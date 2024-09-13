@@ -167,7 +167,7 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 
 # Diagrama Relacional
 
-![Descarga del SDK de Flutter](./Assets/Diagramarelacional.PNG) <br>
+![](./Assets/diagramaRelacional.PNG) <br>
 
 
 
