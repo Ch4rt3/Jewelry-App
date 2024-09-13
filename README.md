@@ -6,6 +6,21 @@
 ---
 ![Descarga del SDK de Flutter](./Assets/4b7bfecb-9807-4075-9273-39feef3ead9f.png)
 
+# MOCKUP
+---
+## 1. Login y registro
+![Descarga del SDK de Flutter](./Assets/MockUpImg/Login.PNG)
+## 1. Home y producto
+![Descarga del SDK de Flutter](./Assets/MockUpImg/HomePage.PNG)
+## 1. Filter y categories
+![Descarga del SDK de Flutter](./Assets/MockUpImg/FilterYCompra.PNG)
+## 1. Mi perfil
+![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG)
+
+
+# Descripcion de entorno de desarrollo
+---
+
 ## 1. Flutter SDK
 
 Flutter es un framework de código abierto creado por Google que permite a los usuarios crear aplicaciones móviles nativas para iOS y Android.
