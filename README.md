@@ -156,13 +156,19 @@ Flutter es un framework de código abierto creado por Google que permite a los u
    - Visita el sitio oficial de Flutter y descarga el SDK para tu sistema operativo.
    - Extrae el archivo descargado en la ubicación deseada (por ejemplo, `C:\src\flutter` en Windows).
 
+   ![Descarga del SDK de Flutter](./Assets/Imagenes_PM/Flutter%201.png)
+
 2. **Configurar la Ruta**:
    - **En Windows**: Abre el "Panel de Control", ve a "Sistema y Seguridad" > "Sistema" > "Configuración avanzada del sistema". Haz clic en "Variables de entorno" y edita la variable PATH añadiendo la ruta donde extrajiste Flutter.
    - **En macOS y Linux**: Abre el terminal y añade la línea `export PATH="$PATH:[ruta a flutter]/bin"` al archivo `~/.bashrc`, `~/.zshrc`, o el que corresponda.
 
+   ![Configuración de la Ruta](./Assets/Imagenes_PM/Flutter%202.png)
+
 3. **Verificar Instalación**:
    - Ejecuta el siguiente comando: `flutter doctor --android-licenses` en la terminal para verificar la instalación y ver los componentes que faltan.
    - En caso ocurra un error en la descarga, ejecuta la siguiente línea: `git config --global --add safe.directory '*'`.
+
+   ![Verificación de la instalación](./Assets/Imagenes_PM/Flutter%203.png)
 
 ## 2. Android Studio
 
@@ -173,14 +179,28 @@ Android Studio es un entorno de desarrollo integrado (IDE) sencillo de utilizar 
 1. **Descargar Android Studio**:
    - Descarga Android Studio desde su sitio oficial.
 
+   ![Descarga de Android Studio](./Assets/Imagenes_PM/Android%20Studio%201.png)
+   ![Instalación de Android Studio](./Assets/Imagenes_PM/Android%20Studio%202.png)
+
 2. **Instalar Android Studio**:
    - Sigue las instrucciones del instalador dependiendo de tu sistema operativo y asegúrate de incluir el Android SDK y el emulador durante la instalación.
+
+   ![Instalación de Android Studio](./Assets/Imagenes_PM/Android%20Studio%203.png)
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%204.png)
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%205.png)
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%206.png)
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%207.png)
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%208.png)
 
 3. **Configurar Android Studio**:
    - Abre Android Studio y ve a "Configuración" > "Plugins". Busca e instala el plugin de Flutter (esto instalará automáticamente el plugin de Dart).
 
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%209.png)
+
 4. **Configurar un Emulador de Android**:
    - En Android Studio, ve a "AVD Manager" y crea un nuevo dispositivo virtual (emulador) configurado según tus necesidades.
+
+   ![Configuración de Plugins en Android Studio](./Assets/Imagenes_PM/Android%20Studio%2010.png)
 
 ## 3. Visual Studio Code (VS Code)
 
@@ -191,11 +211,18 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 1. **Descargar VS Code**:
    - Descarga VS Code desde su sitio oficial.
 
+   ![Descarga de VS Code](./Assets/Imagenes_PM/VS%20code%201.png)
+
 2. **Instalar Extensiones de Flutter y Dart**:
    - Abre VS Code y ve a "Extensiones". Busca e instala las extensiones de Flutter y Dart.
 
+   ![Instalación de Extensiones en VS Code](./Assets/Imagenes_PM/VS%20code%202.png)
+   ![Configuración de Debugging en VS Code](./Assets/Imagenes_PM/VS%20code%203.png)
+
 3. **Configurar Debugging**:
    - Abre la paleta de comandos (`Ctrl+Shift+P` o `Cmd+Shift+P` en macOS) y ejecuta el comando `Flutter: New Project` para crear un nuevo proyecto Flutter y asegurarte de que todo está configurado correctamente.
+
+
 
 # Requerimientos No Funcionales
 ---
