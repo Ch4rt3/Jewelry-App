@@ -10,11 +10,11 @@
 ---
 ## 1. Login y registro
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/Login.PNG)
-## 1. Home y producto
+## 2. Home y producto
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/HomePage.PNG)
-## 1. Filter y categories
+## 3. Filter y categories
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/FilterYCompra.PNG)
-## 1. Mi perfil
+## 4. Mi perfil
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG)
 
 
