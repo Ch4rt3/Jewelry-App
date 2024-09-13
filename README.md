@@ -150,12 +150,19 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 ---
 ## 1. Login y registro
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/Login.PNG)
+-Este mockup muestra el flujo de login y registro de la aplicacion, comenzando con una pantalla de carga que presenta el logotipo de la marca. Luego, se incluyen pantallas para iniciar sesión, registrarse y recuperar la contraseña. Los usuarios pueden iniciar sesión o registrarse ingresando sus datos o utilizando Google. También se muestra el proceso de restablecimiento de contraseña y una pantalla de éxito tras completar el proceso.
+
 ## 2. Home y producto
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/HomePage.PNG)
+-Este mockup muestra la pantalla de inicio y producto la aplicación. La pantalla principal incluye una sección de bienvenida y una lista de productos destacados, con opciones para buscar y explorar categorías como anillos, aretes y collares. En la vista del producto, se presenta una imagen con el nombre, precio y descripción detallada, junto con botones para añadir al carrito o comprar directamente. También se incluye una pantalla de "Acerca de nosotros" que muestra información sobre la marca y características destacadas de los productos.
+
 ## 3. Filter y categories
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/FilterYCompra.PNG)
+-Este mockup muestra la sección de filtros y categorías de la aplicación, donde los usuarios pueden explorar productos organizados por categorías como "Anillos", "Aretes", "Pulseras" y "Collares". También se presenta un filtro ajustable para seleccionar el rango de precios y ordenar los productos. Se incluyen vistas de las pantallas para cada categoría con imágenes de los productos, sus precios, y opciones de añadir al carrito. Además, se muestra una pantalla del carrito de compras, donde los usuarios pueden revisar sus productos antes de proceder al checkout, y una pantalla final que confirma el éxito de la compra con un mensaje de felicitación.
+
 ## 4. Mi perfil
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG)
+-Este mockup muestra la sección de perfil de la aplicación, donde el usuario puede acceder a opciones como gestionar su información personal, revisar órdenes, administrar direcciones de envío y métodos de pago. También incluye una pantalla para ajustes de la cuenta y la opción de cerrar sesión. El diseño es claro y funcional, permitiendo al usuario navegar fácilmente entre las opciones de su perfil.
 
 
 
