@@ -1,23 +1,3 @@
-# Diagrama de casos de uso
----
-![Descarga del SDK de Flutter](./Assets/2520a2e3-4d38-45d0-bf80-9e3ef18f4c5c.png)
-
-# Diagrama de despliegue
----
-![Descarga del SDK de Flutter](./Assets/4b7bfecb-9807-4075-9273-39feef3ead9f.png)
-
-# MOCKUP
----
-## 1. Login y registro
-![Descarga del SDK de Flutter](./Assets/MockUpImg/Login.PNG)
-## 2. Home y producto
-![Descarga del SDK de Flutter](./Assets/MockUpImg/HomePage.PNG)
-## 3. Filter y categories
-![Descarga del SDK de Flutter](./Assets/MockUpImg/FilterYCompra.PNG)
-## 4. Mi perfil
-![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG)
-
-
 # Descripcion de entorno de desarrollo
 ---
 
@@ -97,7 +77,9 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 3. **Configurar Debugging**:
    - Abre la paleta de comandos (`Ctrl+Shift+P` o `Cmd+Shift+P` en macOS) y ejecuta el comando `Flutter: New Project` para crear un nuevo proyecto Flutter y asegurarte de que todo está configurado correctamente.
 
-
+# Diagrama de despliegue
+---
+![Descarga del SDK de Flutter](./Assets/4b7bfecb-9807-4075-9273-39feef3ead9f.png)
 
 # Requerimientos No Funcionales
 ---
@@ -157,3 +139,27 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 | **Características**                  | El sistema deberá de tener un manual de instalación y manual de usuario para facilitar los mantenimientos que serán realizados por el administrador. |
 | **Descripción del requerimiento**     | El sistema debe disponer de una documentación fácilmente actualizable que permita realizar operaciones de mantenimiento con el menor esfuerzo posible. |
 | **Prioridad del requerimiento**       | Alta |
+
+
+# Diagrama de casos de uso
+---
+![Descarga del SDK de Flutter](./Assets/2520a2e3-4d38-45d0-bf80-9e3ef18f4c5c.png)
+
+
+# MOCKUP
+---
+## 1. Login y registro
+![Descarga del SDK de Flutter](./Assets/MockUpImg/Login.PNG)
+## 2. Home y producto
+![Descarga del SDK de Flutter](./Assets/MockUpImg/HomePage.PNG)
+## 3. Filter y categories
+![Descarga del SDK de Flutter](./Assets/MockUpImg/FilterYCompra.PNG)
+## 4. Mi perfil
+![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG)
+
+
+
+
+
+
+
