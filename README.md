@@ -79,7 +79,7 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 
 # Diagrama de despliegue
 ---
-![Descarga del SDK de Flutter](./Assets/4b7bfecb-9807-4075-9273-39feef3ead9f.png)
+![Descarga del SDK de Flutter](./Assets/DiagramaDespliegue.png)
 
 # Requerimientos No Funcionales
 ---
@@ -164,6 +164,10 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 ![Descarga del SDK de Flutter](./Assets/MockUpImg/ConfigurarPerfil.PNG) <br>
 -Este mockup muestra la sección de perfil de la aplicación, donde el usuario puede acceder a opciones como gestionar su información personal, revisar órdenes, administrar direcciones de envío y métodos de pago. También incluye una pantalla para ajustes de la cuenta y la opción de cerrar sesión. El diseño es claro y funcional, permitiendo al usuario navegar fácilmente entre las opciones de su perfil.
 
+
+# Diagrama Relacional
+
+![Descarga del SDK de Flutter](./Assets/Diagramarelacional.PNG) <br>
 
 
 
