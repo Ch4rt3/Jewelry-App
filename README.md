@@ -1,3 +1,11 @@
+# Diagrama de casos de uso
+---
+![Descarga del SDK de Flutter](./Assets/2520a2e3-4d38-45d0-bf80-9e3ef18f4c5c.png)
+
+# Diagrama de despliegue
+---
+![Descarga del SDK de Flutter](./Assets/4b7bfecb-9807-4075-9273-39feef3ead9f.png)
+
 ## 1. Flutter SDK
 
 Flutter es un framework de código abierto creado por Google que permite a los usuarios crear aplicaciones móviles nativas para iOS y Android.
