@@ -105,44 +105,44 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 | **Identificación del requerimiento** | RNF 01 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | Aplicación será desarrollada en Flutter SDK 3.24 |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
+| **Características**                  | El aplicativo se podrá modificar y desplegar en el framework Flutter con su respectiva compatibilidad con diversas herramientas y SO. |
+| **Descripción del requerimiento**     | El ambiente de desarrollo es a través de Flutter por medio de un solo código base que se pueda desplegar en múltiples plataformas y que otorgue un rendimiento similar al nativo en cualquiera SO en la que se ejecute. |
 | **Prioridad del requerimiento**       | Alta |
 
 | **Identificación del requerimiento** | RNF 02 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | La aplicación será diseñada bajo una paleta de colores |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
-| **Prioridad del requerimiento**       | Alta |
+| **Características**                  | La interfaz de la aplicación usará colores como verde, rojo y blanco. |
+| **Descripción del requerimiento**     | El diseño de la interfaz de la aplicación será bajo los colores verde, rojo y blanco. Esto con la finalidad de que se adapte a la marca del producto. |
+| **Prioridad del requerimiento**       | Baja |
 
 | **Identificación del requerimiento** | RNF 03 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | La aplicación se desplegará en Android |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
+| **Características**                  | El SO en la cual desplegamos y se mostrará compatibilidad de la  funciones del aplicativo es Android, sea tanto en su versión base como capas de personalización de fabricantes. |
+| **Descripción del requerimiento**     | El área de despliegue y el desarrollo del código base al estar pensados para este SO, nos permite tener una integración mayor con los servicios derivados del ecosistema de Google y una mayor flexibilidad en la personalización de la app sin limitantes o restricciones de la misma tales como sí existe en iOS. |
 | **Prioridad del requerimiento**       | Alta |
 
 | **Identificación del requerimiento** | RNF 04 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | El servidor se desplegará en Replit Server - Ruby |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
+| **Características**                  | Desarrollar y desplegar una aplicación en Replit Server utilizando Ruby, asegurando que sea segura, escalable y fácil de mantener. |
+| **Descripción del requerimiento**     | La aplicación debe ser capaz de conectarse con la base de datos del replit server - Ruby de manera eficiente. Debe proporcionar logs para facilitar el monitoreo y la solución de problemas. |
 | **Prioridad del requerimiento**       | Alta |
 
 | **Identificación del requerimiento** | RNF 05 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | La interfaz de la aplicación será visualmente moderna |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
+| **Características**                  | La interfaz será atractiva para los usuarios resultando así que sea fácil de navegar y acogedora para todo público. |
+| **Descripción del requerimiento**     | La aplicación será fácil de navegar gracias a su diseño de la interfaz y cómoda visualmente para todo público para todas las edades. |
 | **Prioridad del requerimiento**       | Alta |
 
 | **Identificación del requerimiento** | RNF 06 |
 |--------------------------------------|---------|
 | **Nombre del Requerimiento**         | La aplicación debe ser capaz de procesar un catálogo de al menos 20 productos |
-| **Características**                  | El usuario podrá acceder a la interfaz de mapa de rutas de las actividades de los itinerarios. |
-| **Descripción del requerimiento**     | El usuario podrá visualizar las rutas de las actividades de los itinerarios que ha creado a través de un filtro. En ese filtro, se le pedirá en una casilla el nombre del itinerario en el que se quiere extraer la actividad y seguidamente en otra casilla, el nombre de la actividad que se quiere mostrar en el mapa. Después de colocar los datos necesarios, se contará con un botón de siguiente en el que se actualizará el mapa con la nueva actividad registrada. |
-| **Prioridad del requerimiento**       | Alta |
+| **Características**                  | La interfaz que se proporciona al usuario proporciona la capacidad de contener y visualizar más de 20 productos sin fallas o interrupciones. |
+| **Descripción del requerimiento**     | El apartado del aplicativo centrado en el catálogo permitirá una proyección y almacenamiento sin inconvenientes de los productos mayor a 20 items procurando mantener el rendimiento similar ante cualquier situación. |
+| **Prioridad del requerimiento**       | Media |
 
 | **Identificación del requerimiento** | RNF 07 |
 |--------------------------------------|---------|
