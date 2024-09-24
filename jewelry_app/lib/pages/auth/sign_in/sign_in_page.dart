@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jewelry_app/components/auth_background.dart';
-import 'package:jewelry_app/components/large_button.dart';
-import 'package:jewelry_app/components/large_text_form_field.dart';
+import 'package:jewelry_app/components/layouts/auth_background.dart';
+import 'package:jewelry_app/components/buttons/large_button.dart';
+import 'package:jewelry_app/components/forms/large_text_form_field.dart';
 import 'package:jewelry_app/configs/colors.dart';
 
 class SignInPage extends StatelessWidget {
+  
   const SignInPage({super.key});
 
   Widget _buildBody(BuildContext context) {
@@ -26,6 +27,7 @@ class SignInPage extends StatelessWidget {
           child: TextButton(
             onPressed: () {
               // Acción para recuperar contraseña
+              Navigator.pushNamed(context, "/forgot-password");
             },
             child: const Text(
               '¿Olvidó su contraseña?',
@@ -71,13 +73,10 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: null,
         body: _buildBody(context),
-      ),
-    );
+      );
   }
 }

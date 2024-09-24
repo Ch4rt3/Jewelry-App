@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jewelry_app/components/auth_background.dart';
-import 'package:jewelry_app/components/large_button.dart';
-import 'package:jewelry_app/components/large_text_form_field.dart';
-import 'package:jewelry_app/components/sign_in_with_account.dart';
+import 'package:jewelry_app/components/layouts/auth_background.dart';
+import 'package:jewelry_app/components/buttons/large_button.dart';
+import 'package:jewelry_app/components/forms/large_text_form_field.dart';
+import 'package:jewelry_app/components/auth/sign_in_with_account.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -36,13 +35,7 @@ class SignUpPage extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         const SignInWithAccount(), // Este widget es correcto
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.google),
-          iconSize: 50.0,
-          onPressed: () {
-            // Acción al presionar el botón
-          },
-        ),
+        
       ],
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jewelry_app/pages/sign_in/sign_in_page.dart';
-import 'package:jewelry_app/pages/sign_up/sign_up_page.dart';
+import 'package:jewelry_app/pages/auth/reset/forgot_password_page.dart';
+import 'package:jewelry_app/pages/auth/reset/recovery_password_page.dart';
+import 'package:jewelry_app/pages/auth/sign_in/sign_in_page.dart';
+import 'package:jewelry_app/pages/auth/sign_up/sign_up_page.dart';
+import 'package:jewelry_app/pages/auth/success/success_password_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +27,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/sign-in': (context) => const SignInPage(),
         '/sign-up': (context) => const SignUpPage(),
+        '/forgot-password': (context) => const ForgetPasswordPage(),
+        '/recovery-password': (context) => const RecoveryPasswordPage(),
+        '/success-password': (context) => const SuccessPasswordPage(),
       },
     );
   }
