@@ -2,40 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:jewelry_app/configs/colors.dart';
 
 class LargeButton extends StatelessWidget {
-  final String title;
+  final String titulo;
   final VoidCallback onPressed;
-  final Color? textColor;
-  final Color? backgroundColor;
-  final BorderRadius? borderRadius;
-
-  const LargeButton(
-      {Key? key,
-      required this.title,
-      required this.onPressed,
-      this.backgroundColor,
-      this.textColor,
-      this.borderRadius})
-      : super(key: key);
+  
+  const LargeButton({super.key, required this.titulo, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width:
-          double.infinity, // Hace que el botón ocupe todo el ancho disponible
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-              backgroundColor ?? AppColors.primaryColor),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-            borderRadius: borderRadius ?? BorderRadius.circular(5),
-          )),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: TextStyle(color: textColor ?? AppColors.textColor),
-        ),
-      ),
-    );
+    return ElevatedButton(
+              onPressed: onPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.thirdColor,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 60,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              child: Text(
+                titulo,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            );
   }
 }
