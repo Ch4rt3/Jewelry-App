@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/pages/sign_in/sign_in_page.dart';
+import 'package:jewelry_app/pages/sign_up/sign_up_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/sign-in',
       routes: {
-        '/sign-in': (context) => const SignInPage()
+        '/sign-in': (context) => const SignInPage(),
+        '/sign-up': (context) => const SignUpPage(),
       },
     );
   }

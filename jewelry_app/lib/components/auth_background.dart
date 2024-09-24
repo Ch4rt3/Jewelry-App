@@ -32,8 +32,8 @@ class AuthBackground extends StatelessWidget {
                     decoration: const BoxDecoration(
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(100),
-                        topRight: Radius.circular(100),
+                        topLeft: Radius.circular(80),
+                        topRight: Radius.circular(80),
                       ),
                     ),
                     child: Padding(
