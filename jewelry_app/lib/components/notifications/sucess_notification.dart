@@ -23,7 +23,7 @@ class SuccessNotificationState extends State<SuccessNotification> {
           children: [
             if (!_isAnimationCompleted)
               Lottie.asset(
-                'assets/green_check.json', // Ruta del archivo de animación Lottie
+                'public/green_check.json', // Ruta del archivo de animación Lottie
                 width: 150,
                 height: 150,
                 fit: BoxFit.cover,
