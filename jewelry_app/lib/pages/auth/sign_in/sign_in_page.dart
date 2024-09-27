@@ -38,7 +38,9 @@ class SignInPage extends StatelessWidget {
         const SizedBox(height: 10),
         LargeButton(
           titulo: "INGRESAR", 
-          onPressed: ()=>{}
+          onPressed: ()=>{
+            Navigator.pushNamed(context, "/home"),
+          }
         ),
         const SizedBox(height: 10),
         // No tienes cuenta aun?
