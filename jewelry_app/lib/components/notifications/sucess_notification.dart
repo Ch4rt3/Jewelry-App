@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/buttons/custom_elevated_buttom.dart';
 import 'package:jewelry_app/configs/colors.dart';
 import 'package:lottie/lottie.dart';
 
@@ -64,28 +65,11 @@ class SuccessNotificationState extends State<SuccessNotification> {
             ),
             const SizedBox(height: 80),
             // Botón de continuar
-            ElevatedButton(
-              onPressed: () {
-                // Acción al presionar el botón
+            CustomElevatedButtom(
+              message: "Continue", 
+              onPressed: (){
+                Navigator.pushNamed(context, "/home");
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.thirdColor, // Color de fondo
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 60,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              child: const Text(
-                'Continue',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
             ),
           ],
         ),

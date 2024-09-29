@@ -38,21 +38,23 @@ class AuthBackground extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const SizedBox( height: 35 ),
-                          Text(
-                            titulo,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.textColor,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const SizedBox( height: 35 ),
+                            Text(
+                              titulo,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textColor,
+                              ),
                             ),
-                          ),
-                          const SizedBox( height: 20 ),
-                          ...children,
-                        ],
+                            const SizedBox( height: 20 ),
+                            ...children,
+                          ],
+                        ),
                       ),
                     ),
                   ),
