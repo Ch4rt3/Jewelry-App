@@ -3,16 +3,14 @@ import 'package:jewelry_app/configs/colors.dart';
 
 class CustomElevatedButtom extends StatelessWidget {
   final String message;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   const CustomElevatedButtom({super.key, required this.message, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-              onPressed: () {
-                onPressed;
-              },
+              onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.thirdColor, // Color de fondo
                 padding: const EdgeInsets.symmetric(

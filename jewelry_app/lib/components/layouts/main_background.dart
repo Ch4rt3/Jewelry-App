@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/forms/large_text_form_field.dart';
 import 'package:jewelry_app/components/navigation/bottom_bar.dart';
 import 'package:jewelry_app/components/navigation/diamond_app_bar.dart';
 import 'package:jewelry_app/components/navigation/right_drawer.dart';
@@ -54,6 +55,8 @@ class _MainBackgroundState extends State<MainBackground> {
         screenHeight: screenHeight,
         message: widget.message,
       ),
+
+
 
       //Drawer a la derecha
       endDrawer: const RightDrawer(),

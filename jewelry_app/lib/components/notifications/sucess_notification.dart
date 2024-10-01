@@ -5,8 +5,9 @@ import 'package:lottie/lottie.dart';
 
 class SuccessNotification extends StatefulWidget {
   final String message;
+  final VoidCallback action;
 
-  const SuccessNotification({super.key, required this.message});
+  const SuccessNotification({super.key, required this.message, required this.action});
 
   @override
   SuccessNotificationState createState() => SuccessNotificationState();
@@ -67,9 +68,7 @@ class SuccessNotificationState extends State<SuccessNotification> {
             // Botón de continuar
             CustomElevatedButtom(
               message: "Continue", 
-              onPressed: (){
-                Navigator.pushNamed(context, "/home");
-              },
+              onPressed: widget.action ,
             ),
           ],
         ),

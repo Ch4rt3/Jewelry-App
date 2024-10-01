@@ -6,8 +6,12 @@ class SuccessPasswordPage extends StatelessWidget {
   const SuccessPasswordPage({super.key});
 
   Widget _buildBody(BuildContext context) {
-    return const SuccessNotification(
+    return SuccessNotification(
       message: "Password reset succesful",
+      action: () {
+        Navigator.pushNamed(context, "/home");
+      },
+
     );
   }
 
