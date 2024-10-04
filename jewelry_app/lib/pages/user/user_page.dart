@@ -73,6 +73,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Orders'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+                      Navigator.pushNamed(context, '/orders');
                       // Acción de ir a órdenes
                     },
                   ),
@@ -81,6 +82,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Shipping Addresses'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+                        Navigator.pushNamed(context, '/address');
                       // Acción de ir a direcciones
                     },
                   ),

@@ -9,6 +9,8 @@ import 'package:jewelry_app/pages/user/user_page.dart';
 import 'package:jewelry_app/pages/user/wallet/wallet_page.dart';
 import 'package:jewelry_app/pages/user/wallet/create_wallet_page.dart';
 import 'package:jewelry_app/pages/user/settings/settings_page.dart';
+import 'package:jewelry_app/pages/user/orders/orders_page.dart';
+import 'package:jewelry_app/pages/user/address/address_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -40,6 +42,9 @@ class MyApp extends StatelessWidget {
         '/wallet': (context) => const WalletPage(),
         '/create-wallet': (context) => const CreateWalletPage(),
         '/settings': (context) => const SettingsPage(),
+        '/orders': (context) => const OrdersPage(),
+        '/address': (context) => const AddressPage(),
+      
       },
     );
   }

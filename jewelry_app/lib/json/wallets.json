@@ -4,15 +4,15 @@
       "cardNumber": "**** **** **** 3947",
       "holderName": "Jennyfer Doe",
       "expiryDate": "05/23",
-      "cvv": "123",
-      "isDefault": true
+      "cvv": "123"
+  
     },
     {
       "cardBrand": "Visa",
       "cardNumber": "**** **** **** 3947",
       "holderName": "John Doe",
       "expiryDate": "12/25",
-      "cvv": "456",
-      "isDefault": false
+      "cvv": "456"
+    
     }
   ]

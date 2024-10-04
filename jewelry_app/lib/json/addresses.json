@@ -1,0 +1,12 @@
+[
+    {
+      "id": "uuid1",
+      "name": "Bruno Fernandes",
+      "address": "25 rue Robert Latouche, Nice, 06200, Côte D'azur, France"
+    },
+    {
+      "id": "uuid2",
+      "name": "Emily Davis",
+      "address": "123 Main St, Springfield, USA"
+    }
+  ]
