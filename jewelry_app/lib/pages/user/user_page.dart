@@ -64,6 +64,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Settings'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+                      Navigator.pushNamed(context, '/settings');
                       // Acción de ir a ajustes
                     },
                   ),
