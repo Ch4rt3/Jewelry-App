@@ -33,6 +33,7 @@ class _MainBackgroundState extends State<MainBackground> {
         break;
       case 1:
         print("Perfil");
+         Navigator.pushNamed(context, '/user');
         break;
       case 2:
         print("Carrito");
