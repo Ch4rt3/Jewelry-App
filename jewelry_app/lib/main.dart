@@ -11,14 +11,26 @@ import 'package:jewelry_app/pages/user/wallet/create_wallet_page.dart';
 import 'package:jewelry_app/pages/user/settings/settings_page.dart';
 import 'package:jewelry_app/pages/user/orders/orders_page.dart';
 import 'package:jewelry_app/pages/user/address/address_page.dart';
-void main() {
-  runApp(const MyApp());
+import 'package:jewelry_app/pages/categories/men.dart';
+import 'package:jewelry_app/pages/categories/rings_page.dart';
+import 'package:jewelry_app/pages/categories/earrings_page.dart';
+import 'package:jewelry_app/pages/categories/bracelets_page.dart';
+import 'package:jewelry_app/pages/categories/necklaces_page.dart';
+import 'package:jewelry_app/services/product_service.dart';
+import 'package:jewelry_app/models/producto.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  ProductoService productoService = ProductoService();
+  List<Producto> productos = await productoService.fetchAll();
+  runApp(MyApp(productos: productos));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<Producto> productos;
 
-  // This widget is the root of your application.
+  const MyApp({Key? key, required this.productos}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +41,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-
       initialRoute: '/sign-in',
       routes: {
         '/sign-in': (context) => const SignInPage(),
@@ -44,8 +55,13 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => const SettingsPage(),
         '/orders': (context) => const OrdersPage(),
         '/address': (context) => const AddressPage(),
-      
+        '/men': (context) => MenPage(allProducts: productos),
+        '/rings': (context) => RingsPage(allProducts: productos),
+        '/earrings': (context) => EarringsPage(allProducts: productos),
+        '/bracelets': (context) => BraceletsPage(allProducts: productos),
+        '/necklaces': (context) => NecklacesPage(allProducts: productos),
       },
     );
   }
 }
+

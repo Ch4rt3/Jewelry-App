@@ -1,0 +1,82 @@
+[
+  {
+    "ID": 1,
+    "Nombre": "Collar de Perlas",
+    "Precio": 120,
+    "Stock": 50,
+    "Categoria": "Necklaces",
+    "ImagenUrl": "https://example.com/images/collar_perlas.png"
+  },
+  {
+    "ID": 2,
+    "Nombre": "Anillo de Oro",
+    "Precio": 300,
+    "Stock": 20,
+    "Categoria": "Rings",
+    "ImagenUrl": "https://example.com/images/anillo_oro.png"
+  },
+  {
+    "ID": 3,
+    "Nombre": "Brazalete de Plata",
+    "Precio": 200,
+    "Stock": 15,
+    "Categoria": "Bracelets",
+    "ImagenUrl": "https://example.com/images/brazalete_plata.png"
+  },
+  {
+    "ID": 4,
+    "Nombre": "Pendiente de Diamantes",
+    "Precio": 500,
+    "Stock": 5,
+    "Categoria": "Earrings",
+    "ImagenUrl": "https://example.com/images/pendiente_diamantes.png"
+  },
+  {
+    "ID": 5,
+    "Nombre": "Reloj de Pulsera",
+    "Precio": 250,
+    "Stock": 30,
+    "Categoria": "Men",
+    "ImagenUrl": "https://example.com/images/reloj_pulsera.png"
+  },
+  {
+    "ID": 6,
+    "Nombre": "Broche Antiguo",
+    "Precio": 150,
+    "Stock": 10,
+    "Categoria": "Bracelets",
+    "ImagenUrl": "https://example.com/images/broche_antiguo.png"
+  },
+  {
+    "ID": 7,
+    "Nombre": "Anillo de Platino",
+    "Precio": 600,
+    "Stock": 8,
+    "Categoria": "Rings",
+    "ImagenUrl": "https://example.com/images/anillo_platino.png"
+  },
+  {
+    "ID": 8,
+    "Nombre": "Cadena de Oro Rosa",
+    "Precio": 350,
+    "Stock": 12,
+    "Categoria": "Necklaces",
+    "ImagenUrl": "https://example.com/images/cadena_oro_rosa.png"
+  },
+  {
+    "ID": 9,
+    "Nombre": "Aretes de Rubí",
+    "Precio": 700,
+    "Stock": 4,
+    "Categoria": "Earrings",
+    "ImagenUrl": "https://example.com/images/aretes_rubi.png"
+  },
+  {
+    "ID": 10,
+    "Nombre": "Collar de Esmeraldas",
+    "Precio": 1000,
+    "Stock": 3,
+    "Categoria": "Necklaces",
+    "ImagenUrl": "https://example.com/images/collar_esmeraldas.png"
+  }
+]

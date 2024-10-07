@@ -44,6 +44,8 @@ flutter:
   assets:
     - public/green_check.json
     - public/diamond.png
+    - assets/json/productos.json
+    - assets/json/usuarios.json
 
   fonts:
     - family: Lexend
