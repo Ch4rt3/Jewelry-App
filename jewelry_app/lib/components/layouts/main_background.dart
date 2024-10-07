@@ -8,47 +8,42 @@ class MainBackground extends StatefulWidget {
   final Widget body;
   final bool showDiamondMessage;
   final bool showComplementMessage;
-  final String message;
-  final String subtitle;
+  final String message;  
+  final String subtitle;  
 
   const MainBackground({
     super.key,
-    required this.body, 
-    required this.showDiamondMessage, 
-    this.message = "", 
-    required this.showComplementMessage, 
+    required this.body,
+    required this.showDiamondMessage,
+    required this.showComplementMessage,
+    required this.message,  
     this.subtitle = "",
   });
 
   @override
-  // ignore: library_private_types_in_public_api
   _MainBackgroundState createState() => _MainBackgroundState();
 }
 
 class _MainBackgroundState extends State<MainBackground> {
-  int currentIndex = 0; // Estado para el índice actual
+  int currentIndex = 0;  
 
   void _onBottomBarTapped(int index) {
     setState(() {
-      currentIndex = index; // Actualiza el índice
+      currentIndex = index; 
       switch (index) {
-      case 0:
-        print("Inicio");
-        break;
-      case 1:
-        print("Perfil");
-         Navigator.pushNamed(context, '/user');
-        break;
-      case 2:
-        print("Carrito");
-        break;
-    }
+        case 0:
+          print("Inicio");
+          break;
+        case 1:
+          print("Perfil");
+          Navigator.pushNamed(context, '/user');
+          break;
+        case 2:
+          print("Carrito");
+          break;
+      }
     });
-
-    // Aquí puedes navegar a otras páginas si lo deseas
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -61,34 +56,15 @@ class _MainBackgroundState extends State<MainBackground> {
         message: widget.message,
       ),
 
-
-
-      //Drawer a la derecha
       endDrawer: const RightDrawer(),
 
-      //Cuerpo
       body: Padding(
         padding: const EdgeInsets.all(14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            widget.showComplementMessage ? const Row(
-              children: [
-                SizedBox(width: 10,),
-                Text(
-                  "Best jewelry\nfor you",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black54,
-                  ),
-                  textWidthBasis: TextWidthBasis.longestLine,
-                ),
-              ],
-            )
-            :
             Text(
-              widget.subtitle,
+              widget.message, 
               style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -97,13 +73,13 @@ class _MainBackgroundState extends State<MainBackground> {
               ),
             ),
             
-            const SizedBox(height: 20,),
-            
+            const SizedBox(height: 20),
+
             Padding(
               padding: const EdgeInsets.only(
                 left: 8,
                 right: 8,
-                bottom: 10
+                bottom: 10,
               ),
               child: Row(
                 children: [
@@ -115,10 +91,8 @@ class _MainBackgroundState extends State<MainBackground> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        
                       ),
                       onChanged: (value) {
-                        // Lógica para filtrar resultados mientras el usuario escribe
                       },
                     ),
                   ),
@@ -126,37 +100,41 @@ class _MainBackgroundState extends State<MainBackground> {
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20), // Borde redondeado
+                        borderRadius: BorderRadius.circular(20),  
                       ),
                       side: const BorderSide(
-                        color: Colors.black87, // Color del borde
-                        width: 1, // Grosor del borde
+                        color: Colors.black87,  
+                        width: 1,  
                       ),
-                      padding: const EdgeInsets.all(8), // Espacio alrededor del ícono
+                      padding: const EdgeInsets.all(8),  
                     ),
                     onPressed: () {
-                      // Acción del botón de filtro
+        
                     },
                     child: const Icon(
-                      Icons.filter_alt_outlined, // Icono de filtro
-                      size: 40, // Tamaño del ícono
-                      color: Colors.black87, // Color del ícono
+                      Icons.filter_alt_outlined,  
+                      size: 40,  
+                      color: Colors.black87,  
                     ),
                   ),
                 ],
               ),
             ),
-            // Aquí puede ir el contenido de tu página
-            widget.body,
+            
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: widget.body,
+            ),
           ],
         ),
       ),
 
-      //BottomBar
       bottomNavigationBar: BottomBar(
         currentIndex: currentIndex,
-        onTap: _onBottomBarTapped, // Pasa la función al BottomBar
+        onTap: _onBottomBarTapped, 
       ),
     );
   }
 }
+

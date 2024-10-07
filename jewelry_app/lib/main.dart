@@ -11,7 +11,7 @@ import 'package:jewelry_app/pages/user/wallet/create_wallet_page.dart';
 import 'package:jewelry_app/pages/user/settings/settings_page.dart';
 import 'package:jewelry_app/pages/user/orders/orders_page.dart';
 import 'package:jewelry_app/pages/user/address/address_page.dart';
-import 'package:jewelry_app/pages/categories/men.dart';
+import 'package:jewelry_app/pages/categories/men_page.dart';
 import 'package:jewelry_app/pages/categories/rings_page.dart';
 import 'package:jewelry_app/pages/categories/earrings_page.dart';
 import 'package:jewelry_app/pages/categories/bracelets_page.dart';
