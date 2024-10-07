@@ -37,7 +37,8 @@ class DiamondAppBar extends StatelessWidget implements PreferredSizeWidget {
                 letterSpacing: 1.5,
               ),
             ),
-          ],
+            ],
+          
         ],
       ),
       toolbarHeight: screenHeight * (showDiamond ? 0.12 : 0.08),

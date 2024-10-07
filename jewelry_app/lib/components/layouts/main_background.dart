@@ -1,19 +1,26 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/components/forms/large_text_form_field.dart';
 import 'package:jewelry_app/components/navigation/bottom_bar.dart';
 import 'package:jewelry_app/components/navigation/diamond_app_bar.dart';
 import 'package:jewelry_app/components/navigation/right_drawer.dart';
+import 'package:jewelry_app/configs/colors.dart';
 
 class MainBackground extends StatefulWidget {
   final Widget body;
   final bool showDiamondMessage;
+  final bool showComplementMessage;
   final String message;
+  final String subtitle;
 
   const MainBackground({
     super.key,
     required this.body, 
     required this.showDiamondMessage, 
-    this.message = "",
+    this.message = "", 
+    required this.showComplementMessage, 
+    this.subtitle = "",
   });
 
   @override
@@ -63,7 +70,90 @@ class _MainBackgroundState extends State<MainBackground> {
       endDrawer: const RightDrawer(),
 
       //Cuerpo
-      body: widget.body,
+      body: Padding(
+        padding: const EdgeInsets.all(14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            widget.showComplementMessage ? const Row(
+              children: [
+                SizedBox(width: 10,),
+                Text(
+                  "Best jewelry\nfor you",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black54,
+                  ),
+                  textWidthBasis: TextWidthBasis.longestLine,
+                ),
+              ],
+            )
+            :
+            Text(
+              widget.subtitle,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: AppColors.secondTextColor,
+                letterSpacing: 1.5,
+              ),
+            ),
+            
+            const SizedBox(height: 20,),
+            
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 8,
+                right: 8,
+                bottom: 10
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        
+                      ),
+                      onChanged: (value) {
+                        // Lógica para filtrar resultados mientras el usuario escribe
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20), // Borde redondeado
+                      ),
+                      side: const BorderSide(
+                        color: Colors.black87, // Color del borde
+                        width: 1, // Grosor del borde
+                      ),
+                      padding: const EdgeInsets.all(8), // Espacio alrededor del ícono
+                    ),
+                    onPressed: () {
+                      // Acción del botón de filtro
+                    },
+                    child: const Icon(
+                      Icons.filter_alt_outlined, // Icono de filtro
+                      size: 40, // Tamaño del ícono
+                      color: Colors.black87, // Color del ícono
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Aquí puede ir el contenido de tu página
+            widget.body,
+          ],
+        ),
+      ),
 
       //BottomBar
       bottomNavigationBar: BottomBar(
