@@ -1,0 +1,62 @@
+[
+    {
+      "ID": 1,
+      "Usuario_ID": 1,
+      "SubTotal": 620.0,
+      "Productos": [
+        {
+          "ID": 1,
+          "Nombre": "Collar de Perlas",
+          "Precio": 120,
+          "Stock": 50,
+          "Categoria": "Necklaces",
+          "ImagenUrl": "https://example.com/images/collar_perlas.png",
+          "Cantidad": 2
+        },
+        {
+          "ID": 3,
+          "Nombre": "Pulsera de Plata",
+          "Precio": 150,
+          "Stock": 35,
+          "Categoria": "Bracelets",
+          "ImagenUrl": "https://example.com/images/pulsera_plata.png",
+          "Cantidad": 2
+        }
+      ]
+    },
+    {
+      "ID": 2,
+      "Usuario_ID": 2,
+      "SubTotal": 650.0,
+      "Productos": [
+        {
+          "ID": 2,
+          "Nombre": "Anillo de Oro",
+          "Precio": 300,
+          "Stock": 20,
+          "Categoria": "Rings",
+          "ImagenUrl": "https://example.com/images/anillo_oro.png",
+          "Cantidad": 1
+        },
+        {
+          "ID": 4,
+          "Nombre": "Pendientes de Diamante",
+          "Precio": 250,
+          "Stock": 15,
+          "Categoria": "Earrings",
+          "ImagenUrl": "https://example.com/images/pendientes_diamante.png",
+          "Cantidad": 1
+        },
+        {
+          "ID": 5,
+          "Nombre": "Reloj de Acero",
+          "Precio": 450,
+          "Stock": 10,
+          "Categoria": "Men",
+          "ImagenUrl": "https://example.com/images/reloj_acero.png",
+          "Cantidad": 1
+        }
+      ]
+    }
+  ]
+  

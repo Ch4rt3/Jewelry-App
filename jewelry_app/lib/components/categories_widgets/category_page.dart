@@ -25,16 +25,13 @@ class CategoryPage extends StatelessWidget {
       body: SizedBox(
         height: 400,  
         child: ListView.builder(
-          scrollDirection: Axis.horizontal, 
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          scrollDirection: Axis.horizontal, // Desplazamiento horizontal de la lista de productos
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           itemCount: categoryProducts.length,
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: SizedBox(
-                width: 200,  
-                child: ProductCard(product: categoryProducts[index]),  
-              ),
+            return Container(
+              margin: const EdgeInsets.only(right: 10.0),  // Margen entre cada tarjeta
+              child: ProductCard(product: categoryProducts[index]),
             );
           },
         ),
@@ -42,3 +39,5 @@ class CategoryPage extends StatelessWidget {
     );
   }
 }
+
+

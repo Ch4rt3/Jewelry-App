@@ -4,53 +4,57 @@ import 'package:jewelry_app/models/producto.dart';
 class ProductCard extends StatelessWidget {
   final Producto product;
 
-  ProductCard({required this.product});
+  const ProductCard({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 160,  // Ajustar el ancho de la tarjeta
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0, 4),
-            blurRadius: 10,
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 7,
+            offset: Offset(0, 3),  // Cambia la sombra hacia abajo
           ),
         ],
-        image: DecorationImage(
-          image: NetworkImage(product.imagenUrl),
-          fit: BoxFit.cover,
-        ),
       ),
-      child: Stack(
-        alignment: Alignment.bottomCenter,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 60,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.9),
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+          // Imagen del producto
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(
+              product.imagenUrl,
+              height: 100,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  product.nombre,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '\$${product.precio}',
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              product.nombre,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Text(
+              '\$${product.precio}',
+              style: const TextStyle(
+                color: Colors.green,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
@@ -58,3 +62,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
