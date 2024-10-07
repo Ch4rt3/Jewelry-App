@@ -66,6 +66,7 @@ class _MainBackgroundState extends State<MainBackground> {
       //Drawer a la derecha
       endDrawer: const RightDrawer(),
 
+      resizeToAvoidBottomInset: false,
       //Cuerpo
       body: Padding(
         padding: const EdgeInsets.all(14.0),

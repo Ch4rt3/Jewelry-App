@@ -21,6 +21,7 @@ class CategoryPage extends StatelessWidget {
       showDiamondMessage: false,  
       message: categoryName,    
       showComplementMessage: false, 
+      subtitle: categoryName,
       body: SizedBox(
         height: 400,  
         child: ListView.builder(
