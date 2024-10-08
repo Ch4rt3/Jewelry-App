@@ -1,111 +1,58 @@
 [
-    {
-      "ID": 1,
-      "Codigo": "PED001",
-      "Fecha": "2023-10-01",
-      "MontoTotal": 620.0,
-      "Usuario_ID": 1,
-      "Productos": [
-        {
-          "ID": 1,
-          "Nombre": "Collar de Perlas",
-          "Precio": 120,
-          "Stock": 50,
-          "Categoria": "Necklaces",
-          "ImagenUrl": "https://example.com/images/collar_perlas.png",
-          "Cantidad": 2
-        },
-        {
-          "ID": 3,
-          "Nombre": "Pulsera de Plata",
-          "Precio": 150,
-          "Stock": 35,
-          "Categoria": "Bracelets",
-          "ImagenUrl": "https://example.com/images/pulsera_plata.png",
-          "Cantidad": 2
-        }
-      ]
-    },
-    {
-      "ID": 2,
-      "Codigo": "PED002",
-      "Fecha": "2023-10-02",
-      "MontoTotal": 300.0,
-      "Usuario_ID": 2,
-      "Productos": [
-        {
-          "ID": 2,
-          "Nombre": "Anillo de Oro",
-          "Precio": 300,
-          "Stock": 20,
-          "Categoria": "Rings",
-          "ImagenUrl": "https://example.com/images/anillo_oro.png",
-          "Cantidad": 1
-        }
-      ]
-    },
-    {
-      "ID": 3,
-      "Codigo": "PED003",
-      "Fecha": "2023-10-03",
-      "MontoTotal": 650.0,
-      "Usuario_ID": 3,
-      "Productos": [
-        {
-          "ID": 4,
-          "Nombre": "Pendientes de Diamante",
-          "Precio": 250,
-          "Stock": 15,
-          "Categoria": "Earrings",
-          "ImagenUrl": "https://example.com/images/pendientes_diamante.png",
-          "Cantidad": 1
-        },
-        {
-          "ID": 5,
-          "Nombre": "Reloj de Acero",
-          "Precio": 450,
-          "Stock": 10,
-          "Categoria": "Men",
-          "ImagenUrl": "https://example.com/images/reloj_acero.png",
-          "Cantidad": 1
-        }
-      ]
-    },
-    {
-      "ID": 4,
-      "Codigo": "PED004",
-      "Fecha": "2023-10-04",
-      "MontoTotal": 500.0,
-      "Usuario_ID": 4,
-      "Productos": [
-        {
-          "ID": 6,
-          "Nombre": "Collar de Rubí",
-          "Precio": 250,
-          "Stock": 5,
-          "Categoria": "Necklaces",
-          "ImagenUrl": "https://example.com/images/collar_rubi.png",
-          "Cantidad": 2
-        }
-      ]
-    },
-    {
-      "ID": 5,
-      "Codigo": "PED005",
-      "Fecha": "2023-10-05",
-      "MontoTotal": 125.0,
-      "Usuario_ID": 5,
-      "Productos": [
-        {
-          "ID": 10,
-          "Nombre": "Collar de Cuarzo",
-          "Precio": 125,
-          "Stock": 40,
-          "Categoria": "Necklaces",
-          "ImagenUrl": "https://example.com/images/collar_cuarzo.png",
-          "Cantidad": 1
-        }
-      ]
-    }
-  ]
+  {
+    "ID": 201,
+    "Codigo": "ORD001",
+    "Fecha": "2023-09-12T14:30:00",
+    "MontoTotal": 300.0,
+    "Usuario_ID": 1,
+    "Productos": [
+      {
+        "ID": 1,
+        "Nombre": "Anillo de Oro",
+        "Precio": 200,
+        "Stock": 50,
+        "Categoria": "Anillos",
+        "ImagenUrl": "https://example.com/images/anillo_oro.png",
+        "Cantidad": 1
+      },
+      {
+        "ID": 2,
+        "Nombre": "Reloj de Pulsera",
+        "Precio": 100,
+        "Stock": 20,
+        "Categoria": "Relojes",
+        "ImagenUrl": "https://example.com/images/reloj_pulsera.png",
+        "Cantidad": 1
+      }
+    ]
+  },
+  {
+    "ID": 202,
+    "Codigo": "ORD002",
+    "Fecha": "2023-09-14T16:00:00",
+    "MontoTotal": 500.0,
+    "Usuario_ID": 2,
+    "Productos": [
+      {
+        "ID": 3,
+        "Nombre": "Collar de Plata",
+        "Precio": 300,
+        "Stock": 25,
+        "Categoria": "Collares",
+        "ImagenUrl": "https://example.com/images/collar_plata.png",
+        "Cantidad": 1
+      },
+      {
+        "ID": 4,
+        "Nombre": "Pendientes de Rubí",
+        "Precio": 200,
+        "Stock": 15,
+        "Categoria": "Pendientes",
+        "ImagenUrl": "https://example.com/images/pendientes_rubi.png",
+        "Cantidad": 1
+      }
+    ]
+  }
+]
+
   

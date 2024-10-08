@@ -16,20 +16,42 @@ import 'package:jewelry_app/pages/categories/rings_page.dart';
 import 'package:jewelry_app/pages/categories/earrings_page.dart';
 import 'package:jewelry_app/pages/categories/bracelets_page.dart';
 import 'package:jewelry_app/pages/categories/necklaces_page.dart';
+import 'package:jewelry_app/pages/cart/my_cart_page.dart';  
+import 'package:jewelry_app/pages/cart/checkout_page.dart'; 
 import 'package:jewelry_app/services/product_service.dart';
+import 'package:jewelry_app/services/user_service.dart';
+import 'package:jewelry_app/services/shoppingcart_service.dart';
 import 'package:jewelry_app/models/producto.dart';
+import 'package:jewelry_app/models/usuario.dart';
+import 'package:jewelry_app/models/carrito.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ProductoService productoService = ProductoService();
+  UsuarioService usuarioService = UsuarioService();
+  CarritoService carritoService = CarritoService();
   List<Producto> productos = await productoService.fetchAll();
-  runApp(MyApp(productos: productos));
+  Usuario? usuario = await usuarioService.getUsuarioById(1);  // Asumiendo que cargamos el usuario con ID = 1
+  Carrito? carrito = await carritoService.getCarritoByUsuarioId(1);  // Cargar el carrito del usuario con ID = 1
+
+  runApp(MyApp(
+    productos: productos,
+    usuario: usuario,
+    carrito: carrito,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final List<Producto> productos;
+  final Usuario? usuario;
+  final Carrito? carrito;
 
-  const MyApp({super.key, required this.productos});
+  const MyApp({
+    Key? key,
+    required this.productos,
+    required this.usuario,
+    required this.carrito,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +82,8 @@ class MyApp extends StatelessWidget {
         '/earrings': (context) => EarringsPage(allProducts: productos),
         '/bracelets': (context) => BraceletsPage(allProducts: productos),
         '/necklaces': (context) => NecklacesPage(allProducts: productos),
+        '/cart': (context) => MyCartPage(carrito: carrito!),  
+        '/checkout': (context) => CheckoutPage(carrito: carrito!),  
       },
     );
   }

@@ -46,7 +46,8 @@ flutter:
     - public/diamond.png
     - assets/json/productos.json
     - assets/json/usuarios.json
-
+    - assets/json/carritos.json
+    - assets/json/pedidos.json
   fonts:
     - family: Lexend
       fonts: 
