@@ -29,7 +29,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final List<Producto> productos;
 
-  const MyApp({Key? key, required this.productos}) : super(key: key);
+  const MyApp({super.key, required this.productos});
 
   @override
   Widget build(BuildContext context) {

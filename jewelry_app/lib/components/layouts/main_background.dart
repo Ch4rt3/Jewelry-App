@@ -33,6 +33,7 @@ class _MainBackgroundState extends State<MainBackground> {
       switch (index) {
         case 0:
           print("Inicio");
+          Navigator.pushNamed(context, "/home");
           break;
         case 1:
           print("Perfil");
@@ -60,76 +61,96 @@ class _MainBackgroundState extends State<MainBackground> {
 
       resizeToAvoidBottomInset: false,
       //Cuerpo
-      body: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.message, 
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: AppColors.secondTextColor,
-                letterSpacing: 1.5,
-              ),
-            ),
-            
-            const SizedBox(height: 20),
-
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 8,
-                right: 8,
-                bottom: 10,
-              ),
-              child: Row(
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              widget.showComplementMessage ? const Row(
                 children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onChanged: (value) {
-                      },
+                  SizedBox(width: 10,),
+                  Text(
+                    "Best jewelry\nfor you",
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black54,
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),  
-                      ),
-                      side: const BorderSide(
-                        color: Colors.black87,  
-                        width: 1,  
-                      ),
-                      padding: const EdgeInsets.all(8),  
-                    ),
-                    onPressed: () {
-        
-                    },
-                    child: const Icon(
-                      Icons.filter_alt_outlined,  
-                      size: 40,  
-                      color: Colors.black87,  
-                    ),
+                    textWidthBasis: TextWidthBasis.longestLine,
                   ),
                 ],
+              )
+              :
+              Text(
+                widget.subtitle,
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.secondTextColor,
+                  letterSpacing: 1.5,
+                ),
               ),
-            ),
-            
-            const SizedBox(height: 10),
-
-            Expanded(
-              child: widget.body,
-            ),
-          ],
+              
+              const SizedBox(height: 20),
+        
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  bottom: 10,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onChanged: (value) {
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),  
+                        ),
+                        side: const BorderSide(
+                          color: Colors.black87,  
+                          width: 1,  
+                        ),
+                        padding: const EdgeInsets.all(8),  
+                      ),
+                      onPressed: () {
+          
+                      },
+                      child: const Icon(
+                        Icons.filter_alt_outlined,  
+                        size: 40,  
+                        color: Colors.black87,  
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 10),
+        
+        
+              widget.body,
+        
+            ],
+          ),
         ),
+        ]
       ),
 
       bottomNavigationBar: BottomBar(

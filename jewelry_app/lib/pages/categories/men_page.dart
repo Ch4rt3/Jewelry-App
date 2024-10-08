@@ -5,7 +5,7 @@ import 'package:jewelry_app/models/producto.dart';
 class MenPage extends StatelessWidget {
   final List<Producto> allProducts;
 
-  MenPage({Key? key, required this.allProducts}) : super(key: key);
+  MenPage({super.key, required this.allProducts});
 
   @override
   Widget build(BuildContext context) {
