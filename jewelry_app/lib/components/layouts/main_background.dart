@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/filter/filter_modal_button.dart';
 import 'package:jewelry_app/components/navigation/bottom_bar.dart';
 import 'package:jewelry_app/components/navigation/diamond_app_bar.dart';
 import 'package:jewelry_app/components/navigation/right_drawer.dart';
@@ -105,6 +106,7 @@ class _MainBackgroundState extends State<MainBackground> {
                 child: Row(
                   children: [
                     Expanded(
+                      //Barra de busqueda
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'Search...',
@@ -118,26 +120,8 @@ class _MainBackgroundState extends State<MainBackground> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),  
-                        ),
-                        side: const BorderSide(
-                          color: Colors.black87,  
-                          width: 1,  
-                        ),
-                        padding: const EdgeInsets.all(8),  
-                      ),
-                      onPressed: () {
-          
-                      },
-                      child: const Icon(
-                        Icons.filter_alt_outlined,  
-                        size: 40,  
-                        color: Colors.black87,  
-                      ),
-                    ),
+                    //Boton de filtro
+                    const FilterModalButton(),
                   ],
                 ),
               ),
