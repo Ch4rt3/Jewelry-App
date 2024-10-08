@@ -3,10 +3,10 @@ import 'producto.dart';
 class Pedido {
   final int id;
   final String codigo;
-  final DateTime fecha;  
-  final double montoTotal;  
-  final int usuarioId;  
-  final List<Producto> productos; 
+  final DateTime fecha;
+  final double montoTotal;
+  final int usuarioId;  // Clave foránea a Usuario
+  final List<Producto> productos;  // Relación con productos
 
   Pedido({
     required this.id,
@@ -24,10 +24,10 @@ class Pedido {
     return Pedido(
       id: json['ID'],
       codigo: json['Codigo'],
-      fecha: DateTime.parse(json['Fecha']),  
+      fecha: DateTime.parse(json['Fecha']),
       montoTotal: json['MontoTotal'],
       usuarioId: json['Usuario_ID'],
-      productos: listaProductos,  
+      productos: listaProductos,
     );
   }
 
@@ -35,15 +35,10 @@ class Pedido {
     return {
       'ID': id,
       'Codigo': codigo,
-      'Fecha': fecha.toIso8601String(), 
+      'Fecha': fecha.toIso8601String(),
       'MontoTotal': montoTotal,
       'Usuario_ID': usuarioId,
-      'Productos': productos.map((prod) => prod.toJson()).toList(),  
+      'Productos': productos.map((prod) => prod.toJson()).toList(),
     };
-  }
-
-  @override
-  String toString() {
-    return 'Pedido{id: $id, codigo: $codigo, montoTotal: $montoTotal}';
   }
 }

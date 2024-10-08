@@ -1,3 +1,6 @@
+import 'pedido.dart';
+import 'carrito.dart';
+
 class Usuario {
   final int id;
   final String email;
@@ -8,7 +11,12 @@ class Usuario {
   final String nombre;
   final String telefono;
   final bool visibilidad;
-  final String contrasena;  // Nuevo atributo
+  final String contrasena; 
+
+  // Carrito del usuario (relación 1 a 1)
+  Carrito? carrito;  // Relación con el carrito
+  // Lista de pedidos (relación 1 a N)
+  List<Pedido>? pedidos;  // Relación con los pedidos
 
   Usuario({
     required this.id,
@@ -20,8 +28,11 @@ class Usuario {
     required this.nombre,
     required this.telefono,
     required this.visibilidad,
-    required this.contrasena,  // Asignación de contraseña
+    required this.contrasena,
+    this.carrito,
+    this.pedidos,
   });
+
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['ID'],
@@ -33,9 +44,14 @@ class Usuario {
       nombre: json['Nombre'],
       telefono: json['Telefono'],
       visibilidad: json['Visibilidad'],
-      contrasena: json['Contrasena'], 
+      contrasena: json['Contrasena'],
+      carrito: json['Carrito'] != null ? Carrito.fromJson(json['Carrito']) : null,
+      pedidos: json['Pedidos'] != null
+          ? (json['Pedidos'] as List).map((p) => Pedido.fromJson(p)).toList()
+          : null,
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'ID': id,
@@ -47,13 +63,10 @@ class Usuario {
       'Nombre': nombre,
       'Telefono': telefono,
       'Visibilidad': visibilidad,
-      'Contrasena': contrasena,  // Incluye la contraseña
+      'Contrasena': contrasena,
+      'Carrito': carrito?.toJson(),
+      'Pedidos': pedidos?.map((p) => p.toJson()).toList(),
     };
-  }
-
-  @override
-  String toString() {
-    return 'Usuario{id: $id, nombre: $nombre, email: $email}';
   }
 }
 

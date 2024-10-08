@@ -1,113 +1,118 @@
 [
-    {
-      "ID": 1,
-      "Email": "usuario1@example.com",
-      "URL": "https://example.com/usuario1",
-      "Descripcion": "Amante de la joyería moderna",
-      "AcercaDe": "Experto en colecciones de joyas exclusivas.",
-      "Imagen": "https://example.com/usuario1.jpg",
-      "Nombre": "Juan Pérez",
-      "Telefono": "+1234567890",
-      "Visibilidad": true
+  {
+    "ID": 1,
+    "Email": "cliente1@example.com",
+    "Contrasena": "password123",
+    "Nombre": "Juan Perez",
+    "Telefono": "+123456789",
+    "Imagen": "https://example.com/images/cliente1.png",
+    "URL": "https://example.com/profile/1",
+    "Descripcion": "Amante de la joyería fina.",
+    "AcercaDe": "Cliente frecuente",
+    "Visibilidad": true,
+    "Carrito": {
+      "ID": 101,
+      "Usuario_ID": 1,
+      "SubTotal": 350.0,
+      "Productos": [
+        {
+          "ID": 1,
+          "Nombre": "Anillo de Oro",
+          "Precio": 200,
+          "Stock": 50,
+          "Categoria": "Anillos",
+          "ImagenUrl": "https://example.com/images/anillo_oro.png",
+          "Cantidad": 1
+        },
+        {
+          "ID": 2,
+          "Nombre": "Reloj de Pulsera",
+          "Precio": 150,
+          "Stock": 30,
+          "Categoria": "Relojes",
+          "ImagenUrl": "https://example.com/images/reloj_pulsera.png",
+          "Cantidad": 1
+        }
+      ]
     },
-    {
-      "ID": 2,
-      "Email": "usuario2@example.com",
-      "URL": "https://example.com/usuario2",
-      "Descripcion": "Aficionado a la joyería clásica",
-      "AcercaDe": "Interesado en piezas de joyería vintage.",
-      "Imagen": "https://example.com/usuario2.jpg",
-      "Nombre": "Maria Lopez",
-      "Telefono": "+0987654321",
-      "Visibilidad": false
+    "Pedidos": [
+      {
+        "ID": 201,
+        "Codigo": "ORD001",
+        "Fecha": "2023-09-12T14:30:00",
+        "MontoTotal": 300.0,
+        "Usuario_ID": 1,
+        "Productos": [
+          {
+            "ID": 1,
+            "Nombre": "Anillo de Oro",
+            "Precio": 200,
+            "Stock": 50,
+            "Categoria": "Anillos",
+            "ImagenUrl": "https://example.com/images/anillo_oro.png",
+            "Cantidad": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "ID": 2,
+    "Email": "cliente2@example.com",
+    "Contrasena": "password456",
+    "Nombre": "Maria Gomez",
+    "Telefono": "+987654321",
+    "Imagen": "https://example.com/images/cliente2.png",
+    "URL": "https://example.com/profile/2",
+    "Descripcion": "Compra artículos de lujo.",
+    "AcercaDe": "Amante de los anillos.",
+    "Visibilidad": true,
+    "Carrito": {
+      "ID": 102,
+      "Usuario_ID": 2,
+      "SubTotal": 500.0,
+      "Productos": [
+        {
+          "ID": 3,
+          "Nombre": "Collar de Plata",
+          "Precio": 300,
+          "Stock": 25,
+          "Categoria": "Collares",
+          "ImagenUrl": "https://example.com/images/collar_plata.png",
+          "Cantidad": 1
+        },
+        {
+          "ID": 4,
+          "Nombre": "Pendientes de Rubí",
+          "Precio": 200,
+          "Stock": 15,
+          "Categoria": "Pendientes",
+          "ImagenUrl": "https://example.com/images/pendientes_rubi.png",
+          "Cantidad": 1
+        }
+      ]
     },
-    {
-      "ID": 3,
-      "Email": "usuario3@example.com",
-      "URL": "https://example.com/usuario3",
-      "Descripcion": "Diseñador de joyas",
-      "AcercaDe": "Creador de joyas únicas y personalizadas.",
-      "Imagen": "https://example.com/usuario3.jpg",
-      "Nombre": "Carlos Garcia",
-      "Telefono": "+1112233445",
-      "Visibilidad": true
-    },
-    {
-      "ID": 4,
-      "Email": "usuario4@example.com",
-      "URL": "https://example.com/usuario4",
-      "Descripcion": "Amante de las piedras preciosas",
-      "AcercaDe": "Especializado en piedras preciosas de alta calidad.",
-      "Imagen": "https://example.com/usuario4.jpg",
-      "Nombre": "Ana Torres",
-      "Telefono": "+5432167890",
-      "Visibilidad": false
-    },
-    {
-      "ID": 5,
-      "Email": "usuario5@example.com",
-      "URL": "https://example.com/usuario5",
-      "Descripcion": "Vendedor de joyas premium",
-      "AcercaDe": "Proveedor de las mejores joyas premium.",
-      "Imagen": "https://example.com/usuario5.jpg",
-      "Nombre": "Roberto Martinez",
-      "Telefono": "+9876543210",
-      "Visibilidad": true
-    },
-    {
-      "ID": 6,
-      "Email": "usuario6@example.com",
-      "URL": "https://example.com/usuario6",
-      "Descripcion": "Joyero artesanal",
-      "AcercaDe": "Diseña y fabrica joyas hechas a mano.",
-      "Imagen": "https://example.com/usuario6.jpg",
-      "Nombre": "Laura Sanchez",
-      "Telefono": "+6543219870",
-      "Visibilidad": false
-    },
-    {
-      "ID": 7,
-      "Email": "usuario7@example.com",
-      "URL": "https://example.com/usuario7",
-      "Descripcion": "Coleccionista de joyas antiguas",
-      "AcercaDe": "Interesado en colecciones de joyas raras.",
-      "Imagen": "https://example.com/usuario7.jpg",
-      "Nombre": "Daniel Fernandez",
-      "Telefono": "+3216549870",
-      "Visibilidad": true
-    },
-    {
-      "ID": 8,
-      "Email": "usuario8@example.com",
-      "URL": "https://example.com/usuario8",
-      "Descripcion": "Distribuidor de joyas exclusivas",
-      "AcercaDe": "Proveedor de joyas únicas y exclusivas.",
-      "Imagen": "https://example.com/usuario8.jpg",
-      "Nombre": "Sofia Ramirez",
-      "Telefono": "+4561237890",
-      "Visibilidad": true
-    },
-    {
-      "ID": 9,
-      "Email": "usuario9@example.com",
-      "URL": "https://example.com/usuario9",
-      "Descripcion": "Crítico de joyería",
-      "AcercaDe": "Evalúa la calidad y estilo de joyas de alta gama.",
-      "Imagen": "https://example.com/usuario9.jpg",
-      "Nombre": "Fernando Castro",
-      "Telefono": "+7896541230",
-      "Visibilidad": false
-    },
-    {
-      "ID": 10,
-      "Email": "usuario10@example.com",
-      "URL": "https://example.com/usuario10",
-      "Descripcion": "Experto en joyería minimalista",
-      "AcercaDe": "Fascinado por la elegancia de la simplicidad.",
-      "Imagen": "https://example.com/usuario10.jpg",
-      "Nombre": "Gabriela Hernandez",
-      "Telefono": "+1230987654",
-      "Visibilidad": true
-    }
-  ]
+    "Pedidos": [
+      {
+        "ID": 202,
+        "Codigo": "ORD002",
+        "Fecha": "2023-09-14T16:00:00",
+        "MontoTotal": 500.0,
+        "Usuario_ID": 2,
+        "Productos": [
+          {
+            "ID": 3,
+            "Nombre": "Collar de Plata",
+            "Precio": 300,
+            "Stock": 25,
+            "Categoria": "Collares",
+            "ImagenUrl": "https://example.com/images/collar_plata.png",
+            "Cantidad": 1
+          }
+        ]
+      }
+    ]
+  }
+]
+
   

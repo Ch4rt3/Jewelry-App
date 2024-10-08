@@ -3,8 +3,8 @@ class Producto {
   final String nombre;
   final int precio;
   final int stock;
-  final String categoria;  
-  final String imagenUrl;  
+  final String categoria;
+  final String imagenUrl;
 
   Producto({
     required this.id,
@@ -15,19 +15,14 @@ class Producto {
     required this.imagenUrl,
   });
 
-  @override
-  String toString() {
-    return 'Producto{id: $id, nombre: $nombre, precio: $precio, categoria: $categoria}';
-  }
-
   factory Producto.fromJson(Map<String, dynamic> json) {
     return Producto(
       id: json['ID'],
       nombre: json['Nombre'],
       precio: json['Precio'],
       stock: json['Stock'],
-      categoria: json['Categoria'],  
-      imagenUrl: json['ImagenUrl'],  
+      categoria: json['Categoria'],
+      imagenUrl: json['ImagenUrl'],
     );
   }
 
@@ -42,4 +37,5 @@ class Producto {
     };
   }
 }
+
 

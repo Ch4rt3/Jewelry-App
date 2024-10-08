@@ -40,6 +40,7 @@ class _MainBackgroundState extends State<MainBackground> {
           break;
         case 2:
           print("Carrito");
+          Navigator.pushNamed(context, '/cart');
           break;
       }
     });

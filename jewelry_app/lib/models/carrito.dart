@@ -1,16 +1,21 @@
 import 'producto.dart';
+import 'pedido.dart';
 
 class Carrito {
   final int id;
-  final int usuarioId;  
-  final List<Producto> productos;  
-  final double subTotal; 
+  final int usuarioId;  // Clave foránea a Usuario
+  final List<Producto> productos;  // Relación con productos
+  final double subTotal;  // Total del carrito en el momento
+
+  // Relación con Pedido (opcional)
+  Pedido? pedido;
 
   Carrito({
     required this.id,
     required this.usuarioId,
     required this.productos,
     required this.subTotal,
+    this.pedido,
   });
 
   factory Carrito.fromJson(Map<String, dynamic> json) {
@@ -20,8 +25,9 @@ class Carrito {
     return Carrito(
       id: json['ID'],
       usuarioId: json['Usuario_ID'],
-      productos: listaProductos, 
+      productos: listaProductos,
       subTotal: json['SubTotal'],
+      pedido: json['Pedido'] != null ? Pedido.fromJson(json['Pedido']) : null,
     );
   }
 
@@ -29,13 +35,11 @@ class Carrito {
     return {
       'ID': id,
       'Usuario_ID': usuarioId,
-      'Productos': productos.map((prod) => prod.toJson()).toList(), 
+      'Productos': productos.map((prod) => prod.toJson()).toList(),
       'SubTotal': subTotal,
+      'Pedido': pedido?.toJson(),
     };
   }
-
-  @override
-  String toString() {
-    return 'Carrito{id: $id, usuarioId: $usuarioId, subTotal: $subTotal}';
-  }
 }
+
+

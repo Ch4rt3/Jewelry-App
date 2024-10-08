@@ -9,12 +9,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:jewelry_app/main.dart';
+import 'package:jewelry_app/models/carrito.dart';
+import 'package:jewelry_app/models/usuario.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(productos: [],));
-
+    await tester.pumpWidget(MyApp(
+      productos: [],
+      usuario: Usuario(
+        id: 1,
+        nombre: 'testUser',
+        email: 'test@example.com',
+        url: 'http://example.com',
+        descripcion: 'test description',
+        acercaDe: 'about testUser',
+        imagen: 'http://example.com/image.png',
+        telefono: '1234567890',
+        visibilidad: true,
+        contrasena: 'testPassword'
+      ),
+      carrito: Carrito(
+        id: 1,
+        usuarioId: 1,
+        productos: [],
+        subTotal: 0.0,
+      )
+    ));
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
     expect(find.text('1'), findsNothing);
