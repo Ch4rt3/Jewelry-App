@@ -8,10 +8,10 @@ class CategoryPage extends StatelessWidget {
   final List<Producto> allProducts;
 
   CategoryPage({
-    Key? key,
+    super.key,
     required this.categoryName,
     required this.allProducts,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +22,21 @@ class CategoryPage extends StatelessWidget {
       message: categoryName,    
       showComplementMessage: false, 
       subtitle: categoryName,
-      body: SizedBox(
-        height: 400,  
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal, 
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          itemCount: categoryProducts.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: const EdgeInsets.only(right: 10.0),
-              child: ProductCard(product: categoryProducts[index]),
+      body: SingleChildScrollView(  // Permitir scroll si es necesario
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: categoryProducts.map((product) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),  // Márgenes laterales
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 10.0),  // Margen inferior entre tarjetas
+                width: double.infinity,  // Expandir la tarjeta horizontalmente
+                child: ProductCard(producto: product),  // Mostrar cada producto
+              ),
             );
-          },
+          }).toList(),
         ),
       ),
     );
   }
 }
-
-

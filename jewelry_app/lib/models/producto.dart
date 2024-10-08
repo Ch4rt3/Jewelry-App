@@ -3,8 +3,9 @@ class Producto {
   final String nombre;
   final int precio;
   final int stock;
-  final String categoria;
-  final String imagenUrl;
+  final String categoria;  
+  final String imagenUrl;  
+  final String descripcion; // Nueva propiedad para la descripción
 
   Producto({
     required this.id,
@@ -13,7 +14,13 @@ class Producto {
     required this.stock,
     required this.categoria,
     required this.imagenUrl,
+    required this.descripcion, // Agrega descripción al constructor
   });
+
+  @override
+  String toString() {
+    return 'Producto{id: $id, nombre: $nombre, precio: $precio, categoria: $categoria, descripcion: $descripcion}';
+  }
 
   factory Producto.fromJson(Map<String, dynamic> json) {
     return Producto(
@@ -21,8 +28,9 @@ class Producto {
       nombre: json['Nombre'],
       precio: json['Precio'],
       stock: json['Stock'],
-      categoria: json['Categoria'],
-      imagenUrl: json['ImagenUrl'],
+      categoria: json['Categoria'],  
+      imagenUrl: json['ImagenUrl'],  
+      descripcion: json['Descripcion'] ?? 'Sin descripción', // Asigna un valor predeterminado
     );
   }
 
@@ -34,6 +42,7 @@ class Producto {
       'Stock': stock,
       'Categoria': categoria,
       'ImagenUrl': imagenUrl,
+      'Descripcion': descripcion, // Agrega descripción al mapa JSON
     };
   }
 }

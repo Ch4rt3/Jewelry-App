@@ -5,7 +5,8 @@
     "Precio": 120,
     "Stock": 50,
     "Categoria": "Necklaces",
-    "ImagenUrl": "https://example.com/images/collar_perlas.png"
+    "ImagenUrl": "https://example.com/images/collar_perlas.png",
+    "Descripcion": "Perlas naturales de agua dulce"  
   },
   {
     "ID": 2,
@@ -13,7 +14,8 @@
     "Precio": 300,
     "Stock": 20,
     "Categoria": "Rings",
-    "ImagenUrl": "https://example.com/images/anillo_oro.png"
+    "ImagenUrl": "https://example.com/images/anillo_oro.png",
+    "Descripcion": "Oro de 18 quilates" 
   },
   {
     "ID": 3,
@@ -21,7 +23,8 @@
     "Precio": 200,
     "Stock": 15,
     "Categoria": "Bracelets",
-    "ImagenUrl": "https://example.com/images/brazalete_plata.png"
+    "ImagenUrl": "https://example.com/images/brazalete_plata.png",
+    "Descripcion": "Plata esterlina pulida" 
   },
   {
     "ID": 4,
@@ -29,7 +32,8 @@
     "Precio": 500,
     "Stock": 5,
     "Categoria": "Earrings",
-    "ImagenUrl": "https://example.com/images/pendiente_diamantes.png"
+    "ImagenUrl": "https://example.com/images/pendiente_diamantes.png",
+    "Descripcion": "Diamantes brillantes de calidad" 
   },
   {
     "ID": 5,
@@ -37,7 +41,8 @@
     "Precio": 250,
     "Stock": 30,
     "Categoria": "Men",
-    "ImagenUrl": "https://example.com/images/reloj_pulsera.png"
+    "ImagenUrl": "public/diamond.png",
+    "Descripcion": "Acero inoxidable, cristal de zafiro" 
   },
   {
     "ID": 6,
@@ -45,38 +50,7 @@
     "Precio": 150,
     "Stock": 10,
     "Categoria": "Bracelets",
-    "ImagenUrl": "https://example.com/images/broche_antiguo.png"
-  },
-  {
-    "ID": 7,
-    "Nombre": "Anillo de Platino",
-    "Precio": 600,
-    "Stock": 8,
-    "Categoria": "Rings",
-    "ImagenUrl": "https://example.com/images/anillo_platino.png"
-  },
-  {
-    "ID": 8,
-    "Nombre": "Cadena de Oro Rosa",
-    "Precio": 350,
-    "Stock": 12,
-    "Categoria": "Necklaces",
-    "ImagenUrl": "https://example.com/images/cadena_oro_rosa.png"
-  },
-  {
-    "ID": 9,
-    "Nombre": "Aretes de Rubí",
-    "Precio": 700,
-    "Stock": 4,
-    "Categoria": "Earrings",
-    "ImagenUrl": "https://example.com/images/aretes_rubi.png"
-  },
-  {
-    "ID": 10,
-    "Nombre": "Collar de Esmeraldas",
-    "Precio": 1000,
-    "Stock": 3,
-    "Categoria": "Necklaces",
-    "ImagenUrl": "https://example.com/images/collar_esmeraldas.png"
+    "ImagenUrl": "https://example.com/images/broche_antiguo.png",
+    "Descripcion": "Metal antiguo con detalles"
   }
 ]
