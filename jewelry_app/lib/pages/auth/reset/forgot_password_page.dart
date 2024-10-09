@@ -14,7 +14,7 @@ class ForgetPasswordPage extends StatelessWidget {
         const SizedBox(height: 30,),
         LargeTextFormField(
           titulo: "Your email", 
-          onPressed: (){}
+          onChanged: (value){}
         ),
         const SizedBox(height: 50),
         LargeButton(

@@ -5,7 +5,7 @@ import 'package:jewelry_app/models/carrito.dart';
 class CarritoService {
   // Método para obtener todos los carritos
   Future<List<Carrito>> fetchAllCarritos() async {
-    final String response = await rootBundle.loadString('json/carritos.json');
+    final String response = await rootBundle.loadString('assets/json/carritos.json');
     final List<dynamic> data = jsonDecode(response);
     return data.map((json) => Carrito.fromJson(json)).toList();
   }

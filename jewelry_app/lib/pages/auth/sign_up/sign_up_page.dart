@@ -13,17 +13,17 @@ class SignUpPage extends StatelessWidget {
       children: [
         LargeTextFormField(
           titulo: "Correo electrónico",
-          onPressed: () => {},
+          onChanged: (value) => {},
         ),
         const SizedBox(height: 20),
         LargeTextFormField(
           titulo: "Contraseña",
-          onPressed: () => {},
+          onChanged: (value) => {},
         ),
         const SizedBox(height: 20),
         LargeTextFormField(
           titulo: "Confirmar contraseña",
-          onPressed: () => {},
+          onChanged: (value) => {},
         ),
         const SizedBox(height: 10),
         LargeButton(

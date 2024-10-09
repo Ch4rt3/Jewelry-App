@@ -15,17 +15,17 @@ class RecoveryPasswordPage extends StatelessWidget {
         const SizedBox(height: 10,),
         LargeTextFormField(
           titulo: "Reset Code", 
-          onPressed: (){}
+          onChanged: (value){}
         ),
         const SizedBox(height: 20),
         LargeTextFormField(
           titulo: "New Password", 
-          onPressed: (){}
+          onChanged: (value){}
         ),
         const SizedBox(height: 20),
         LargeTextFormField(
           titulo: "Confirm Password", 
-          onPressed: (){}
+          onChanged: (value){}
         ),
         const SizedBox(height: 20),
         LargeButton(
