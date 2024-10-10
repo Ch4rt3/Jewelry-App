@@ -2,7 +2,7 @@
   {
     "ID": 1,
     "Email": "cliente1@example.com",
-    "Contrasena": "password123",
+    "Contrasena": "123",
     "Nombre": "Juan Perez",
     "Telefono": "+123456789",
     "Imagen": "https://example.com/images/cliente1.png",

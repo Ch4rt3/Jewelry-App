@@ -18,6 +18,7 @@ import 'package:jewelry_app/pages/categories/bracelets_page.dart';
 import 'package:jewelry_app/pages/categories/necklaces_page.dart';
 import 'package:jewelry_app/pages/cart/my_cart_page.dart';  
 import 'package:jewelry_app/pages/cart/checkout_page.dart';
+import 'package:jewelry_app/providers/product_provider.dart';
 import 'package:jewelry_app/providers/user_provider.dart'; 
 import 'package:jewelry_app/services/product_service.dart';
 import 'package:jewelry_app/services/user_service.dart';
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (context) => UserProvider()
+          ),
+        ChangeNotifierProvider(
+            create: (context) => ProductProvider()
           ),
       ],
       child: MaterialApp(

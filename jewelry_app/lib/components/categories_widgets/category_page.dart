@@ -7,7 +7,7 @@ class CategoryPage extends StatelessWidget {
   final String categoryName;
   final List<Producto> allProducts;
 
-  CategoryPage({
+  const CategoryPage({
     super.key,
     required this.categoryName,
     required this.allProducts,
