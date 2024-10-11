@@ -3,15 +3,15 @@ import 'carrito.dart';
 
 class Usuario {
   final int id;
-  final String email;
-  final String url;
-  final String descripcion;
-  final String acercaDe;
-  final String imagen;
-  final String nombre;
-  final String telefono;
-  final bool visibilidad;
-  final String contrasena; 
+  String email;
+  String url;
+  String descripcion;
+  String acercaDe;
+  String imagen;
+  String nombre;
+  String telefono;
+  bool visibilidad;
+  String contrasena; 
 
   // Carrito del usuario (relación 1 a 1)
   Carrito? carrito;  // Relación con el carrito
@@ -25,9 +25,9 @@ class Usuario {
     required this.descripcion,
     required this.acercaDe,
     required this.imagen,
-    required this.nombre,
+    this.nombre = "Usuario",
     required this.telefono,
-    required this.visibilidad,
+    this.visibilidad = true,
     required this.contrasena,
     this.carrito,
     this.pedidos,

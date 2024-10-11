@@ -3,49 +3,73 @@ import 'package:jewelry_app/components/layouts/auth_background.dart';
 import 'package:jewelry_app/components/buttons/large_button.dart';
 import 'package:jewelry_app/components/forms/large_text_form_field.dart';
 import 'package:jewelry_app/components/auth/sign_in_with_account.dart';
+import 'package:jewelry_app/pages/auth/sign_up/sign_up_controller.dart';
+import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
-  Widget _buildBody(BuildContext context) {
-    return AuthBackground(
-      titulo: "Registrarse",
-      children: [
-        LargeTextFormField(
-          titulo: "Correo electrónico",
-          onChanged: (value) => {},
-        ),
-        const SizedBox(height: 20),
-        LargeTextFormField(
-          titulo: "Contraseña",
-          onChanged: (value) => {},
-        ),
-        const SizedBox(height: 20),
-        LargeTextFormField(
-          titulo: "Confirmar contraseña",
-          onChanged: (value) => {},
-        ),
-        const SizedBox(height: 10),
-        LargeButton(
-          titulo: "REGISTRARSE",
-          onPressed: () {
-            // Aquí puedes agregar la navegación al finalizar el registro
-            // Navigator.pushNamed(context, "/home"); // Por ejemplo, a la página principal
-          },
-        ),
-        const SizedBox(height: 5),
-        const SignInWithAccount(), // Este widget es correcto
-        
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Crear instancia del controlador solo para esta página
+    final signUpController = SignUpController();
+    final userProvider = Provider.of<UserProvider>(context); // Obtener el UserProvider
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: null,
-      body: _buildBody(context),
+      body: AuthBackground(
+        titulo: "Registrarse",
+        children: [
+          LargeTextFormField(
+            titulo: "Correo electrónico",
+            controller: signUpController.emailController,
+            onChanged: (value) => signUpController.setEmail(value),
+          ),
+          const SizedBox(height: 20),
+          LargeTextFormField(
+            titulo: "Contraseña",
+            controller: signUpController.passwordController,
+            onChanged: (value) => signUpController.setPassword(value),
+          ),
+          const SizedBox(height: 20),
+          LargeTextFormField(
+            titulo: "Confirmar contraseña",
+            controller: signUpController.confirmPswrdController,
+            onChanged: (value) => signUpController.setConfirmPassword(value),
+          ),
+          const SizedBox(height: 10),
+          LargeButton(
+            titulo: "REGISTRARSE",
+            onPressed: () async {
+              bool success = await signUpController.register(userProvider);
+              if (success) {
+                // Verificar si el widget todavía está montado
+                if (context.mounted) {
+                  // Navegación al registro exitoso
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/home', // Ruta a la que quieres navegar
+                    (route) => false, // El predicado que elimina todas las rutas anteriores
+                  );
+                }
+              } else {
+                // Verificar si el widget todavía está montado
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Error en el registro. Verifica los datos ingresados.'),
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+          const SizedBox(height: 5),
+          const SignInWithAccount(),
+        ],
+      ),
     );
   }
 }

@@ -9,7 +9,11 @@ class SuccessPasswordPage extends StatelessWidget {
     return SuccessNotification(
       message: "Password reset succesful",
       action: () {
-        Navigator.pushNamed(context, "/home");
+        Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/home', // Ruta a la que quieres navegar
+                    (route) => false, // El predicado que elimina todas las rutas anteriores
+                  );
       },
 
     );

@@ -22,7 +22,11 @@ class SignInController {
       userProvider.addListener(() {
         if (userProvider.isLogged) {
           // Navegar al HomePage después del login exitoso
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/home', // Ruta a la que quieres navegar
+                    (route) => false, // El predicado que elimina todas las rutas anteriores
+                  );
         } else {
           // Mostrar un diálogo de error si las credenciales son incorrectas
           showDialog(
