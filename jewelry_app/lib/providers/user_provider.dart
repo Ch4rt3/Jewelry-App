@@ -19,23 +19,23 @@ class UserProvider extends ChangeNotifier {
   }
 
   // Método para autenticar al usuario
-  Future<void> login(String email, String password) async {
-    try {
-      Usuario foundUser = _usuarios.firstWhere(
-        (user) => user.email == email && user.contrasena == password,
-      );
-
-      // Si el usuario es encontrado, lo asignamos y marcamos como logueado
-      _usuario = foundUser;
-      _isLogged = true;
-      notifyListeners();
-    } catch (e) {
-      // Si no se encuentra el usuario, se maneja la excepción
-      _isLogged = false;
-      _usuario = null; // Aseguramos que no haya un usuario asignado
-      notifyListeners();
-    }
+  Future<bool> login(String email, String password) async {
+  try {
+    List<Usuario> users = await UsuarioService().fetchAllUsuarios();
+    Usuario foundUser = users.firstWhere(
+      (user) => user.email == email && user.contrasena == password,
+    );
+    _usuario = foundUser;
+    _isLogged = true;
+    notifyListeners();
+    return true;
+  } catch (e) {
+    _isLogged = false;
+    _usuario = null;
+    notifyListeners();
+    return false;
   }
+}
 
   // Método para registrar un nuevo usuario
   void register(Usuario newUser) {
@@ -59,4 +59,6 @@ class UserProvider extends ChangeNotifier {
       notifyListeners(); // Notifica a los oyentes
     }
   }
+
+  setUser(Usuario usuarioPrueba) {}
 }

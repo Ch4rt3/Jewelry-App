@@ -27,9 +27,15 @@ class SignUpController {
   }
 
   // Método de registro
-  Future<bool> register(UserProvider userProvider) async {
+  Future<bool> register(BuildContext context, UserProvider userProvider) async {
+    // Verificar si los campos están vacíos
+    if (_email.isEmpty || _password.isEmpty || _confirmPassword.isEmpty) {
+      _showErrorMessage(context, 'Los campos no pueden estar vacíos');
+      return false; // Retorna false si hay campos vacíos
+    }
+
     if (_password != _confirmPassword) {
-      print("Las contraseñas no coinciden");
+      _showErrorMessage(context, 'Las contraseñas no coinciden');
       return false; // Las contraseñas no coinciden
     }
 
@@ -40,7 +46,7 @@ class SignUpController {
       // Verificar si el correo ya está registrado
       bool emailExists = data.any((user) => user.email == _email); // Accede a la propiedad 'email'
       if (emailExists) {
-        print("El correo ya está registrado.");
+        _showErrorMessage(context, 'El correo ya está registrado.');
         return false;
       }
 
@@ -59,7 +65,6 @@ class SignUpController {
         acercaDe: "",
         imagen: "",
         visibilidad: true,
-        carrito: null,
         pedidos: [],
       );
 
@@ -76,5 +81,22 @@ class SignUpController {
       print("Error al registrar usuario: $error");
       return false;
     }
+  }
+
+  void _showErrorMessage(BuildContext context, String message) {
+    // Verificar si el contexto es válido antes de mostrar el diálogo
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
+    }
+  }
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPswrdController.dispose();
   }
 }

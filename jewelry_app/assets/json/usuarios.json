@@ -1,118 +1,33 @@
 [
   {
-    "ID": 1,
-    "Email": "user",
-    "Contrasena": "123",
-    "Nombre": "Juan Perez",
-    "Telefono": "+123456789",
-    "Imagen": "https://example.com/images/cliente1.png",
-    "URL": "https://example.com/profile/1",
-    "Descripcion": "Amante de la joyería fina.",
-    "AcercaDe": "Cliente frecuente",
-    "Visibilidad": true,
-    "Carrito": {
-      "ID": 101,
-      "Usuario_ID": 1,
-      "SubTotal": 350.0,
-      "Productos": [
-        {
-          "ID": 1,
-          "Nombre": "Anillo de Oro",
-          "Precio": 200,
-          "Stock": 50,
-          "Categoria": "Anillos",
-          "ImagenUrl": "https://example.com/images/anillo_oro.png",
-          "Cantidad": 1
-        },
-        {
-          "ID": 2,
-          "Nombre": "Reloj de Pulsera",
-          "Precio": 150,
-          "Stock": 30,
-          "Categoria": "Relojes",
-          "ImagenUrl": "https://example.com/images/reloj_pulsera.png",
-          "Cantidad": 1
-        }
-      ]
-    },
-    "Pedidos": [
-      {
-        "ID": 201,
-        "Codigo": "ORD001",
-        "Fecha": "2023-09-12T14:30:00",
-        "MontoTotal": 300.0,
-        "Usuario_ID": 1,
-        "Productos": [
-          {
-            "ID": 1,
-            "Nombre": "Anillo de Oro",
-            "Precio": 200,
-            "Stock": 50,
-            "Categoria": "Anillos",
-            "ImagenUrl": "https://example.com/images/anillo_oro.png",
-            "Cantidad": 1
-          }
-        ]
-      }
-    ]
+    "id": 1,
+    "email": "user",
+    "contrasena": "123",
+    "nombre": "Juan Perez",
+    "telefono": "+123456789",
+    "imagen": "https://example.com/images/cliente1.png",
+    "url": "https://example.com/profile/1",
+    "descripcion": "Amante de la joyería fina.",
+    "acercaDe": "Cliente frecuente",
+    "visibilidad": true,
+    "carritoId": 101,  
+    "pedidos": [201]
   },
   {
-    "ID": 2,
-    "Email": "cliente2@example.com",
-    "Contrasena": "password456",
-    "Nombre": "Maria Gomez",
-    "Telefono": "+987654321",
-    "Imagen": "https://example.com/images/cliente2.png",
-    "URL": "https://example.com/profile/2",
-    "Descripcion": "Compra artículos de lujo.",
-    "AcercaDe": "Amante de los anillos.",
-    "Visibilidad": true,
-    "Carrito": {
-      "ID": 102,
-      "Usuario_ID": 2,
-      "SubTotal": 500.0,
-      "Productos": [
-        {
-          "ID": 3,
-          "Nombre": "Collar de Plata",
-          "Precio": 300,
-          "Stock": 25,
-          "Categoria": "Collares",
-          "ImagenUrl": "https://example.com/images/collar_plata.png",
-          "Cantidad": 1
-        },
-        {
-          "ID": 4,
-          "Nombre": "Pendientes de Rubí",
-          "Precio": 200,
-          "Stock": 15,
-          "Categoria": "Pendientes",
-          "ImagenUrl": "https://example.com/images/pendientes_rubi.png",
-          "Cantidad": 1
-        }
-      ]
-    },
-    "Pedidos": [
-      {
-        "ID": 202,
-        "Codigo": "ORD002",
-        "Fecha": "2023-09-14T16:00:00",
-        "MontoTotal": 500.0,
-        "Usuario_ID": 2,
-        "Productos": [
-          {
-            "ID": 3,
-            "Nombre": "Collar de Plata",
-            "Precio": 300,
-            "Stock": 25,
-            "Categoria": "Collares",
-            "ImagenUrl": "https://example.com/images/collar_plata.png",
-            "Cantidad": 1
-          }
-        ]
-      }
-    ]
+    "id": 2,
+    "email": "cliente2@example.com",
+    "contrasena": "password456",
+    "nombre": "Maria Gomez",
+    "telefono": "+987654321",
+    "imagen": "https://example.com/images/cliente2.png",
+    "url": "https://example.com/profile/2",
+    "descripcion": "Compra artículos de lujo.",
+    "acercaDe": "Amante de los anillos.",
+    "visibilidad": true,
+    "carritoId": 102,
+    "pedidos": [202]
   }
 ]
+
 
   

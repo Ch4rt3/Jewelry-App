@@ -20,52 +20,24 @@ import 'package:jewelry_app/pages/cart/my_cart_page.dart';
 import 'package:jewelry_app/pages/cart/checkout_page.dart';
 import 'package:jewelry_app/providers/product_provider.dart';
 import 'package:jewelry_app/providers/user_provider.dart'; 
-import 'package:jewelry_app/services/product_service.dart';
-import 'package:jewelry_app/services/user_service.dart';
-import 'package:jewelry_app/services/shoppingcart_service.dart';
-import 'package:jewelry_app/models/producto.dart';
-import 'package:jewelry_app/models/usuario.dart';
-import 'package:jewelry_app/models/carrito.dart';
+import 'package:jewelry_app/providers/order_provider.dart';
+import 'package:jewelry_app/providers/shoppingcart_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  ProductoService productoService = ProductoService();
-  UsuarioService usuarioService = UsuarioService();
-  CarritoService carritoService = CarritoService();
-  List<Producto> productos = await productoService.fetchAll();
-  Usuario? usuario = await usuarioService.getUsuarioById(1);  // Asumiendo que cargamos el usuario con ID = 1
-  Carrito? carrito = await carritoService.getCarritoByUsuarioId(1);  // Cargar el carrito del usuario con ID = 1
-
-  runApp(MyApp(
-    productos: productos,
-    usuario: usuario,
-    carrito: carrito,
-  ));
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final List<Producto> productos;
-  final Usuario? usuario;
-  final Carrito? carrito;
-
-  const MyApp({
-    super.key,
-    required this.productos,
-    required this.usuario,
-    required this.carrito,
-  });
-
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => UserProvider()
-          ),
-        ChangeNotifierProvider(
-            create: (context) => ProductProvider()
-          ),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => OrderProvider()),
+        ChangeNotifierProvider(create: (context) => ShoppingCartProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -89,16 +61,15 @@ class MyApp extends StatelessWidget {
           '/settings': (context) => const SettingsPage(),
           '/orders': (context) => const OrdersPage(),
           '/address': (context) => const AddressPage(),
-          '/men': (context) => MenPage(allProducts: productos),
-          '/rings': (context) => RingsPage(allProducts: productos),
-          '/earrings': (context) => EarringsPage(allProducts: productos),
-          '/bracelets': (context) => BraceletsPage(allProducts: productos),
-          '/necklaces': (context) => NecklacesPage(allProducts: productos),
-          '/cart': (context) => MyCartPage(carrito: carrito!),  
-          '/checkout': (context) => CheckoutPage(carrito: carrito!),  
+          '/men': (context) => const MenPage(),
+          '/rings': (context) => const  RingsPage(),
+          '/earrings': (context) => const EarringsPage(),
+          '/bracelets': (context) => const BraceletsPage(),
+          '/necklaces': (context) => const NecklacesPage(),
+          '/cart': (context) => const MyCartPage(),  
+          '/checkout': (context) => const CheckoutPage(),  
         },
       ),
     );
   }
 }
-

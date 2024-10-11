@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
     Future.microtask(() => controller.loadProducts());
 
     return MainBackground(
-      message: "Hello, ${userProvider.usuario?.nombre}",
+      message: "Hello, User",
       showDiamondMessage: true,
       showComplementMessage: true,
       body: const ProductList(),

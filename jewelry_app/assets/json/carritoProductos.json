@@ -1,0 +1,21 @@
+[
+    {
+      "id": 1,
+      "carritoId": 101,
+      "productoId": 1,
+      "cantidad": 2
+    },
+    {
+      "id": 2,
+      "carritoId": 101,
+      "productoId": 2,
+      "cantidad": 1
+    },
+    {
+      "id": 3,
+      "carritoId": 102,
+      "productoId": 3,
+      "cantidad": 1
+    }
+]
+  

@@ -43,7 +43,7 @@ class SignUpPage extends StatelessWidget {
           LargeButton(
             titulo: "REGISTRARSE",
             onPressed: () async {
-              bool success = await signUpController.register(userProvider);
+              bool success = await signUpController.register(context,userProvider);
               if (success) {
                 // Verificar si el widget todavía está montado
                 if (context.mounted) {
@@ -54,16 +54,7 @@ class SignUpPage extends StatelessWidget {
                     (route) => false, // El predicado que elimina todas las rutas anteriores
                   );
                 }
-              } else {
-                // Verificar si el widget todavía está montado
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Error en el registro. Verifica los datos ingresados.'),
-                    ),
-                  );
-                }
-              }
+              } 
             },
           ),
           const SizedBox(height: 5),
