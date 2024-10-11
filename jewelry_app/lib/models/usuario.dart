@@ -1,15 +1,15 @@
 
 class Usuario {
   final int id;
-  final String email;
-  final String url;
-  final String descripcion;
-  final String acercaDe;
-  final String imagen;
-  final String nombre;
-  final String telefono;
-  final bool visibilidad;
-  final String contrasena;
+  String email;
+  String url;
+  String descripcion;
+  String acercaDe;
+  String imagen;
+  String nombre;
+  String telefono;
+  bool visibilidad;
+  String contrasena;
   final int? carritoId; // Permitir que carritoId sea nulo
   final List<int> pedidos; // Reemplazar `List<dynamic>` con `List<int>`
 
@@ -20,9 +20,9 @@ class Usuario {
     required this.descripcion,
     required this.acercaDe,
     required this.imagen,
-    required this.nombre,
+    this.nombre = "Usuario",
     required this.telefono,
-    required this.visibilidad,
+    this.visibilidad = true,
     required this.contrasena,
     this.carritoId, // Campo opcional para permitir nulo
     this.pedidos = const [],  // Inicializado como lista vacía

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/models/carrito.dart';
 import '../models/producto.dart';
 import '../models/carrito_producto.dart';
 import '../services/shoppingcart_service.dart';
@@ -139,6 +140,8 @@ class ShoppingCartProvider extends ChangeNotifier {
     print("No hay productos en el carrito para realizar un pedido.");
   }
 }
+
+  initializeCart(Carrito carritoPrueba) {}
 
 
 }

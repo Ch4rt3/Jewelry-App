@@ -32,9 +32,11 @@ class SuccessNotificationState extends State<SuccessNotification> {
                 repeat: false, // Se reproduce solo una vez
                 onLoaded: (composition) {
                   Future.delayed(composition.duration, () {
-                    setState(() {
-                      _isAnimationCompleted = true;
-                    });
+                    if (mounted) { // Verificar que el widget aún esté montado
+                      setState(() {
+                        _isAnimationCompleted = true;
+                      });
+                    }
                   });
                 },
               ),
@@ -68,7 +70,7 @@ class SuccessNotificationState extends State<SuccessNotification> {
             // Botón de continuar
             CustomElevatedButtom(
               message: "Continue", 
-              onPressed: widget.action ,
+              onPressed: _isAnimationCompleted ? widget.action : () {}, // Deshabilitar si la animación no ha terminado
             ),
           ],
         ),

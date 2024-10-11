@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jewelry_app/pages/auth/reset/forgot_password_page.dart';
-import 'package:jewelry_app/pages/auth/reset/recovery_password_page.dart';
+import 'package:jewelry_app/pages/auth/reset/forgot_password/forgot_password_page.dart';
+import 'package:jewelry_app/pages/auth/reset/recovery_password/recovery_password_page.dart';
 import 'package:jewelry_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:jewelry_app/pages/auth/sign_up/sign_up_page.dart';
 import 'package:jewelry_app/pages/auth/success/success_password_page.dart';
@@ -29,15 +29,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => OrderProvider()),
-        ChangeNotifierProvider(create: (_) => ShoppingCartProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => OrderProvider()),
+        ChangeNotifierProvider(create: (context) => ShoppingCartProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
