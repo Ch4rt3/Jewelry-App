@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/notifications/sucess_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:jewelry_app/providers/shoppingcart_provider.dart';
 import 'package:jewelry_app/providers/order_provider.dart';
 
 class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({Key? key}) : super(key: key);
+  const CheckoutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CheckoutPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Checkout'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -204,21 +205,24 @@ class CheckoutPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        onPressed: () async {
-          if (shoppingCartProvider.productosEnCarrito.isNotEmpty) {
-            await shoppingCartProvider.placeOrder(context);
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Order Placed Successfully!")),
-            );
-            shoppingCartProvider.clearCart();
-            Navigator.popUntil(context, ModalRoute.withName('/'));
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Your cart is empty!")),
-            );
-          }
+        onPressed: () {
+          // if (shoppingCartProvider.productosEnCarrito.isNotEmpty) {
+            // await shoppingCartProvider.placeOrder(context);
+            Navigator.pushNamed(context, "/success-order");
+            // shoppingCartProvider.clearCart();
+            // Navigator.popUntil(context, ModalRoute.withName('/'));
+          // } else {
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(content: Text("Your cart is empty!")),
+            // );
+          // }
         },
-        child: const Text("Place Order"),
+        child: const Text(
+            "Place Order",
+            style: TextStyle(
+              color: Colors.white
+            ),
+          ),
       ),
     );
   }

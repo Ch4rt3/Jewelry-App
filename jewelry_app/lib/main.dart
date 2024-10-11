@@ -4,6 +4,7 @@ import 'package:jewelry_app/pages/auth/reset/recovery_password/recovery_password
 import 'package:jewelry_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:jewelry_app/pages/auth/sign_up/sign_up_page.dart';
 import 'package:jewelry_app/pages/auth/success/success_password_page.dart';
+import 'package:jewelry_app/pages/cart/success/success_order_page.dart';
 import 'package:jewelry_app/pages/main/home/home_page.dart';
 import 'package:jewelry_app/pages/user/user_page.dart';
 import 'package:jewelry_app/pages/user/wallet/wallet_page.dart';
@@ -16,8 +17,8 @@ import 'package:jewelry_app/pages/categories/rings_page.dart';
 import 'package:jewelry_app/pages/categories/earrings_page.dart';
 import 'package:jewelry_app/pages/categories/bracelets_page.dart';
 import 'package:jewelry_app/pages/categories/necklaces_page.dart';
-import 'package:jewelry_app/pages/cart/my_cart_page.dart';  
-import 'package:jewelry_app/pages/cart/checkout_page.dart';
+import 'package:jewelry_app/pages/cart/my_cart/my_cart_page.dart';  
+import 'package:jewelry_app/pages/cart/checkout/checkout_page.dart';
 import 'package:jewelry_app/providers/product_provider.dart';
 import 'package:jewelry_app/providers/user_provider.dart'; 
 import 'package:jewelry_app/providers/order_provider.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
           '/necklaces': (context) => const NecklacesPage(),
           '/cart': (context) => const MyCartPage(),  
           '/checkout': (context) => const CheckoutPage(),  
+          '/success-order': (context) => const SuccessOrderPage(),  
         },
       ),
     );
