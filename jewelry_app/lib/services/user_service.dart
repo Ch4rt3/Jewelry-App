@@ -1,24 +1,28 @@
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'package:jewelry_app/models/usuario.dart';
 
 class UsuarioService {
-  Future<Usuario> getUsuarioById(int id) async {
-    List<Usuario> usuarios = await fetchAllUsuarios();
-    try {
-      return usuarios.firstWhere((user) => user.id == id);
-    } catch (e) {
-      throw Exception("Usuario con ID $id no encontrado");
-    }
-  }
-
-  // Método para obtener todos los usuarios
+  // Cargar todos los usuarios desde el JSON
   Future<List<Usuario>> fetchAllUsuarios() async {
-    final String response = await rootBundle.loadString("assets/json/usuarios.json");
-    final List<dynamic> data = jsonDecode(response);
-    return data.map((json) => Usuario.fromJson(json)).toList();
+  try {
+    // Lee el archivo JSON
+    String response = await rootBundle.loadString('assets/json/usuarios.json');
+    
+    // Imprime el JSON para verificar los datos
+    print("Contenido del JSON: $response");
+    
+    // Decodifica y convierte a lista de usuarios
+    List<dynamic> data = json.decode(response);
+    print("Datos procesados: $data");
+    
+    List<Usuario> usuarios = data.map((item) => Usuario.fromJson(item)).toList();
+    return usuarios;
+  } catch (e) {
+    print("Error al cargar usuarios: $e");
+    return [];
   }
 }
 
-
+}
 

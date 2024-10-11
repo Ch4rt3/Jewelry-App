@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/categories_widgets/productCard.dart';
 import 'package:jewelry_app/components/layouts/main_background.dart';
+import 'package:jewelry_app/pages/main/home/home_page_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:jewelry_app/providers/product_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-   Widget _buildBody(BuildContext context) {
-    return const MainBackground(
-          message: "Hello, User",
-          body: Text("data"),
-          showDiamondMessage: true, 
-          showComplementMessage: true,
-    );
-   }
   @override
   Widget build(BuildContext context) {
-    return _buildBody(context);
+    final HomePageController controller = HomePageController(context);
+
+    // Cargar productos al iniciar
+    Future.microtask(() => controller.loadProducts());
+
+    return const MainBackground(
+      message: "Hello, User",
+      showDiamondMessage: true,
+      showComplementMessage: true,
+      body: ProductList(),
+    );
+  }
+}
+
+// Widget para listar los productos
+class ProductList extends StatelessWidget {
+  const ProductList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final productProvider = Provider.of<ProductProvider>(context);
+
+    if (productProvider.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (productProvider.productos.isEmpty) {
+      return const Center(child: Text('No se encontraron productos'));
+    }
+
+    return SingleChildScrollView(
+      child: Column(
+        children: productProvider.productos.map((producto) {
+          return ProductCard(producto: producto);
+        }).toList(),
+      ),
+    );
   }
 }

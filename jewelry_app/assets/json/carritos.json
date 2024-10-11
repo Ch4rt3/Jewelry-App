@@ -1,54 +1,17 @@
 [
   {
-    "ID": 101,
-    "Usuario_ID": 1,
-    "SubTotal": 350.0,
-    "Productos": [
-      {
-        "ID": 1,
-        "Nombre": "Anillo de Oro",
-        "Precio": 200,
-        "Stock": 50,
-        "Categoria": "Anillos",
-        "ImagenUrl": "https://example.com/images/anillo_oro.png",
-        "Cantidad": 1
-      },
-      {
-        "ID": 2,
-        "Nombre": "Reloj de Pulsera",
-        "Precio": 150,
-        "Stock": 30,
-        "Categoria": "Relojes",
-        "ImagenUrl": "https://example.com/images/reloj_pulsera.png",
-        "Cantidad": 1
-      }
-    ]
+    "id": 101,
+    "usuarioId": 1,
+    "subTotal": 350.0,
+    "productos": [1, 2]
   },
   {
-    "ID": 102,
-    "Usuario_ID": 2,
-    "SubTotal": 500.0,
-    "Productos": [
-      {
-        "ID": 3,
-        "Nombre": "Collar de Plata",
-        "Precio": 300,
-        "Stock": 25,
-        "Categoria": "Collares",
-        "ImagenUrl": "https://example.com/images/collar_plata.png",
-        "Cantidad": 1
-      },
-      {
-        "ID": 4,
-        "Nombre": "Pendientes de Rubí",
-        "Precio": 200,
-        "Stock": 15,
-        "Categoria": "Pendientes",
-        "ImagenUrl": "https://example.com/images/pendientes_rubi.png",
-        "Cantidad": 1
-      }
-    ]
+    "id": 102,
+    "usuarioId": 2,
+    "subTotal": 500.0,
+    "productos": [3]
   }
 ]
+
 
   

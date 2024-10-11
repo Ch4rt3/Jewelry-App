@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:jewelry_app/components/layouts/main_background.dart';
 import 'package:jewelry_app/models/producto.dart';
 import 'package:jewelry_app/components/categories_widgets/productCard.dart';
+import 'package:jewelry_app/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class CategoryPage extends StatelessWidget {
   final String categoryName;
-  final List<Producto> allProducts;
 
-  CategoryPage({
+  const CategoryPage({
     super.key,
     required this.categoryName,
-    required this.allProducts,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<Producto> categoryProducts = allProducts.where((product) => product.categoria == categoryName).toList();
+    // Utilizar el ProductProvider para obtener los productos de la categoría
+    final productProvider = Provider.of<ProductProvider>(context);
+    List<Producto> categoryProducts = productProvider.productos
+        .where((product) => product.categoria == categoryName)
+        .toList();
 
     return MainBackground(
       showDiamondMessage: false,  
@@ -40,3 +44,6 @@ class CategoryPage extends StatelessWidget {
     );
   }
 }
+
+
+

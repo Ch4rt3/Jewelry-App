@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "idPedido": 201,
+        "idProducto": 1,
+        "cantidad": 2
+    },
+    {
+        "id": 2,
+        "idPedido": 201,
+        "idProducto": 2,
+        "cantidad": 1
+    },
+    {
+        "id": 3,
+        "idPedido": 202,
+        "idProducto": 3,
+        "cantidad": 1
+    }
+]   

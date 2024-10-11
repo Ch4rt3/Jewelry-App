@@ -1,58 +1,21 @@
 [
   {
-    "ID": 201,
-    "Codigo": "ORD001",
-    "Fecha": "2023-09-12T14:30:00",
-    "MontoTotal": 300.0,
-    "Usuario_ID": 1,
-    "Productos": [
-      {
-        "ID": 1,
-        "Nombre": "Anillo de Oro",
-        "Precio": 200,
-        "Stock": 50,
-        "Categoria": "Anillos",
-        "ImagenUrl": "https://example.com/images/anillo_oro.png",
-        "Cantidad": 1
-      },
-      {
-        "ID": 2,
-        "Nombre": "Reloj de Pulsera",
-        "Precio": 100,
-        "Stock": 20,
-        "Categoria": "Relojes",
-        "ImagenUrl": "https://example.com/images/reloj_pulsera.png",
-        "Cantidad": 1
-      }
-    ]
+    "id": 201,
+    "codigo": "ORD001",
+    "fecha": "2023-09-12T14:30:00",
+    "montoTotal": 300.0,
+    "usuarioId": 1,
+    "productos": [1, 2]
   },
   {
-    "ID": 202,
-    "Codigo": "ORD002",
-    "Fecha": "2023-09-14T16:00:00",
-    "MontoTotal": 500.0,
-    "Usuario_ID": 2,
-    "Productos": [
-      {
-        "ID": 3,
-        "Nombre": "Collar de Plata",
-        "Precio": 300,
-        "Stock": 25,
-        "Categoria": "Collares",
-        "ImagenUrl": "https://example.com/images/collar_plata.png",
-        "Cantidad": 1
-      },
-      {
-        "ID": 4,
-        "Nombre": "Pendientes de Rubí",
-        "Precio": 200,
-        "Stock": 15,
-        "Categoria": "Pendientes",
-        "ImagenUrl": "https://example.com/images/pendientes_rubi.png",
-        "Cantidad": 1
-      }
-    ]
+    "id": 202,
+    "codigo": "ORD002",
+    "fecha": "2023-09-14T16:00:00",
+    "montoTotal": 500.0,
+    "usuarioId": 2,
+    "productos": [3]
   }
 ]
+
 
   

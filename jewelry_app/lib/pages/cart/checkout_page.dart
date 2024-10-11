@@ -1,111 +1,227 @@
 import 'package:flutter/material.dart';
-import 'package:jewelry_app/models/carrito.dart';
+import 'package:provider/provider.dart';
+import 'package:jewelry_app/providers/shoppingcart_provider.dart';
+import 'package:jewelry_app/providers/order_provider.dart';
 
 class CheckoutPage extends StatelessWidget {
-  final Carrito carrito;
-
-  const CheckoutPage({Key? key, required this.carrito}) : super(key: key);
+  const CheckoutPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Obtener los providers de ShoppingCart y Order
+    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
+    final orderProvider = Provider.of<OrderProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Checkout"),
-        centerTitle: true,
+        title: const Text('Checkout'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildAddressSection(),  // Sección de dirección de entrega
+            const Text(
+              'Resumen de la Orden',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            // Sección de Dirección de Entrega Estática
+            _buildAddressSection(),
+
             const SizedBox(height: 20),
-            _buildPaymentSection(),  // Sección de método de pago
+
+            // Sección de Método de Pago Estática
+            _buildPaymentMethodSection(),
+
             const SizedBox(height: 20),
-            _buildSummarySection(),  // Resumen del monto total
-            const Spacer(),
-            _buildPlaceOrderButton(context),  // Botón para confirmar la compra
+
+            // Resumen de productos en el carrito
+            _buildOrderSummary(shoppingCartProvider),
+
+            const SizedBox(height: 20),
+
+            // Botón para colocar la orden
+            _buildPlaceOrderButton(context, shoppingCartProvider, orderProvider),
           ],
         ),
       ),
     );
   }
 
-  // Sección de dirección de entrega
+  // Sección de dirección de entrega estática
   Widget _buildAddressSection() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
       ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text("Deliver to", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
-          Text("123 Main Street, Springfield, USA"),  // Dirección predeterminada
-          SizedBox(height: 10),
-          TextButton(onPressed: null, child: Text("Change Address")),
+          const Icon(Icons.location_on, color: Colors.green),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '123 Calle Principal, Ciudad de Ejemplo',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue[100],
+              elevation: 0,
+            ),
+            onPressed: () {},
+            child: const Text(
+              'Change Address',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Sección de método de pago
-  Widget _buildPaymentSection() {
+  // Sección de método de pago estática
+  Widget _buildPaymentMethodSection() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
       ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Text("Payment Method", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10),
-          Text("**** **** **** 1234 (Visa)"),  // Método de pago predeterminado
-          SizedBox(height: 10),
-          TextButton(onPressed: null, child: Text("Use Other")),
+          const Icon(Icons.credit_card, color: Colors.blue),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '**** **** **** 1234',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue[100],
+              elevation: 0,
+            ),
+            onPressed: () {},
+            child: const Text(
+              'Use Other',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Resumen del monto total
-  Widget _buildSummarySection() {
+  // Mostrar el resumen del pedido con el subtotal y el costo de envío
+  Widget _buildOrderSummary(ShoppingCartProvider shoppingCartProvider) {
+    final itemTotal = shoppingCartProvider.subTotal;
+    const deliveryFee = 50.0;
+    final total = itemTotal + deliveryFee;
+
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSummaryRow('Item Total', '\$${itemTotal.toStringAsFixed(2)}'),
+          _buildSummaryRow('Delivery Fee', '\$${deliveryFee.toStringAsFixed(2)}'),
+          const Divider(),
+          _buildSummaryRow('Total', '\$${total.toStringAsFixed(2)}', isTotal: true),
+        ],
+      ),
+    );
+  }
+
+  // Widget para construir las filas del resumen de la orden
+  Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text("Total", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text("\$${(carrito.subTotal + 10).toStringAsFixed(2)}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+              color: isTotal ? Colors.black : Colors.grey,
+            ),
+          ),
+          Text(
+            amount,
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
+              color: isTotal ? Colors.black : Colors.grey,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Botón para confirmar la compra
-  Widget _buildPlaceOrderButton(BuildContext context) {
+  // Botón para realizar el pedido
+  Widget _buildPlaceOrderButton(BuildContext context, ShoppingCartProvider shoppingCartProvider, OrderProvider orderProvider) {
     return Center(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepPurple,
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-          textStyle: const TextStyle(fontSize: 18),
+          backgroundColor: Colors.black,
+          padding: const EdgeInsets.all(16.0),
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        onPressed: () {
-          // Lógica para confirmar la compra
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Order Placed Successfully")));
+        onPressed: () async {
+          if (shoppingCartProvider.productosEnCarrito.isNotEmpty) {
+            await shoppingCartProvider.placeOrder(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Order Placed Successfully!")),
+            );
+            shoppingCartProvider.clearCart();
+            Navigator.popUntil(context, ModalRoute.withName('/'));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Your cart is empty!")),
+            );
+          }
         },
         child: const Text("Place Order"),
       ),
     );
   }
 }
+
+

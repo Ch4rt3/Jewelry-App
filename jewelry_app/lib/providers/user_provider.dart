@@ -1,7 +1,6 @@
-import 'dart:convert'; // Importa para manejar JSON
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Importa para cargar archivos de assets
 import 'package:jewelry_app/models/usuario.dart';
+import 'package:jewelry_app/services/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
   Usuario? _usuario;
@@ -12,14 +11,13 @@ class UserProvider extends ChangeNotifier {
   bool get isLogged => _isLogged;
 
   // Método para autenticar al usuario
-  void login(String email, String password) async {
+  Future<void> login(String email, String password) async {
     try {
       // Lógica para encontrar al usuario en el archivo JSON
-      var userList = await fetchUsersFromJson(); // Cambiado a async
+      var userList = await UsuarioService().fetchAllUsuarios(); // Cambiado a async
       Usuario foundUser = userList.firstWhere(
         (user) => user.email == email && user.contrasena == password,
       );
-
       // Si el usuario es encontrado, lo asignamos y marcamos como logueado
       _usuario = foundUser;
       _isLogged = true;
@@ -39,12 +37,4 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Método para cargar la lista de usuarios desde el JSON (simulación de base de datos)
-  Future<List<Usuario>> fetchUsersFromJson() async {
-    // Cargar el archivo JSON
-    final String response = await rootBundle.loadString('assets/json/usuarios.json');
-    // Decodificar el JSON a una lista de objetos Usuario
-    final List<dynamic> data = json.decode(response);
-    return data.map((json) => Usuario.fromJson(json)).toList();
-  }
 }

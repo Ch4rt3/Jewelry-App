@@ -1,44 +1,41 @@
-import 'producto.dart';
+import 'pedido_producto.dart';
 
 class Pedido {
   final int id;
-  final String codigo;
-  final DateTime fecha;
+  final int usuarioId;
+  List<PedidoProducto> productosEnPedido;  // Convertido a variable modificable
   final double montoTotal;
-  final int usuarioId;  // Clave foránea a Usuario
-  final List<Producto> productos;  // Relación con productos
+  final DateTime fecha;
 
   Pedido({
     required this.id,
-    required this.codigo,
-    required this.fecha,
-    required this.montoTotal,
     required this.usuarioId,
-    required this.productos,
+    required this.productosEnPedido,
+    required this.montoTotal,
+    required this.fecha,
   });
 
   factory Pedido.fromJson(Map<String, dynamic> json) {
     var productosJson = json['Productos'] as List;
-    List<Producto> listaProductos = productosJson.map((prod) => Producto.fromJson(prod)).toList();
+    List<PedidoProducto> listaProductos = productosJson.map((prod) => PedidoProducto.fromJson(prod)).toList();
 
     return Pedido(
       id: json['ID'],
-      codigo: json['Codigo'],
-      fecha: DateTime.parse(json['Fecha']),
-      montoTotal: json['MontoTotal'],
       usuarioId: json['Usuario_ID'],
-      productos: listaProductos,
+      productosEnPedido: listaProductos,
+      montoTotal: json['MontoTotal'],
+      fecha: DateTime.parse(json['Fecha']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'ID': id,
-      'Codigo': codigo,
-      'Fecha': fecha.toIso8601String(),
-      'MontoTotal': montoTotal,
       'Usuario_ID': usuarioId,
-      'Productos': productos.map((prod) => prod.toJson()).toList(),
+      'Productos': productosEnPedido.map((prod) => prod.toJson()).toList(),
+      'MontoTotal': montoTotal,
+      'Fecha': fecha.toIso8601String(),
     };
   }
 }
+

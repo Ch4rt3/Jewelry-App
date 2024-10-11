@@ -7,45 +7,69 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:jewelry_app/main.dart';
-import 'package:jewelry_app/models/carrito.dart';
+import 'package:provider/provider.dart';
+import 'package:jewelry_app/main.dart'; // Ajusta esta ruta según la ubicación de tu `main.dart`
+import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:jewelry_app/providers/shoppingcart_provider.dart';
+import 'package:jewelry_app/providers/order_provider.dart';
+import 'package:jewelry_app/providers/product_provider.dart';
 import 'package:jewelry_app/models/usuario.dart';
+import 'package:jewelry_app/models/carrito.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(
-      productos: [],
-      usuario: Usuario(
-        id: 1,
-        nombre: 'testUser',
-        email: 'test@example.com',
-        url: 'http://example.com',
-        descripcion: 'test description',
-        acercaDe: 'about testUser',
-        imagen: 'http://example.com/image.png',
-        telefono: '1234567890',
-        visibilidad: true,
-        contrasena: 'testPassword'
+  // Configurar el test
+  testWidgets('Prueba de integración básica para la app de joyería', (WidgetTester tester) async {
+    // Crear usuario y carrito de prueba
+    final usuarioPrueba = Usuario(
+      id: 1,
+      nombre: 'testUser',
+      email: 'test@example.com',
+      url: 'http://example.com',
+      descripcion: 'test description',
+      acercaDe: 'about testUser',
+      imagen: 'http://example.com/image.png',
+      telefono: '1234567890',
+      visibilidad: true,
+      contrasena: 'testPassword',
+    );
+
+    final carritoPrueba = Carrito(
+      id: 1,
+      usuarioId: usuarioPrueba.id,
+      productosEnCarrito: [],
+      subTotal: 0.0,
+    );
+
+    // Envolver el widget principal con los providers requeridos para las pruebas
+    await tester.pumpWidget(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserProvider>(
+            create: (_) => UserProvider()..setUser(usuarioPrueba),
+          ),
+          ChangeNotifierProvider<ShoppingCartProvider>(
+            create: (_) => ShoppingCartProvider()..initializeCart(carritoPrueba),
+          ),
+          ChangeNotifierProvider<OrderProvider>(
+            create: (_) => OrderProvider(),
+          ),
+          ChangeNotifierProvider<ProductProvider>(
+            create: (_) => ProductProvider(),
+          ),
+        ],
+        child: const MyApp(), // Tu widget principal
       ),
-      carrito: Carrito(
-        id: 1,
-        usuarioId: 1,
-        productos: [],
-        subTotal: 0.0,
-      )
-    ));
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Esperar a que la app se cargue
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Realizar algunas verificaciones básicas para asegurar que la app carga correctamente
+    expect(find.byType(MaterialApp), findsOneWidget);
+    expect(find.text('Men'), findsWidgets); // Cambiar según el texto que aparezca en la UI de inicio
+
+    // Verificar que no hay errores al cargar la app
+    expect(find.text('Error'), findsNothing);
   });
 }
+
