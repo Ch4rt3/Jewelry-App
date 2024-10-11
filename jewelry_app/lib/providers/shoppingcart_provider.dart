@@ -38,25 +38,37 @@ class ShoppingCartProvider extends ChangeNotifier {
 
 
 
-  // Método para cargar el carrito
   Future<void> loadCart(int carritoId) async {
-    _isLoading = true;
-    notifyListeners();
+  _isLoading = true;
+  notifyListeners();
 
-    try {
-      // 1. Cargar las relaciones del carrito
-      _carritoProductos = await _carritoService.getCarritoProductos(carritoId);
+  try {
+    // 1. Cargar las relaciones del carrito
+    _carritoProductos = await _carritoService.getCarritoProductos(carritoId);
+    print("Relaciones del carrito cargadas: $_carritoProductos");
 
-      // 2. Cargar los productos basados en las relaciones
-      _productosEnCarrito = await _carritoService.getProductosFromRelations(_carritoProductos);
-
-    } catch (e) {
-      print("Error al cargar el carrito: $e");
+    // 2. Verificar si hay relaciones en el carrito
+    if (_carritoProductos.isEmpty) {
+      print("El carrito no contiene productos.");
     }
 
-    _isLoading = false;
-    notifyListeners();
+    // 3. Cargar los productos basados en las relaciones
+    _productosEnCarrito = await _carritoService.getProductosFromRelations(_carritoProductos);
+    print("Productos en el carrito cargados: $_productosEnCarrito");
+
+    // Imprimir el nombre de los productos cargados para verificar
+    for (var producto in _productosEnCarrito) {
+      print("Producto cargado: ${producto.nombre} con ID: ${producto.id}");
+    }
+
+  } catch (e) {
+    print("Error al cargar el carrito: $e");
   }
+
+  _isLoading = false;
+  notifyListeners();
+}
+
 
   // Método para añadir un producto al carrito
   Future<void> addProductToCart(Producto producto, int cantidad) async {

@@ -49,6 +49,8 @@ flutter:
     - assets/json/usuarios.json
     - assets/json/carritos.json
     - assets/json/pedidos.json
+    - assets/json/carritoProductos.json
+    - assets/json/pedidoProductos.json
   fonts:
     - family: Lexend
       fonts: 
