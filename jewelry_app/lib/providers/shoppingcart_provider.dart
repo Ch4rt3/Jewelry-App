@@ -17,12 +17,13 @@ class ShoppingCartProvider extends ChangeNotifier {
   // Getters
   List<Producto> get productosEnCarrito => _productosEnCarrito;
   bool get isLoading => _isLoading;
+
   double get subTotal {
-  double total = 0.0;
-  for (var producto in _carritoProductos) {
-    total += producto.cantidad * _productosEnCarrito.firstWhere((p) => p.id == producto.productoId).precio;
-  }
-    return total;
+    double total = 0.0;
+    for (var producto in _carritoProductos) {
+      total += producto.cantidad * _productosEnCarrito.firstWhere((p) => p.id == producto.productoId).precio;
+    }
+      return total;
   }
   int cantidadProducto(Producto producto) {
     try {

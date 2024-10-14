@@ -1,24 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/models/producto.dart';
 import 'package:jewelry_app/pages/cart/my_cart/my_cart_controller.dart';
-import 'package:jewelry_app/providers/user_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:jewelry_app/providers/shoppingcart_provider.dart';
 import 'package:jewelry_app/components/cart_widgets/product_cart_card.dart';
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:jewelry_app/providers/shoppingcart_provider.dart';
-import 'package:jewelry_app/components/cart_widgets/product_cart_card.dart';
-
-class MyCartPage extends StatelessWidget {
+class MyCartPage extends StatefulWidget {
   const MyCartPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
-    final user = Provider.of<UserProvider>(context);
-    print(user.usuario?.carritoId);
+  _MyCartPageState createState() => _MyCartPageState();
+}
 
+class _MyCartPageState extends State<MyCartPage> {
+  List<Producto> carritoProducto = [];
+  double itemTotal = 0.0; // Variable para el total de los artículos
+  static const double deliveryFee = 50.0; // Tarifa de entrega
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarProductos();
+  }
+
+  Future<void> _cargarProductos() async {
+    MyCartController myCartController = MyCartController();
+    List<Producto> productos = await myCartController.cargarCarritoProductos(context);
+    setState(() {
+      carritoProducto = productos;
+      itemTotal = _calculateItemTotal(productos); // Calcula el total de los artículos
+    });
+  }
+
+  double _calculateItemTotal(List<Producto> productos) {
+    // Sumar el precio de cada producto en el carrito
+    double total = 0.0;
+    for (var producto in productos) {
+      total += producto.precio; // Asegúrate de que 'precio' sea la propiedad correcta
+    }
+    return total;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Cart'),
@@ -27,66 +49,56 @@ class MyCartPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Verificar si la lista de productos no está vacía
-            shoppingCartProvider.productosEnCarrito.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: shoppingCartProvider.productosEnCarrito.length,
-                      itemBuilder: (context, index) {
-                        final producto = shoppingCartProvider.productosEnCarrito[index];
-                        final cantidad = shoppingCartProvider.cantidadProducto(producto);
-                        return ProductCartCard(
-                          producto: producto,
-                          cantidad: cantidad,
-                        );
-                      },
-                    ),
-                  )
-                : const Expanded(
-                    child: Center(
-                      child: Text(
-                        "No hay productos en el carrito.",
-                        style: TextStyle(fontSize: 16, color: Colors.grey),
-                      ),
-                    ),
-                  ),
-            const SizedBox(height: 20),
-            _buildPaymentSummary(shoppingCartProvider),
-            const SizedBox(height: 10),
-        
-            // Botón de "Go to Checkout" con ajustes de tamaño y diseño
+            // Lista de productos en el carrito
+            Column(
+              children: carritoProducto.map((producto) {
+                int cantidad = 1; // Cantidad por defecto
+                return ProductCartCard(
+                  producto: producto,
+                  cantidad: cantidad,
+                  onDecrease: () {
+                    // Lógica para disminuir la cantidad
+                  },
+                  onIncrease: () {
+                    // Lógica para aumentar la cantidad
+                  },
+                  onRemove: () {
+                    // Lógica para eliminar el producto
+                  },
+                );
+              }).toList(),
+            ),
+            // Resumen de pago
+            _buildPaymentSummary(),
+            SizedBox(height: 20),
+            // Botón de checkout
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16.0),
-              width: double.infinity, // Usar toda la anchura disponible
+              width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10), // Redondear bordes del botón
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 onPressed: () {
-                  // Solo permitir ir a checkout si hay productos en el carrito
-                  // if (shoppingCartProvider.productosEnCarrito.isNotEmpty) {
+                  if (carritoProducto.isNotEmpty) { // Verifica si hay productos en el carrito
                     Navigator.pushNamed(context, '/checkout');
-                  // } else {
-                  //   ScaffoldMessenger.of(context).showSnackBar(
-                  //     const SnackBar(content: Text("No hay productos en el carrito para proceder al checkout.")),
-                  //   );
-                  // }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("No hay productos en el carrito para proceder al checkout.")),
+                    );
+                  }
                 },
                 child: const Text(
-                    'Go to Checkout', 
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white
-                      )
-                  ),
+                  'Go to Checkout',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -95,10 +107,7 @@ class MyCartPage extends StatelessWidget {
     );
   }
 
-  // Definición del método buildPaymentSummary corregido
-  Widget _buildPaymentSummary(ShoppingCartProvider shoppingCartProvider) {
-    final itemTotal = shoppingCartProvider.subTotal;
-    const deliveryFee = 50.0;
+  Widget _buildPaymentSummary() {
     final total = itemTotal + deliveryFee;
 
     return Padding(
@@ -142,6 +151,3 @@ class MyCartPage extends StatelessWidget {
     );
   }
 }
-
-
-

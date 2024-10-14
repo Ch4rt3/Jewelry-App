@@ -3,7 +3,7 @@ import 'package:jewelry_app/models/usuario.dart';
 import 'package:jewelry_app/services/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
-  Usuario? _usuario; // Usuario actualmente logueado
+  Usuario _usuario = Usuario(id: 0, email: "", url: "", descripcion: "", acercaDe: "", imagen: "", telefono: "", contrasena: ""); // Usuario actualmente logueado
   bool _isLogged = false; // Atributo para verificar si el usuario está logueado
   List<Usuario> _usuarios = []; // Lista de usuarios cargados
 
@@ -31,7 +31,6 @@ class UserProvider extends ChangeNotifier {
     return true;
   } catch (e) {
     _isLogged = false;
-    _usuario = null;
     notifyListeners();
     return false;
   }
@@ -47,7 +46,7 @@ class UserProvider extends ChangeNotifier {
 
   // Método para cerrar sesión
   void logout() {
-    _usuario = null;
+    _usuario = Usuario(id: 0, email: "", url: "", descripcion: "", acercaDe: "", imagen: "", telefono: "", contrasena: "");
     _isLogged = false;
     notifyListeners();
   }

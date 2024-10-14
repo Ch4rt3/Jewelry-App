@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:jewelry_app/models/carrito.dart';
+
 import '../models/producto.dart';
 import '../models/carrito_producto.dart';
 
@@ -7,6 +10,52 @@ class CarritoService {
   // Listas para almacenar las relaciones y productos
   List<CarritoProducto> _carritoProductos = [];
   List<Producto> _productos = [];
+
+  Future<List<Producto>> loadCarritoProductos(Map carrito) async {
+  try {
+    final String response = await rootBundle.loadString("assets/json/productos.json");
+    final List<dynamic> data = jsonDecode(response);
+    
+    // Convierte los productos a objetos de tipo Producto
+    List<Producto> productos = data.map((item) => Producto.fromJson(item)).toList();
+    
+    // Obtiene la lista de IDs de productos en el carrito
+    List<int> listaProductos = List<int>.from(carrito['productos']);
+    
+    // Filtra los productos que coincidan con los IDs en listaProductos
+    List<Producto> productosFiltrados = productos.where((producto) => listaProductos.contains(producto.id)).toList();
+    
+    print(productosFiltrados);
+    return productosFiltrados;
+  } catch (e) {
+    print("Error al cargar los productos del carrito: $e");
+    return [];
+  }
+}
+
+  Future<Map> loadCarrito(int idCarrito) async {
+  try {
+    final String response = await rootBundle.loadString("assets/json/carritos.json");
+    final List<dynamic> data = jsonDecode(response);
+
+    // Buscar el carrito con el id especificado
+    final carritoMap = data.firstWhere(
+      (carrito) => carrito['id'] == idCarrito,
+      orElse: () => {'mensaje':'Elemento no encontrado'}
+    );
+
+    // Si no se encontró el carrito, lanza una excepción
+    if (carritoMap.containsKey('mensaje')) {
+      throw Exception('Carrito no encontrado');
+    }
+
+    return carritoMap;
+
+  } catch (e) {
+    print("Error al cargar el carrito: $e");
+    throw Exception('Error al cargar el carrito');
+  }
+}
 
   // Cargar productos desde el archivo JSON
   Future<void> loadProductosFromFile() async {

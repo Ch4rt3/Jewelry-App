@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/models/producto.dart';
-import 'package:jewelry_app/providers/shoppingcart_provider.dart';
-import 'package:provider/provider.dart';
 
 class ProductCartCard extends StatelessWidget {
   final Producto producto;
   final int cantidad;
+  final VoidCallback onRemove;
+  final VoidCallback onIncrease;
+  final VoidCallback onDecrease;
 
   const ProductCartCard({
-    Key? key,
+    super.key,
     required this.producto,
     required this.cantidad,
-  }) : super(key: key);
+    required this.onRemove,
+    required this.onIncrease,
+    required this.onDecrease,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
-
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       padding: const EdgeInsets.all(10.0),
+      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -28,7 +31,7 @@ class ProductCartCard extends StatelessWidget {
             color: Colors.grey.withOpacity(0.2),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: const Offset(0, 2), // Cambia la dirección de la sombra.
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -38,11 +41,15 @@ class ProductCartCard extends StatelessWidget {
           // Imagen del producto
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              producto.imagenUrl,
-              fit: BoxFit.cover,
-              width: 80,
-              height: 80,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(producto.imagenUrl), // Cambia a NetworkImage si es una URL
+                  fit: BoxFit.cover,
+                ),
+              ),
+              width: 80, // Ancho del contenedor
+              height: 80, // Altura del contenedor
             ),
           ),
           const SizedBox(width: 10),
@@ -68,7 +75,7 @@ class ProductCartCard extends StatelessWidget {
                     // Botón de eliminación
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.grey),
-                      onPressed: () => shoppingCartProvider.removeProductFromCart(producto),
+                      onPressed: onRemove,
                     ),
                   ],
                 ),
@@ -85,9 +92,7 @@ class ProductCartCard extends StatelessWidget {
                 Row(
                   children: [
                     // Botón para disminuir la cantidad
-                    _buildQuantityButton(context, shoppingCartProvider, Icons.remove, () {
-                      shoppingCartProvider.decreaseProductQuantity(producto);
-                    }),
+                    _buildQuantityButton(Icons.remove, onDecrease),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Text(
@@ -98,17 +103,21 @@ class ProductCartCard extends StatelessWidget {
                       ),
                     ),
                     // Botón para aumentar la cantidad
-                    _buildQuantityButton(context, shoppingCartProvider, Icons.add, () {
-                      shoppingCartProvider.addProductToCart(producto, 1);
-                    }),
-                    const Spacer(),
+                    _buildQuantityButton(Icons.add, onIncrease),
+                    // Quitamos Spacer para evitar conflictos de layout
+                    // const Spacer(),
                     // Precio del producto
-                    Text(
-                      "\$${producto.precio.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "\$${producto.precio.toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -121,9 +130,7 @@ class ProductCartCard extends StatelessWidget {
     );
   }
 
-  // Botón para aumentar o disminuir la cantidad
-  Widget _buildQuantityButton(
-      BuildContext context, ShoppingCartProvider shoppingCartProvider, IconData icon, VoidCallback onPressed) {
+  Widget _buildQuantityButton(IconData icon, VoidCallback onPressed) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
@@ -136,4 +143,3 @@ class ProductCartCard extends StatelessWidget {
     );
   }
 }
-

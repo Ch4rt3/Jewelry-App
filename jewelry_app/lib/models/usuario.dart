@@ -10,7 +10,7 @@ class Usuario {
   String telefono;
   bool visibilidad;
   String contrasena;
-  final int? carritoId; // Permitir que carritoId sea nulo
+  int carritoId;
   final List<int> pedidos; // Reemplazar `List<dynamic>` con `List<int>`
 
   Usuario({
@@ -24,7 +24,7 @@ class Usuario {
     required this.telefono,
     this.visibilidad = true,
     required this.contrasena,
-    this.carritoId, // Campo opcional para permitir nulo
+    this.carritoId = 0, // Campo opcional para permitir nulo
     this.pedidos = const [],  // Inicializado como lista vacía
   });
 
