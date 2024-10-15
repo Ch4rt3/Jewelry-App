@@ -17,13 +17,13 @@ class HomePage extends StatelessWidget {
     // Cargar productos al iniciar
     Future.microtask(() => controller.loadProducts());
 
-    return const MainBackground(
+    return MainBackground(
       searchBar: true,
       automaticallyImplyLeading: false,
-      message: "Hello, User",
+      message: "Hello, ${controller.cargarNombre()}",
       showDiamondMessage: true,
       showComplementMessage: true,
-      body: ProductList(),
+      body: const ProductList(),
     );
   }
 }
