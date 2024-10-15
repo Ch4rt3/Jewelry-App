@@ -3,16 +3,49 @@ import 'package:jewelry_app/components/notifications/sucess_notification.dart';
 import 'package:provider/provider.dart';
 import 'package:jewelry_app/providers/shoppingcart_provider.dart';
 import 'package:jewelry_app/providers/order_provider.dart';
+import 'package:jewelry_app/models/producto.dart';
+import 'package:jewelry_app/pages/cart/my_cart/my_cart_controller.dart';
 
-class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+class CheckoutPage extends StatefulWidget {
+    const CheckoutPage({super.key});
+    @override
+    _CheckoutPageState createState() => _CheckoutPageState();
+  }
+
+class _CheckoutPageState extends State<CheckoutPage> {
+    double itemTotal = 0.0;
+    static const deliveryFee = 50.0;
+    List<Producto> carritoProducto = [];
+    
+    @override
+    void initState() {
+      super.initState();
+      _cargarProductos();
+    }
+
+    Future<void> _cargarProductos() async {
+      MyCartController myCartController = MyCartController();
+      List<Producto> productos = await myCartController.cargarCarritoProductos(context);
+      setState(() {
+        carritoProducto = productos;
+        itemTotal = _calculateItemTotal(productos); // Calcula el total de los artículos
+      });
+    }
+
+    double _calculateItemTotal(List<Producto> productos) {
+      // Sumar el precio de cada producto en el carrito
+      double total = 0.0;
+      for (var producto in productos) {
+        total += producto.precio; // Asegúrate de que 'precio' sea la propiedad correcta
+      }
+      return total;
+    }
 
   @override
   Widget build(BuildContext context) {
     // Obtener los providers de ShoppingCart y Order
     final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
     final orderProvider = Provider.of<OrderProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -139,10 +172,7 @@ class CheckoutPage extends StatelessWidget {
 
   // Mostrar el resumen del pedido con el subtotal y el costo de envío
   Widget _buildOrderSummary(ShoppingCartProvider shoppingCartProvider) {
-    final itemTotal = shoppingCartProvider.subTotal;
-    const deliveryFee = 50.0;
     final total = itemTotal + deliveryFee;
-
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -227,5 +257,6 @@ class CheckoutPage extends StatelessWidget {
     );
   }
 }
+
 
 
