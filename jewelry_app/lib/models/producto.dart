@@ -5,7 +5,8 @@ class Producto {
   final int stock;
   final String categoria;
   final String imagenUrl;
-  final String descripcion;  
+  final String descripcion;
+  final String descripcionLarga; // Nuevo atributo
 
   Producto({
     required this.id,
@@ -15,6 +16,7 @@ class Producto {
     required this.categoria,
     required this.imagenUrl,
     required this.descripcion,
+    required this.descripcionLarga, // Incluye en el constructor
   });
 
   factory Producto.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class Producto {
       categoria: json['Categoria'],
       imagenUrl: json['ImagenUrl'],
       descripcion: json['Descripcion'],
+      descripcionLarga: json['DescripcionLarga'], // Asigna el nuevo atributo
     );
   }
 
@@ -38,6 +41,7 @@ class Producto {
       'Categoria': categoria,
       'ImagenUrl': imagenUrl,
       'Descripcion': descripcion,
+      'DescripcionLarga': descripcionLarga, // Incluye en el método toJson
     };
   }
 
@@ -46,5 +50,3 @@ class Producto {
     return 'Producto{id: $id, nombre: $nombre, precio: $precio, stock: $stock, categoria: $categoria}';
   }
 }
-
-

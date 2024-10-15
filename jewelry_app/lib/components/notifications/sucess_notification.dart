@@ -68,7 +68,7 @@ class SuccessNotificationState extends State<SuccessNotification> {
             ),
             const SizedBox(height: 80),
             // Botón de continuar
-            CustomElevatedButtom(
+            CustomElevatedButton(
               message: "Continue", 
               onPressed: _isAnimationCompleted ? widget.action : () {}, // Deshabilitar si la animación no ha terminado
             ),

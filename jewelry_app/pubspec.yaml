@@ -45,6 +45,12 @@ flutter:
   assets:
     - public/green_check.json
     - public/diamond.png
+    - public/collar_de_perlas.png
+    - public/anillo_oro.png
+    - public/brazalete_plata.png
+    - public/pendiente_diamantes.png
+    - public/reloj_de_pulsera.png
+    - public/broche_antiguo.png
     - assets/json/productos.json
     - assets/json/usuarios.json
     - assets/json/carritos.json

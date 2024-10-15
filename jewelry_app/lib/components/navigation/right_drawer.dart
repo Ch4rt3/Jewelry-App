@@ -67,9 +67,9 @@ class RightDrawer extends StatelessWidget {
             },
           ),
           const SizedBox(height: 40),
-          CustomElevatedButtom(
+          CustomElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/home");
+              Navigator.pushNamed(context, "/about-us");
             },
             message: "About us",
           ),

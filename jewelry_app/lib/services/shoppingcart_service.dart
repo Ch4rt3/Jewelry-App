@@ -100,7 +100,8 @@ class CarritoService {
                 stock: 0,
                 categoria: "Desconocida",
                 imagenUrl: "assets/images/no-image.png",
-                descripcion: "Descripción no disponible"
+                descripcion: "Descripción no disponible",
+                descripcionLarga: "Inserte descripcion larga"
               ),
             ))
         .toList();

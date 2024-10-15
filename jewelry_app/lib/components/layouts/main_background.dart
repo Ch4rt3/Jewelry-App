@@ -3,6 +3,7 @@ import 'package:jewelry_app/components/filter/filter_modal_button.dart';
 import 'package:jewelry_app/components/navigation/bottom_bar.dart';
 import 'package:jewelry_app/components/navigation/diamond_app_bar.dart';
 import 'package:jewelry_app/components/navigation/right_drawer.dart';
+import 'package:jewelry_app/components/navigation/search_field.dart';
 import 'package:jewelry_app/configs/colors.dart';
 
 class MainBackground extends StatefulWidget {
@@ -10,7 +11,9 @@ class MainBackground extends StatefulWidget {
   final bool showDiamondMessage;
   final bool showComplementMessage;
   final String message;  
-  final String subtitle;  
+  final String subtitle;
+  final bool automaticallyImplyLeading;
+  final bool searchBar;  
 
   const MainBackground({
     super.key,
@@ -18,7 +21,9 @@ class MainBackground extends StatefulWidget {
     required this.showDiamondMessage,
     required this.showComplementMessage,
     required this.message,  
-    this.subtitle = "",
+    this.subtitle = "", 
+    required this.automaticallyImplyLeading, 
+    required this.searchBar,
   });
 
   @override
@@ -56,7 +61,8 @@ class _MainBackgroundState extends State<MainBackground> {
       appBar: DiamondAppBar(
         showDiamond: widget.showDiamondMessage,
         screenHeight: screenHeight,
-        message: widget.message,
+        message: widget.message, 
+        automaticallyImplyLeading: widget.automaticallyImplyLeading,
       ),
 
       endDrawer: const RightDrawer(),
@@ -71,63 +77,55 @@ class _MainBackgroundState extends State<MainBackground> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              widget.showComplementMessage ? const Row(
-                children: [
-                  SizedBox(width: 10,),
-                  Text(
-                    "Best jewelry\nfor you",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.black54,
-                    ),
-                    textWidthBasis: TextWidthBasis.longestLine,
-                  ),
-                ],
-              )
-              :
-              Text(
-                widget.subtitle,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondTextColor,
-                  letterSpacing: 1.5,
-                ),
-              ),
-              
-              const SizedBox(height: 20),
-        
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 8,
-                  right: 8,
-                  bottom: 10,
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      //Barra de busqueda
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
+              if (widget.searchBar) ...[
+                  widget.showComplementMessage
+                      ? const Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Text(
+                              "Best jewelry\nfor you",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black54,
+                              ),
+                              textWidthBasis: TextWidthBasis.longestLine,
+                            ),
+                          ],
+                        )
+                      : Text(
+                          widget.subtitle,
+                          style: const TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.secondTextColor,
+                            letterSpacing: 1.5,
                           ),
                         ),
-                        onChanged: (value) {
-                        },
-                      ),
+
+                  const SizedBox(height: 20),
+
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8,
+                      right: 8,
+                      bottom: 10,
                     ),
-                    const SizedBox(width: 10),
-                    //Boton de filtro
-                    const FilterModalButton(),
-                  ],
-                ),
-              ),
-              
-              const SizedBox(height: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          //Barra de búsqueda
+                          child: SearchField(onChange: (value) {}),
+                        ),
+                        const SizedBox(width: 10),
+                        //Botón de filtro
+                        const FilterModalButton(),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+                ],
         
         
               widget.body,

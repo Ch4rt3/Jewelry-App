@@ -5,18 +5,20 @@ class DiamondAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double screenHeight;
   final String message;
   final bool showDiamond;
+  final bool automaticallyImplyLeading;
 
   const DiamondAppBar({
     super.key,
     required this.screenHeight,
     required this.message,
-    required this.showDiamond,
+    required this.showDiamond, 
+    required this.automaticallyImplyLeading,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: automaticallyImplyLeading,
       title: Row(
         children: [
           if (showDiamond) ...[

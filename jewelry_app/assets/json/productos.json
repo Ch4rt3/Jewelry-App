@@ -5,8 +5,9 @@
     "Precio": 120,
     "Stock": 50,
     "Categoria": "Necklaces",
-    "ImagenUrl": "https://example.com/images/collar_perlas.png",
-    "Descripcion": "Perlas naturales de agua dulce"  
+    "ImagenUrl": "public/collar_de_perlas.png",
+    "Descripcion": "Perlas naturales de agua dulce",
+    "DescripcionLarga": "Este hermoso collar está hecho con perlas naturales de agua dulce, conocidas por su brillo y belleza. Es un accesorio perfecto para cualquier ocasión, ya sea una cena elegante o un evento informal. Las perlas son cuidadosamente seleccionadas para garantizar la mejor calidad y se ensamblan a mano para crear un diseño único."
   },
   {
     "ID": 2,
@@ -14,8 +15,9 @@
     "Precio": 300,
     "Stock": 20,
     "Categoria": "Rings",
-    "ImagenUrl": "https://example.com/images/anillo_oro.png",
-    "Descripcion": "Oro de 18 quilates" 
+    "ImagenUrl": "public/anillo_oro.png",
+    "Descripcion": "Oro de 18 quilates",
+    "DescripcionLarga": "Este elegante anillo está fabricado en oro de 18 quilates, lo que garantiza su durabilidad y belleza a largo plazo. Su diseño atemporal lo convierte en un regalo ideal para esa persona especial o para consentirte a ti mismo. Con su brillo radiante, este anillo es perfecto para cualquier ocasión."
   },
   {
     "ID": 3,
@@ -23,8 +25,9 @@
     "Precio": 200,
     "Stock": 15,
     "Categoria": "Bracelets",
-    "ImagenUrl": "https://example.com/images/brazalete_plata.png",
-    "Descripcion": "Plata esterlina pulida" 
+    "ImagenUrl": "public/brazalete_plata.png",
+    "Descripcion": "Plata esterlina pulida",
+    "DescripcionLarga": "Este brazalete está hecho de plata esterlina pulida, lo que le otorga un brillo excepcional y una apariencia elegante. Su diseño versátil lo hace ideal para el uso diario o para ocasiones especiales. Cada brazalete es elaborado con atención al detalle, asegurando que cada pieza sea única."
   },
   {
     "ID": 4,
@@ -32,8 +35,9 @@
     "Precio": 500,
     "Stock": 5,
     "Categoria": "Earrings",
-    "ImagenUrl": "https://example.com/images/pendiente_diamantes.png",
-    "Descripcion": "Diamantes brillantes de calidad" 
+    "ImagenUrl": "public/pendiente_diamantes.png",
+    "Descripcion": "Diamantes brillantes de calidad",
+    "DescripcionLarga": "Estos pendientes de diamantes son la culminación de la elegancia y el lujo. Con diamantes brillantes de la más alta calidad, son el complemento perfecto para cualquier atuendo. Su diseño clásico asegura que siempre estén en estilo, haciendo que te sientas especial en cualquier ocasión."
   },
   {
     "ID": 5,
@@ -41,8 +45,9 @@
     "Precio": 250,
     "Stock": 30,
     "Categoria": "Men",
-    "ImagenUrl": "public/diamond.png",
-    "Descripcion": "Acero inoxidable, cristal de zafiro" 
+    "ImagenUrl": "public/reloj_de_pulsera.png",
+    "Descripcion": "Acero inoxidable, cristal de zafiro",
+    "DescripcionLarga": "Este reloj de pulsera combina la resistencia del acero inoxidable con la claridad del cristal de zafiro, ofreciendo durabilidad y estilo. Su diseño moderno lo hace ideal para hombres que buscan un accesorio que complemente su atuendo diario. Además, su movimiento preciso asegura que siempre llegues a tiempo."
   },
   {
     "ID": 6,
@@ -50,7 +55,8 @@
     "Precio": 150,
     "Stock": 10,
     "Categoria": "Bracelets",
-    "ImagenUrl": "https://example.com/images/broche_antiguo.png",
-    "Descripcion": "Metal antiguo con detalles"
+    "ImagenUrl": "public/broche_antiguo.png",
+    "Descripcion": "Metal antiguo con detalles",
+    "DescripcionLarga": "Este broche antiguo está elaborado con metal de alta calidad y presenta intrincados detalles que reflejan una época pasada. Es una pieza única que puede transformar cualquier atuendo, añadiendo un toque de elegancia y sofisticación. Perfecto para coleccionistas o amantes de la moda vintage."
   }
 ]

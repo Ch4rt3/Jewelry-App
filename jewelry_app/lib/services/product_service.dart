@@ -29,6 +29,7 @@ class ProductoService {
         categoria: "Desconocida",
         imagenUrl: "assets/images/default.png",
         descripcion: "Este producto no está disponible.",
+        descripcionLarga: "Inserte descripcion larga"
       ),
     );
   } catch (e) {
@@ -56,6 +57,7 @@ class ProductoService {
     categoria: "Desconocida",
     imagenUrl: "assets/images/default.png",
     descripcion: "Este producto no está disponible.",
+    descripcionLarga: "Inserte descripcion larga"
   );
 }
 

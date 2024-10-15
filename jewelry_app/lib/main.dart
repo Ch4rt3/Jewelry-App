@@ -5,6 +5,7 @@ import 'package:jewelry_app/pages/auth/sign_in/sign_in_page.dart';
 import 'package:jewelry_app/pages/auth/sign_up/sign_up_page.dart';
 import 'package:jewelry_app/pages/auth/success/success_password_page.dart';
 import 'package:jewelry_app/pages/cart/success/success_order_page.dart';
+import 'package:jewelry_app/pages/main/about_us/about_us_page.dart';
 import 'package:jewelry_app/pages/main/home/home_page.dart';
 import 'package:jewelry_app/pages/user/user_page.dart';
 import 'package:jewelry_app/pages/user/wallet/wallet_page.dart';
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
           '/recovery-password': (context) => const RecoveryPasswordPage(),
           '/success-password': (context) => const SuccessPasswordPage(),
           '/home': (context) => const HomePage(),
+          '/about-us': (context) => const AboutUsPage(),
           '/user': (context) => const UserPage(),
           '/wallet': (context) => const WalletPage(),
           '/create-wallet': (context) => const CreateWalletPage(),

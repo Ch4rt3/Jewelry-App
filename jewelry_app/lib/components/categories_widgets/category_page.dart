@@ -22,10 +22,12 @@ class CategoryPage extends StatelessWidget {
         .toList();
 
     return MainBackground(
+      searchBar: true,
       showDiamondMessage: false,  
       message: categoryName,    
       showComplementMessage: false, 
       subtitle: categoryName,
+      automaticallyImplyLeading: false,
       body: SingleChildScrollView(  // Permitir scroll si es necesario
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
