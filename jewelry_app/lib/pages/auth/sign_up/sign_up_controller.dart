@@ -58,7 +58,7 @@ class SignUpController {
         id: newId,
         email: _email,
         contrasena: _password,
-        nombre: "",
+        nombre: "User",
         telefono: "", 
         url: "",
         descripcion: "",
