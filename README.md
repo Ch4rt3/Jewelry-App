@@ -167,7 +167,7 @@ VS Code es un editor de código fuente ligero y muy popular, ideal para desarrol
 
 # Diagrama Relacional
 
-![](./Assets/diagramaRelacional.png) <br>
+![](./Assets/RelacionalActualizado.png) <br>
 
 
 
