@@ -97,23 +97,50 @@ end
 
 post '/usuarios/login' do
   content_type :json
+  status = 500
+  resp = ''
+
   begin
     datos = JSON.parse(request.body.read)
-    puts "Datos recibidos: #{datos}"  # Datos del cliente
+    correo = datos['email']
+    contrasenia = datos['contrasenia']
+    puts "Datos recibidos: #{datos}"  # Log para debug
 
-    # Busca el usuario por email
-    usuario = Usuario.where(Email: datos['email']).first
-    puts "Usuario encontrado: #{usuario.inspect}"  # Información del usuario encontrado
+    # Query directa para encontrar al usuario
+    query = <<-SQL
+      SELECT * FROM usuarios WHERE email = '#{correo}' AND contrasenia = '#{contrasenia}';
+    SQL
+    usuario = DB[query].first  # Ejecutar la consulta y obtener el primer resultado
 
-    if usuario && usuario.Contrasenia == datos['contrasenia']
-      token = JWT.encode({ usuario_id: usuario.id, exp: Time.now.to_i + 4 * 3600 }, SECRET_KEY, 'HS256')
-      { token: token, usuario: { id: usuario.id, email: usuario.email } }.to_json
+    puts "Usuario encontrado: #{usuario.inspect}"  # Log de usuario encontrado
+
+    if usuario
+      # Acceder a las claves correctamente
+      token = JWT.encode({ usuario_id: usuario[:ID], exp: Time.now.to_i + 4 * 3600 }, SECRET_KEY, 'HS256')
+      status = 200
+      resp = {
+        token: token,
+        usuario: { 
+          id: usuario[:ID],  # Acceso a ID
+          email: usuario[:Email]  # Acceso a Email
+        }
+      }.to_json
     else
-      status 401
-      { error: 'Credenciales inválidas' }.to_json
+      status = 401
+      resp = { error: 'Credenciales inválidas' }.to_json
     end
   rescue JSON::ParserError
-    status 400
-    { error: 'Formato JSON inválido' }.to_json
+    status = 400
+    resp = { error: 'Formato JSON inválido' }.to_json
+  rescue Sequel::DatabaseError => e
+    resp = { error: e.message }.to_json
+  rescue StandardError => e
+    resp = { error: e.message }.to_json
   end
+
+  status status
+  resp
 end
+
+
+
