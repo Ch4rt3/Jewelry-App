@@ -62,10 +62,32 @@ end
 post '/usuarios' do
   content_type :json
   begin
+    # Parsear los datos JSON del request
     datos = JSON.parse(request.body.read)
-    nuevo_usuario = Usuario.create(datos)
+    
+    # Extraer los valores del JSON
+    email = datos['Email']
+    contrasenia = datos['Contrasenia']
+    nombre = datos['Nombre']
+    telefono = datos['Telefono']
+    descripcion = datos['Descripcion']
+    acerca_de = datos['AcercaDe']
+    visibilidad = datos['Visibilidad']
+
+    # Insertar el usuario en la base de datos
+    query = <<-SQL
+      INSERT INTO usuarios (Email, Contrasenia, Nombre, Telefono, Descripcion, AcercaDe, Visibilidad)
+      VALUES (#{email}, #{contrasenia}, #{nombre}, #{telefono}, #{descripcion}, #{acerca_de}, #{visibilidad})
+      RETURNING *;
+    SQL
+
+    # Ejecutar la consulta y obtener el usuario recién creado
+    nuevo_usuario = DB[query].first
+
+    # Devolver el usuario creado en la respuesta
     status 201
     nuevo_usuario.to_json
+
   rescue Sequel::DatabaseError => e
     status 500
     { error: 'Error al crear el usuario', message: e.message }.to_json
@@ -74,6 +96,7 @@ post '/usuarios' do
     { error: 'Formato JSON inválido' }.to_json
   end
 end
+
 
 # Actualizar un usuario por ID
 put '/usuarios/:id' do
@@ -248,4 +271,3 @@ post '/usuarios/actualizar-contrasenia' do
   status status
   resp
 end
-
