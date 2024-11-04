@@ -2,7 +2,7 @@ require 'sinatra'
 require 'sequel'
 
 # Configuración
-set :bind, 'localhost'
+set :bind, '0.0.0.0'
 set :port, 4568
 
 # Cargar la base de datos y modelos

@@ -1,17 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import 'package:jewelry_app/models/usuario.dart';
+import 'package:jewelry_app/services/api_base_service.dart';
 
-class UsuarioService {
-  Future<Usuario> getUsuarioById(int id) async {
-    List<Usuario> usuarios = await fetchAllUsuarios();
-    try {
-      return usuarios.firstWhere((user) => user.id == id);
-    } catch (e) {
-      throw Exception("Usuario con ID $id no encontrado");
-    }
-  }
-
+class UsuarioService extends ApiBaseService{
+  
   // Método para obtener todos los usuarios
   Future<List<Usuario>> fetchAllUsuarios() async {
     final String response = await rootBundle.loadString("assets/json/usuarios.json");
@@ -64,4 +58,37 @@ class UsuarioService {
       return false; // Retorna false en caso de error
     }
   }
+
+  Future<http.Response> loginUsuario(String email, String contrasena) async {
+  // Crear el cuerpo de la solicitud con las credenciales
+    Map<String, dynamic> data = {
+      'email': email,
+      'contrasenia': contrasena
+    };
+
+    // Realizar la solicitud POST al endpoint de login
+    final response = await postRequest('/usuarios/login', data);
+
+    // Imprimir la respuesta para depuración
+    print('Response: ${response.body}');
+
+    // Retornar la respuesta para manejarla en otra parte del código si es necesario
+    return response;
+  }
+
+  Future<http.Response> crearUsuario(Usuario usuario) async {
+    // Convertir el objeto Usuario a un mapa para el cuerpo de la solicitud
+    Map<String, dynamic> data = usuario.toJson();
+
+    // Realizar la solicitud POST al endpoint de creación de usuario
+    final response = await postRequest('/usuarios', data);
+
+    print(data);
+    // Imprimir la respuesta para depuración
+    print('Response: ${response.body}');
+
+    // Retornar la respuesta para manejarla en otra parte del código si es necesario
+    return response;
+  }
+
 }

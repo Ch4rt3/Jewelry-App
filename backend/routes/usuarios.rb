@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'json'
-require 'jwt' # Asegúrate de agregar la gema jwt en tu Gemfile
 require 'sendgrid-ruby'
 include SendGrid
 require 'dotenv/load'
@@ -64,6 +63,8 @@ post '/usuarios' do
   begin
     # Parsear los datos JSON del request
     datos = JSON.parse(request.body.read)
+    puts"-----------------------------"
+    puts datos
     
     # Extraer los valores del JSON
     email = datos['Email']
@@ -74,15 +75,15 @@ post '/usuarios' do
     acerca_de = datos['AcercaDe']
     visibilidad = datos['Visibilidad']
 
-    # Insertar el usuario en la base de datos
+    # Insertar el usuario en la base de datos usando parámetros
     query = <<-SQL
       INSERT INTO usuarios (Email, Contrasenia, Nombre, Telefono, Descripcion, AcercaDe, Visibilidad)
-      VALUES (#{email}, #{contrasenia}, #{nombre}, #{telefono}, #{descripcion}, #{acerca_de}, #{visibilidad})
+      VALUES (?, ?, ?, ?, ?, ?, ?)
       RETURNING *;
     SQL
 
     # Ejecutar la consulta y obtener el usuario recién creado
-    nuevo_usuario = DB[query].first
+    nuevo_usuario = DB[query, email, contrasenia, nombre, telefono, descripcion, acerca_de, visibilidad].first
 
     # Devolver el usuario creado en la respuesta
     status 201
@@ -96,6 +97,7 @@ post '/usuarios' do
     { error: 'Formato JSON inválido' }.to_json
   end
 end
+
 
 
 # Actualizar un usuario por ID
@@ -127,29 +129,23 @@ post '/usuarios/login' do
   resp = ''
 
   begin
+    # Leer y parsear los datos JSON del cuerpo de la solicitud
     datos = JSON.parse(request.body.read)
     correo = datos['email']
     contrasenia = datos['contrasenia']
+    
     puts "Datos recibidos: #{datos}"  # Log para debug
 
-    # Query directa para encontrar al usuario
-    query = <<-SQL
-      SELECT * FROM usuarios WHERE email = '#{correo}' AND contrasenia = '#{contrasenia}';
-    SQL
-    usuario = DB[query].first  # Ejecutar la consulta y obtener el primer resultado
+    # Consulta parametrizada para evitar inyección SQL
+    usuario = DB[:usuarios].where(email: correo, contrasenia: contrasenia).first
 
     puts "Usuario encontrado: #{usuario.inspect}"  # Log de usuario encontrado
 
     if usuario
-      # Acceder a las claves correctamente
-      token = JWT.encode({ usuario_id: usuario[:ID], exp: Time.now.to_i + 4 * 3600 }, SECRET_KEY, 'HS256')
+      # Retornar solo los datos del usuario sin token
       status = 200
       resp = {
-        token: token,
-        usuario: { 
-          id: usuario[:ID],  # Acceso a ID
-          email: usuario[:Email]  # Acceso a Email
-        }
+        usuario: usuario
       }.to_json
     else
       status = 401
@@ -159,14 +155,17 @@ post '/usuarios/login' do
     status = 400
     resp = { error: 'Formato JSON inválido' }.to_json
   rescue Sequel::DatabaseError => e
+    status = 500
     resp = { error: e.message }.to_json
   rescue StandardError => e
+    status = 500
     resp = { error: e.message }.to_json
   end
 
   status status
   resp
 end
+
 
 post '/usuarios/restablecer-contrasenia' do
   content_type :json

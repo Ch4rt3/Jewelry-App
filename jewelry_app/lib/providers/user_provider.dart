@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/models/usuario.dart';
 import 'package:jewelry_app/services/user_service.dart';
 
 class UserProvider extends ChangeNotifier {
-  Usuario _usuario = Usuario(id: 0, email: "", url: "", descripcion: "", acercaDe: "", imagen: "",nombre: "", telefono: "", contrasena: ""); // Usuario actualmente logueado
+  Usuario _usuario = Usuario(email: "", url: "", descripcion: "", acercaDe: "", imagen: "",nombre: "", telefono: "", visibilidad: true, contrasena: "", codigoRecuperacion: null); // Usuario actualmente logueado
   bool _isLogged = false; // Atributo para verificar si el usuario está logueado
   List<Usuario> _usuarios = []; // Lista de usuarios cargados
 
@@ -12,29 +14,42 @@ class UserProvider extends ChangeNotifier {
   bool get isLogged => _isLogged;
   List<Usuario> get usuarios => _usuarios;
 
-  // Método para cargar todos los usuarios al iniciar la app
-  Future<void> loadUsuarios() async {
-    _usuarios = await UsuarioService().fetchAllUsuarios();
-    notifyListeners(); // Notifica a los listeners que la data ha cambiado
-  }
+
 
   // Método para autenticar al usuario
   Future<bool> login(String email, String password) async {
   try {
-    List<Usuario> users = await UsuarioService().fetchAllUsuarios();
-    Usuario foundUser = users.firstWhere(
-      (user) => user.email == email && user.contrasena == password,
-    );
-    _usuario = foundUser;
-    _isLogged = true;
-    notifyListeners();
-    return true;
-  } catch (e) {
-    _isLogged = false;
-    notifyListeners();
-    return false;
+    // Llamar a la función loginUsuario para autenticar
+    final response = await UsuarioService().loginUsuario(email, password);
+    // Verificar si el login fue exitoso
+    if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        
+        // Acceder al usuario y token de la respuesta
+        Map<String, dynamic> usuarioData = data['usuario'];
+
+        // Crear un usuario desde los datos recibidos
+        _usuario = Usuario.fromJson(usuarioData); 
+        _isLogged = true;
+
+        print(_usuario);
+
+        notifyListeners(); // Notificar cambios en el estado
+        return true;
+      } else {
+        // Si el código de estado no es 200, el login falló
+        _isLogged = false;
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      print('Error en el login: $e');
+      _isLogged = false;
+      notifyListeners();
+      return false;
+    }
   }
-}
+
 
   // Método para registrar un nuevo usuario
   void register(Usuario newUser) {
@@ -46,18 +61,20 @@ class UserProvider extends ChangeNotifier {
 
   // Método para cerrar sesión
   void logout() {
-    _usuario = Usuario(id: 0, email: "", url: "", descripcion: "", acercaDe: "", imagen: "", telefono: "", contrasena: "");
+    _usuario = Usuario(email: "", url: "", descripcion: "", acercaDe: "", imagen: "",nombre: "", telefono: "", visibilidad: true, contrasena: "", codigoRecuperacion: null);
     _isLogged = false;
+    notifyListeners();
+  }
+
+  void setUser(Usuario usuario){
+    _usuario = usuario;
+    _isLogged = true;
     notifyListeners();
   }
 
   // Método para actualizar la contraseña del usuario logueado
   void updatePassword(String newPassword) {
-    if (_usuario != null) {
-      _usuario!.contrasena = newPassword; // Actualiza la contraseña
-      notifyListeners(); // Notifica a los oyentes
-    }
+    _usuario.contrasena = newPassword; // Actualiza la contraseña
+    notifyListeners(); // Notifica a los oyentes
   }
-
-  setUser(Usuario usuarioPrueba) {}
 }

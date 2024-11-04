@@ -1,6 +1,4 @@
-
 class Usuario {
-  final int id;
   String email;
   String url;
   String descripcion;
@@ -10,11 +8,9 @@ class Usuario {
   String telefono;
   bool visibilidad;
   String contrasena;
-  int carritoId;
-  final List<int> pedidos; // Reemplazar `List<dynamic>` con `List<int>`
+  int? codigoRecuperacion;
 
   Usuario({
-    required this.id,
     required this.email,
     required this.url,
     required this.descripcion,
@@ -24,47 +20,34 @@ class Usuario {
     required this.telefono,
     this.visibilidad = true,
     required this.contrasena,
-    this.carritoId = 0, // Campo opcional para permitir nulo
-    this.pedidos = const [],  // Inicializado como lista vacía
+    this.codigoRecuperacion,
   });
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
-      id: json['id'] ?? 0, // Valor predeterminado si es null
-      email: json['email'] ?? '',
-      contrasena: json['contrasena'] ?? '',
-      nombre: json['nombre'] ?? 'Usuario desconocido',
-      telefono: json['telefono'] ?? 'Desconocido', // Asegurar que no sea nulo
-      imagen: json['imagen'] ?? 'assets/images/default_user.png',
-      url: json['url'] ?? '',
-      descripcion: json['descripcion'] ?? 'Sin descripción',
-      acercaDe: json['acercaDe'] ?? '',
-      visibilidad: json['visibilidad'] ?? true,
-      carritoId: json['carritoId'] ?? null, // Permitir null aquí
-      pedidos: (json['pedidos'] as List<dynamic>?)
-              ?.map((item) => item ?? 0) // Reemplazar posibles null en la lista
-              .cast<int>()
-              .toList() ??
-          [], // Lista vacía si es nula
+      email: json['Email'] ?? '',
+      contrasena: json['Contrasenia'] ?? '',
+      nombre: json['Nombre'] ?? 'User',
+      telefono: json['Telefono'] ?? 'Desconocido',
+      imagen: json['Imagen'] ?? 'assets/images/default_user.png',
+      url: json['URL'] ?? '',
+      descripcion: json['Descripcion'] ?? 'Sin descripción',
+      acercaDe: json['AcercaDe'] ?? '',
+      visibilidad: json['Visibilidad'] ?? true,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'email': email,
-      'contrasena': contrasena,
-      'nombre': nombre,
-      'telefono': telefono,
-      'imagen': imagen,
-      'url': url,
-      'descripcion': descripcion,
-      'acercaDe': acercaDe,
-      'visibilidad': visibilidad,
-      'carritoId': carritoId,
-      'pedidos': pedidos,
+      'Email': email,
+      'Contrasenia': contrasena,
+      'Nombre': nombre,
+      'Telefono': telefono,
+      'Imagen': imagen,
+      'Url': url,
+      'Descripcion': descripcion,
+      'AcercaDe': acercaDe,
+      'Visibilidad': visibilidad,
     };
   }
 }
-
-

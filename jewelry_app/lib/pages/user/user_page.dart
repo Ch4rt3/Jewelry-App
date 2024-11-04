@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -101,8 +105,9 @@ class UserPage extends StatelessWidget {
                     title: const Text('Log out'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                       Navigator.pushNamed(context, '/sign-in');
-                      // Acción de cerrar sesión
+                        userProvider.logout();
+                        Navigator.pushNamed(context, '/sign-in');
+                        // Acción de cerrar sesión
                     },
                   ),
                 ],

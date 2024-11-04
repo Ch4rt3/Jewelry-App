@@ -14,27 +14,30 @@ class MyCartController {
     Usuario? usuario = userProvider.usuario;
     
     // Asegúrate de que el carritoId no sea nulo
-    final carritoId = usuario?.carritoId;
-    if (carritoId != null) {
-      await shoppingCartProvider.loadCart(carritoId); // Asegúrate de esperar la carga
-      print("Productos en el carrito después de cargar: ${shoppingCartProvider.productosEnCarrito}");
-    } else {
-      print("Carrito ID no disponible");
-    }
+    // final carritoId = usuario?.carritoId;
+    // if (carritoId != null) {
+    //   await shoppingCartProvider.loadCart(carritoId); 
+    //   print("Productos en el carrito después de cargar: ${shoppingCartProvider.productosEnCarrito}");
+    // } else {
+    //   print("Carrito ID no disponible");
+    // }
   }
 
-  Future<List<Producto>> cargarCarritoProductos(BuildContext context) async{
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    Usuario? usuario = userProvider.usuario;
-    final carritoService = CarritoService();
-        // Esperar el resultado de loadCarrito usando 'await'
-    final carrito = await carritoService.loadCarrito(usuario!.carritoId);
+  Future<List<Producto>> cargarCarritoProductos(BuildContext context) async {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  Usuario? usuario = userProvider.usuario;
+  final carritoService = CarritoService();
 
-    // Esperar el resultado de loadCarritoProductos usando 'await'
-    final productos = await carritoService.loadCarritoProductos(carrito);
+  // if (usuario?.carritoId != null) {
+  //   final carrito = await carritoService.loadCarrito(usuario!.carritoId!);
 
-    // Aquí puedes hacer lo que quieras con la lista de productos filtrados
-    return productos;
+  //   final productos = await carritoService.loadCarritoProductos(carrito);
 
-  }
+  //   return productos;
+  // } else {
+  //   return [];
+  // }
+  return [];
+}
+
 }
