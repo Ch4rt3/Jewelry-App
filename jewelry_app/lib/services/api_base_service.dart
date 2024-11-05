@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 abstract class ApiBaseService {
-  final String baseUrl = 'http://192.168.18.10:4568'; // Reemplaza con la URL de tu API
+  final String baseUrl = 'http://192.168.190.1:4568'; // Reemplaza con la URL de tu API
 
   // Método para manejar solicitudes GET
   Future<http.Response> getRequest(String endpoint) async {

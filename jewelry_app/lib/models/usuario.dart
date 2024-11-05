@@ -1,4 +1,5 @@
 class Usuario {
+   int? id; 
   String email;
   String url;
   String descripcion;
@@ -11,6 +12,7 @@ class Usuario {
   int? codigoRecuperacion;
 
   Usuario({
+    this.id, 
     required this.email,
     required this.url,
     required this.descripcion,
@@ -25,6 +27,7 @@ class Usuario {
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
+      id: json['id'], // Asegúrate de mapear el 'id' desde el JSON
       email: json['Email'] ?? '',
       contrasena: json['Contrasenia'] ?? '',
       nombre: json['Nombre'] ?? 'User',
@@ -39,6 +42,7 @@ class Usuario {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id, // Incluir el 'id' en la conversión a JSON
       'Email': email,
       'Contrasenia': contrasena,
       'Nombre': nombre,

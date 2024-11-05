@@ -7,7 +7,8 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    // Accede al UserProvider con listen en true para que la UI se actualice automáticamente
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,17 +45,19 @@ class UserPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const Text(
-              'Robert Fox',
-              style: TextStyle(
+            // Muestra el nombre del usuario
+            Text(
+              userProvider.usuario?.nombre ?? 'Nombre no disponible',
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 5),
-            const Text(
-              'robertfox@gmail.com',
-              style: TextStyle(
+            // Muestra el correo del usuario
+            Text(
+              userProvider.usuario?.email ?? 'Correo no disponible',
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
@@ -86,7 +89,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Shipping Addresses'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                        Navigator.pushNamed(context, '/address');
+                      Navigator.pushNamed(context, '/address');
                       // Acción de ir a direcciones
                     },
                   ),
@@ -96,7 +99,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Wallet'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                       Navigator.pushNamed(context, '/wallet');
+                      Navigator.pushNamed(context, '/wallet');
                       // Acción de ir a billetera
                     },
                   ),
@@ -105,9 +108,9 @@ class UserPage extends StatelessWidget {
                     title: const Text('Log out'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                        userProvider.logout();
-                        Navigator.pushNamed(context, '/sign-in');
-                        // Acción de cerrar sesión
+                      userProvider.logout();
+                      Navigator.pushNamed(context, '/sign-in');
+                      // Acción de cerrar sesión
                     },
                   ),
                 ],
