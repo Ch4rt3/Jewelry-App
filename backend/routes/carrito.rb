@@ -24,12 +24,47 @@ get '/carrito/:usuario_id' do
         { error: 'Error al acceder a la base de datos', message: e.message }.to_json
     end
 end
+# Actualizar el subtotal del carrito
+put '/carrito/:carrito_id/actualizar_subtotal' do
+    content_type :json
+    carrito_id = params[:carrito_id].to_i
+    begin
+# Obtener los productos del carrito
+        carrito_productos = CarritoProducto.where(Carrito_ID: carrito_id).all
+        if carrito_productos.any?
+# Calcular el nuevo subtotal
+            nuevo_subtotal = carrito_productos.inject(0) do |subtotal, cp|
+            producto = Producto[cp[:Producto_ID]]
+            subtotal + (producto[:Precio] * cp[:Cantidad])
+            end
+# Actualizar el subtotal en la tabla Carrito
+            carrito = Carrito[carrito_id]
+            if carrito
+                carrito.update(SubTotal: nuevo_subtotal)
+                status 200
+                { carrito_id: carrito_id, nuevo_subtotal: nuevo_subtotal }.to_json
+            else    
+                status 404
+                { error: 'Carrito no encontrado' }.to_json
+            end
+        else
+            status 404
+            { error: 'No se encontraron productos en el carrito' }.to_json
+        end
+    rescue Sequel::DatabaseError => e
+        status 500
+        { error: 'Error al acceder a la base de datos', message: e.message }.to_json
+    end
+end
 # Agregar un nuevo carrito vacío para un usuario
-    post '/carrito' do
+post '/carrito' do
     content_type :json
     begin
 # Parsear los datos JSON del request
     datos = JSON.parse(request.body.read)
+    puts"-----------------------------"
+    puts datos
+# Extraer los valores del JSON
     usuario_id = datos['Usuario_ID']
 # Insertar el carrito vacío en la base de datos
     query = <<-SQL
