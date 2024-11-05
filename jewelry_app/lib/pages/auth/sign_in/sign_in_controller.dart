@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/messages/error_dialog.dart';
 import 'package:jewelry_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,32 +30,11 @@ class SignInController {
         );
       } else {
         // Mostrar un diálogo de error si las credenciales son incorrectas
-        _showErrorDialog(context, 'Credenciales incorrectas');
+        showErrorMessage(context, 'Credenciales incorrectas'); // Use the new function
       }
     } else {
       // Mostrar mensaje si faltan campos por completar
-      _showErrorDialog(context, 'Por favor, complete todos los campos');
-    }
-  }
-
-  void _showErrorDialog(BuildContext context, String message) {
-    // Verificar si el contexto es válido antes de mostrar el diálogo
-    if (context.mounted) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: Text(message),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      showErrorMessage(context, 'Por favor, complete todos los campos'); // Use the new function
     }
   }
 

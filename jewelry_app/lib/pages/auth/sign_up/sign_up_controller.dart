@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:jewelry_app/components/messages/error_dialog.dart';
 import 'package:jewelry_app/models/usuario.dart';
 import 'package:jewelry_app/providers/user_provider.dart';
 import 'package:jewelry_app/services/user_service.dart';
@@ -9,8 +10,6 @@ class SignUpController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPswrdController = TextEditingController();
-
-
 
   String _email = '';
   String _password = '';
@@ -29,27 +28,16 @@ class SignUpController {
     _confirmPassword = confirmPassword;
   }
 
-  void _showErrorMessage(BuildContext context, String message) {
-    // Verificar si el contexto es válido antes de mostrar el diálogo
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-        ),
-      );
-    }
-  }
-
   Future<bool> register(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false); // Cambiado aquí
 
     if (_email.isEmpty || _password.isEmpty || _confirmPassword.isEmpty) {
-      _showErrorMessage(context, 'Los campos no pueden estar vacíos');
+      showErrorMessage(context, 'Los campos no pueden estar vacíos'); // Use the new function
       return false; // Retorna false si hay campos vacíos
     }
 
     if (_password != _confirmPassword) {
-      _showErrorMessage(context, 'Las contraseñas no coinciden');
+      showErrorMessage(context, 'Las contraseñas no coinciden'); // Use the new function
       return false; // Las contraseñas no coinciden
     }
 
@@ -75,7 +63,6 @@ class SignUpController {
       return false;
     }
   }
-
 
   void dispose() {
     emailController.dispose();

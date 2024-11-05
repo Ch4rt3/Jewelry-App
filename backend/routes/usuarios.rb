@@ -6,9 +6,6 @@ require 'dotenv/load'
 require_relative '../configs/database'
 require_relative '../configs/models'
 
-# Configuración del secreto para JWT
-SECRET_KEY = ENV['JWT_SECRET'] || 'tu_clave_secreta_aqui'
-
 # Obtener todos los usuarios
 get '/usuarios' do
   content_type :json
@@ -131,8 +128,8 @@ post '/usuarios/login' do
   begin
     # Leer y parsear los datos JSON del cuerpo de la solicitud
     datos = JSON.parse(request.body.read)
-    correo = datos['email']
-    contrasenia = datos['contrasenia']
+    correo = datos['Email']
+    contrasenia = datos['Contrasenia']
     
     puts "Datos recibidos: #{datos}"  # Log para debug
 
@@ -167,14 +164,14 @@ post '/usuarios/login' do
 end
 
 
-post '/usuarios/restablecer-contrasenia' do
+post '/usuarios/enviar-correo' do
   content_type :json
   status = 500
   resp = ''
 
   begin
     datos = JSON.parse(request.body.read)
-    correo = datos['email']
+    correo = datos['Email']
     puts "Email recibido: #{correo}"  # Log para debug
 
     # Generar un código de recuperación aleatorio
@@ -211,11 +208,11 @@ post '/usuarios/restablecer-contrasenia' do
         resp = { message: 'Código de recuperación enviado a tu correo' }.to_json
       else
         status = 500
-        resp = { error: 'Error al enviar el correo' }.to_json
+        resp = { message: 'Error al enviar el correo' }.to_json
       end
     else
       status = 404
-      resp = { error: 'Usuario no encontrado' }.to_json
+      resp = { message: 'Usuario no encontrado' }.to_json
     end
   rescue JSON::ParserError
     status = 400
@@ -236,9 +233,9 @@ post '/usuarios/actualizar-contrasenia' do
 
   begin
     datos = JSON.parse(request.body.read)
-    correo = datos['email']
-    nueva_contrasenia = datos['nueva_contrasenia']
-    codigo_recuperacion = datos['codigo_recuperacion']
+    correo = datos['Email']
+    nueva_contrasenia = datos['Nueva_contrasenia']
+    codigo_recuperacion = datos['Codigo_recuperacion']
     
     puts "Email recibido: #{correo}"  # Log para debug
     puts "Código de recuperación recibido: #{codigo_recuperacion}"  # Log del código
