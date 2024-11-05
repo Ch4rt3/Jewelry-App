@@ -13,13 +13,11 @@ class RecoveryPasswordPage extends StatelessWidget {
     final RecoveryPasswordController recoveryPasswordController = RecoveryPasswordController();
     
     // Obtener argumentos pasados a la página
-    final Map<String, dynamic>? args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final Map<String, dynamic>? args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
     // Obtener email de los argumentos
-    String email = args?['email'] ?? '';
-    
-    // Obtener resetCode de los argumentos y convertirlo a String
-    String resetCode = (args?['resetCode'] is int) ? args!['resetCode'].toString() : args?['resetCode'] ?? '';
+    final String email = args?['email']; // Extraer el email
+    print(email);
 
     return AuthBackground(
       titulo: "Recovery Password", 
@@ -47,7 +45,7 @@ class RecoveryPasswordPage extends StatelessWidget {
           titulo: "Change Password", 
           onPressed: () {
             // Llamar a changePassword con email y resetCode
-            recoveryPasswordController.changePassword(context, email, resetCode); 
+            recoveryPasswordController.changePassword(context,email); 
           },
         ),
         const SignInWithAccount(),

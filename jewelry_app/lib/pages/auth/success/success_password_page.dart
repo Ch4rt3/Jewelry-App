@@ -11,7 +11,7 @@ class SuccessPasswordPage extends StatelessWidget {
       action: () {
         Navigator.pushNamedAndRemoveUntil(
                     context,
-                    '/home', // Ruta a la que quieres navegar
+                    '/sign-in', // Ruta a la que quieres navegar
                     (route) => false, // El predicado que elimina todas las rutas anteriores
                   );
       },

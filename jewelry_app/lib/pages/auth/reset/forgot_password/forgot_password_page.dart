@@ -3,6 +3,8 @@ import 'package:jewelry_app/components/layouts/auth_background.dart';
 import 'package:jewelry_app/components/buttons/large_button.dart';
 import 'package:jewelry_app/components/forms/large_text_form_field.dart';
 import 'package:jewelry_app/components/auth/sign_in_with_account.dart';
+import 'package:jewelry_app/components/messages/error_dialog.dart';
+import 'package:jewelry_app/configs/colors.dart';
 import 'package:jewelry_app/pages/auth/reset/forgot_password/forgot_password_controller.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
@@ -12,49 +14,33 @@ class ForgetPasswordPage extends StatelessWidget {
     final forgetPasswordController = ForgotPasswordController();
 
     return AuthBackground(
-      titulo: "Forget Password", 
+      titulo: "Forget Password",
       children: [
-        const SizedBox(height: 30,),
+        const SizedBox(height: 30),
         LargeTextFormField(
-          titulo: "Your email", 
+          titulo: "Your email",
           controller: forgetPasswordController.emailController,
-          onChanged: (value) {}
+          onChanged: (value) {},
         ),
         const SizedBox(height: 50),
         LargeButton(
-          titulo: "Send Email", 
+          titulo: "Send Email",
           onPressed: () async {
-            Map<String, dynamic>? resetCodeData = await forgetPasswordController.sendResetCode(context);
+            // Llamar a la función que envía el correo y obtener el mensaje de respuesta
+            Map<String, dynamic> resetCodeData = await forgetPasswordController.sendCode(context);
+            String message = resetCodeData['message'];
+            String email = resetCodeData['email'];
 
-            if (resetCodeData != null) {
-              String resetCode = resetCodeData['resetCode']?.toString() ?? ''; // Extrae solo el resetCode
+            // Mostrar el mensaje usando showErrorMessage
 
-              if (context.mounted) { // Verifica si el contexto está montado
-                showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text("Reset Code"),
-                      content: Text(resetCode), // Muestra solo el resetCode
-                      actions: [
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            textStyle: Theme.of(context).textTheme.labelLarge,
-                          ),
-                          child: const Text('Close'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            // Pasar solo el código a la siguiente página
-                            Navigator.pushNamed(context, "/recovery-password", arguments: {'email': forgetPasswordController.emailController.text, 'resetCode': resetCode}); 
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
+            // Si el mensaje es el esperado, esperar y navegar a la nueva página
+            if (message == "Código de recuperación enviado a tu correo") {
+              await Future.delayed(const Duration(seconds: 1)); // Esperar 1 segundo
+              if(context.mounted){
+                Navigator.pushNamed(context, "/recovery-password", arguments: {"email": email});
               }
             }
-          }
+          },
         ),
         const SignInWithAccount(),
       ],
