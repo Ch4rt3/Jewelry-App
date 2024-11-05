@@ -32,12 +32,14 @@ class RecoveryPasswordPage extends StatelessWidget {
         LargeTextFormField(
           controller: recoveryPasswordController.newPasswordController,
           titulo: "New Password", 
+          isPassword: true,
           onChanged: (value) {},
         ),
         const SizedBox(height: 20),
         LargeTextFormField(
           controller: recoveryPasswordController.confirmPasswordController,
           titulo: "Confirm Password", 
+          isPassword: true,
           onChanged: (value) {},
         ),
         const SizedBox(height: 20),
