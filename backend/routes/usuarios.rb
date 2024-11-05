@@ -105,7 +105,13 @@ put '/usuarios/:id' do
     usuario = Usuario[usuario_id]
     if usuario
       datos = JSON.parse(request.body.read)
-      usuario.update(datos)
+      puts "Datos recibidos para actualizar: #{datos}"  # Log para ver los datos recibidos
+
+      # Filtrar solo los campos que quieres permitir actualizar
+      campos_actualizables = ['Nombre', 'Email', 'Contrasenia']
+      datos_filtrados = datos.select { |key, _| campos_actualizables.include?(key) }
+
+      usuario.update(datos_filtrados)
       usuario.to_json
     else
       status 404
