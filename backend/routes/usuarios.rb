@@ -6,9 +6,6 @@ require 'dotenv/load'
 require_relative '../configs/database'
 require_relative '../configs/models'
 
-# Configuración del secreto para JWT
-SECRET_KEY = ENV['JWT_SECRET'] || 'tu_clave_secreta_aqui'
-
 # Obtener todos los usuarios
 get '/usuarios' do
   content_type :json
