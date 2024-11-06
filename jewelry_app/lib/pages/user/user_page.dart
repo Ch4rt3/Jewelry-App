@@ -7,8 +7,15 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Accede al UserProvider con listen en true para que la UI se actualice automáticamente
+    // Accede al UserProvider y asigna el ID a una variable
     final userProvider = Provider.of<UserProvider>(context);
+
+    // Cargar el ID del usuario desde SharedPreferences si no se ha cargado aún
+    if (userProvider.userId == null) {
+      userProvider.loadUserId();
+    }
+
+    final String userId = userProvider.userId ?? 'ID no disponible';
 
     return Scaffold(
       appBar: AppBar(
@@ -51,6 +58,15 @@ class UserPage extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 5),
+            // Muestra el ID del usuario guardado en SharedPreferences
+            Text(
+              'ID: $userId',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
               ),
             ),
             const SizedBox(height: 5),

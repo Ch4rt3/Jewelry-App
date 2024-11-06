@@ -1,5 +1,5 @@
 class Usuario {
-   int? id; 
+  int? id;
   String email;
   String url;
   String descripcion;
@@ -12,7 +12,7 @@ class Usuario {
   int? codigoRecuperacion;
 
   Usuario({
-    this.id, 
+    this.id,
     required this.email,
     required this.url,
     required this.descripcion,
@@ -27,31 +27,33 @@ class Usuario {
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
-      id: json['id'], // Asegúrate de mapear el 'id' desde el JSON
+      id: json['ID'], // Asegúrate de que coincida con la capitalización de tu JSON
       email: json['Email'] ?? '',
-      contrasena: json['Contrasenia'] ?? '',
-      nombre: json['Nombre'] ?? 'User',
-      telefono: json['Telefono'] ?? 'Desconocido',
-      imagen: json['Imagen'] ?? 'assets/images/default_user.png',
       url: json['URL'] ?? '',
       descripcion: json['Descripcion'] ?? 'Sin descripción',
       acercaDe: json['AcercaDe'] ?? '',
+      imagen: json['Imagen'] ?? 'assets/images/default_user.png',
+      nombre: json['Nombre'] ?? 'User',
+      telefono: json['Telefono'] ?? 'Desconocido',
       visibilidad: json['Visibilidad'] ?? true,
+      contrasena: json['Contrasenia'] ?? '',
+      codigoRecuperacion: json['CodigoRecuperacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id, // Incluir el 'id' en la conversión a JSON
+      'ID': id, // Coincide con la capitalización de tu API si es necesario
       'Email': email,
-      'Contrasenia': contrasena,
-      'Nombre': nombre,
-      'Telefono': telefono,
-      'Imagen': imagen,
-      'Url': url,
+      'URL': url,
       'Descripcion': descripcion,
       'AcercaDe': acercaDe,
+      'Imagen': imagen,
+      'Nombre': nombre,
+      'Telefono': telefono,
       'Visibilidad': visibilidad,
+      'Contrasenia': contrasena,
+      'CodigoRecuperacion': codigoRecuperacion,
     };
   }
 }
