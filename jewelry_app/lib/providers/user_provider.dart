@@ -89,12 +89,13 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
-  // Método para cargar el ID desde SharedPreferences
-  Future<void> loadUserId() async {
-    final prefs = await SharedPreferences.getInstance();
-    _userId = prefs.getString('userId');
-    notifyListeners();
-  }
+// Método para cargar el ID desde SharedPreferences
+Future<void> loadUserId() async {
+  final prefs = await SharedPreferences.getInstance();
+  _userId = prefs.getString('userId');
+  notifyListeners();
+}
+
 
   // Método para cerrar sesión y limpiar el ID de SharedPreferences
   void logout() async {
@@ -131,36 +132,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners(); // Notifica a los oyentes
   }
 
-  // Método para registrar un nuevo usuario y guardar su ID en SharedPreferences
-Future<bool> register(Usuario newUser) async {
-  try {
-    final response = await UsuarioService().crearUsuario(newUser);
-    if (response.statusCode == 201) { // 201 es el código HTTP para "Created"
-      final data = jsonDecode(response.body);
 
-      // Crear un usuario desde los datos recibidos
-      _usuario = Usuario.fromJson(data);
-      _userId = _usuario.id.toString(); // Guarda el ID del usuario
-
-      // Guardar el ID en SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('userId', _userId!);
-
-      _isLogged = true;
-
-      print('Usuario registrado: $_usuario');
-      print('ID guardado: $_userId');
-
-      notifyListeners(); // Notificar cambios en el estado
-      return true;
-    } else {
-      print('Error al registrar el usuario: ${response.body}');
-      return false;
-    }
-  } catch (e) {
-    print('Error al registrar el usuario: $e');
-    return false;
-  }
-}
 }
 

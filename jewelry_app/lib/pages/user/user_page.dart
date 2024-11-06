@@ -7,15 +7,12 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Accede al UserProvider y asigna el ID a una variable
     final userProvider = Provider.of<UserProvider>(context);
 
-    // Cargar el ID del usuario desde SharedPreferences si no se ha cargado aún
+    // Llamar a loadUserId si el userId es null y aún no se ha cargado
     if (userProvider.userId == null) {
       userProvider.loadUserId();
     }
-
-    final String userId = userProvider.userId ?? 'ID no disponible';
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +49,6 @@ class UserPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // Muestra el nombre del usuario
             Text(
               userProvider.usuario?.nombre ?? 'Nombre no disponible',
               style: const TextStyle(
@@ -60,22 +56,20 @@ class UserPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 5),
-            // Muestra el ID del usuario guardado en SharedPreferences
-            Text(
-              'ID: $userId',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 5),
-            // Muestra el correo del usuario
             Text(
               userProvider.usuario?.email ?? 'Correo no disponible',
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Muestra el ID del usuario o un mensaje de carga
+            Text(
+              'User ID: ${userProvider.userId ?? "Cargando..."}',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.blueGrey,
               ),
             ),
             const SizedBox(height: 30),
@@ -88,7 +82,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/settings');
-                      // Acción de ir a ajustes
                     },
                   ),
                   ListTile(
@@ -97,7 +90,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/orders');
-                      // Acción de ir a órdenes
                     },
                   ),
                   ListTile(
@@ -106,7 +98,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/address');
-                      // Acción de ir a direcciones
                     },
                   ),
                   ListTile(
@@ -116,7 +107,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/wallet');
-                      // Acción de ir a billetera
                     },
                   ),
                   ListTile(
@@ -126,7 +116,6 @@ class UserPage extends StatelessWidget {
                     onTap: () {
                       userProvider.logout();
                       Navigator.pushNamed(context, '/sign-in');
-                      // Acción de cerrar sesión
                     },
                   ),
                 ],

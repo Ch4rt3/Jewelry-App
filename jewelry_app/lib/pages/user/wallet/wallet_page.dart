@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';  // Para obtener el directorio de documentos
-import 'package:jewelry_app/pages/user/wallet/create_wallet_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../services/wallet_service.dart';
+import '../../../models/tarjeta.dart';
+import 'create_wallet_page.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -12,51 +12,63 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
-  List<dynamic> _wallets = [];
+  final WalletService _walletService = WalletService();
+  List<Tarjeta> _wallets = [];
 
   @override
   void initState() {
     super.initState();
-    _loadWallets();  // Cargar las billeteras al iniciar
+    _loadWallets(); // Cargar las billeteras al iniciar
   }
 
   Future<void> _loadWallets() async {
     try {
-      final directory = await getApplicationDocumentsDirectory();
-      final path = '${directory.path}/wallets.json';
-      final file = File(path);
+      // Obtener el usuarioId desde SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final usuarioId = prefs.getString('userId');
 
-      if (file.existsSync()) {
-        final jsonContent = file.readAsStringSync();
-        setState(() {
-          _wallets = json.decode(jsonContent);  // Cargar las billeteras
-        });
-      } else {
-        // Si el archivo no existe, inicializarlo con una lista vacía
-        file.writeAsStringSync(json.encode([]));
+      if (usuarioId == null) {
+        // Manejar el caso en que el usuarioId no esté disponible
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Error: Usuario no autenticado.'),
+        ));
+        return;
       }
+
+      // Llamar al servicio para obtener las tarjetas del usuario
+      List<Tarjeta> tarjetas = await _walletService.getWalletsByUserId(usuarioId);
+
+      setState(() {
+        _wallets = tarjetas; // Cargar las billeteras
+      });
     } catch (e) {
       print('Error reading wallets: $e');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error al cargar las tarjetas: $e'),
+      ));
     }
   }
 
   // Función para eliminar una billetera
   Future<void> _deleteWallet(int index) async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = '${directory.path}/wallets.json';
-    final file = File(path);
+    try {
+      final tarjetaId = _wallets[index].id;
+      if (tarjetaId != null) {
+        await _walletService.deleteWallet(tarjetaId); // Llamada al servicio para eliminar
 
-    // Eliminar la billetera del listado
-    setState(() {
-      _wallets.removeAt(index);
-    });
+        setState(() {
+          _wallets.removeAt(index); // Eliminar la tarjeta localmente
+        });
 
-    // Guardar la lista actualizada en el archivo JSON
-    file.writeAsStringSync(json.encode(_wallets));
-
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Wallet deleted successfully!'),
-    ));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Wallet deleted successfully!'),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error al eliminar la tarjeta: $e'),
+      ));
+    }
   }
 
   @override
@@ -99,12 +111,12 @@ class _WalletPageState extends State<WalletPage> {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
                           child: _buildCard(
-                            cardBrand: wallet['cardBrand'],
-                            cardColor: Colors.black, // Todas las tarjetas serán de color negro
-                            cardNumber: wallet['cardNumber'],
-                            holderName: wallet['holderName'],
-                            expiryDate: wallet['expiryDate'],
-                            onDelete: () => _deleteWallet(index), // Eliminar la tarjeta
+                            cardBrand: 'Card', // Puedes personalizar esto si tienes la información
+                            cardColor: Colors.black,
+                            cardNumber: wallet.numeroTarjeta,
+                            holderName: wallet.nombreTitular,
+                            expiryDate: wallet.expFecha,
+                            onDelete: () => _deleteWallet(index),
                           ),
                         );
                       },
@@ -128,14 +140,13 @@ class _WalletPageState extends State<WalletPage> {
     );
   }
 
-  // Modificar la función _buildCard para agregar el botón de eliminar
   Widget _buildCard({
     required String cardBrand,
     required Color cardColor,
     required String cardNumber,
     required String holderName,
     required String expiryDate,
-    required VoidCallback onDelete, // Parámetro para la función de eliminar
+    required VoidCallback onDelete,
   }) {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -157,7 +168,7 @@ class _WalletPageState extends State<WalletPage> {
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
-                  overflow: TextOverflow.ellipsis,  // Agregado para evitar el desbordamiento
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Row(
@@ -165,11 +176,11 @@ class _WalletPageState extends State<WalletPage> {
                   Text(
                     cardNumber,
                     style: const TextStyle(color: Colors.white, fontSize: 18),
-                    overflow: TextOverflow.ellipsis,  // Evita que el número desborde
+                    overflow: TextOverflow.ellipsis,
                   ),
                   IconButton(
                     icon: const Icon(Icons.delete, color: Colors.white),
-                    onPressed: onDelete, // Eliminar tarjeta cuando se presiona
+                    onPressed: onDelete,
                   ),
                 ],
               ),

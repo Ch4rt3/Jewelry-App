@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:convert'; // Para manejar JSON
-import 'dart:io'; // Para manejar archivos
-import 'package:path_provider/path_provider.dart'; // Para obtener rutas del dispositivo
-import 'package:uuid/uuid.dart'; // Para generar un ID único
+import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:jewelry_app/models/tarjeta.dart';
+import 'package:jewelry_app/services/wallet_service.dart';
+import 'package:provider/provider.dart';
 
 class CreateWalletPage extends StatefulWidget {
   const CreateWalletPage({super.key});
@@ -13,59 +13,60 @@ class CreateWalletPage extends StatefulWidget {
 
 class _CreateWalletPageState extends State<CreateWalletPage> {
   final _formKey = GlobalKey<FormState>();
-  String _cardBrand = '';
   String _cardNumber = '';
   String _holderName = '';
   String _expiryDate = '';
   String _cvv = '';
+  final WalletService _walletService = WalletService();
+  String? userId;
 
-  // Obtener la ruta del archivo wallets.json
-  Future<String> _getWalletsFilePath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return '${directory.path}/wallets.json';
+  @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    userProvider.loadUserId(); // Cargar el ID del usuario desde SharedPreferences
+    setState(() {
+      userId = userProvider.userId; // Asignar el ID a la variable local
+    });
   }
 
-  // Función para guardar la billetera
+  // Función para guardar la billetera utilizando el usuarioId
   Future<void> _saveWallet() async {
-    // Generar un ID único para la nueva billetera
-    var uuid = Uuid();
-    String walletId = uuid.v4(); // Generar un ID único
-
-    // Estructura de la nueva tarjeta
-    Map<String, String> newWallet = {
-      'id': walletId,  // Agregar ID único
-      'cardBrand': _cardBrand,
-      'cardNumber': _cardNumber,
-      'holderName': _holderName,
-      'expiryDate': _expiryDate,
-      'cvv': _cvv,  // Agregar CVV
-    };
-
-    // Obtener la ruta correcta para guardar el archivo wallets.json en el dispositivo
-    final path = await _getWalletsFilePath();
-    final file = File(path);
-    
-    List<dynamic> wallets = [];
-
-    // Si el archivo existe, cargar el contenido JSON
-    if (file.existsSync()) {
-      String jsonContent = file.readAsStringSync();
-      wallets = json.decode(jsonContent);
+    if (userId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Error: Usuario no autenticado.'),
+      ));
+      return;
     }
 
-    // Agregar la nueva billetera a la lista
-    wallets.add(newWallet);
+    // Crear la estructura de la tarjeta con usuarioId
+    Tarjeta newWallet = Tarjeta(
+      usuarioId: userId!, // usuarioId como String
+      numeroTarjeta: _cardNumber,
+      nombreTitular: _holderName,
+      expFecha: _expiryDate,
+      cvv: _cvv,
+    );
 
-    // Guardar la lista actualizada en el archivo JSON
-    file.writeAsStringSync(json.encode(wallets));
+    try {
+      // Llamar al servicio para crear la tarjeta en el backend
+      final response = await _walletService.createWallet(newWallet);
 
-    // Mostrar mensaje de éxito
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Wallet created successfully!'),
-    ));
-
-    // Navegar de vuelta a la pantalla de Wallet
-    Navigator.pushReplacementNamed(context, '/wallet');
+      if (response.statusCode == 201) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Wallet created successfully!'),
+        ));
+        Navigator.pushReplacementNamed(context, '/wallet');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Error al crear la tarjeta: ${response.statusCode}'),
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error al crear la tarjeta: $e'),
+      ));
+    }
   }
 
   @override
@@ -82,20 +83,10 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Campo para la marca de la tarjeta
+                Text('User ID: ${userId ?? 'Cargando...'}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Card Brand'),
-                  onSaved: (value) => _cardBrand = value ?? '',
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter the card brand';
-                    }
-                    return null;
-                  },
-                ),
-                // Campo para el número de la tarjeta (teclado numérico)
-                TextFormField(
-                  keyboardType: TextInputType.number,  // Teclado numérico
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: 'Card Number'),
                   onSaved: (value) => _cardNumber = value ?? '',
                   validator: (value) {
@@ -105,7 +96,6 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                     return null;
                   },
                 ),
-                // Campo para el nombre del titular de la tarjeta
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'Card Holder Name'),
                   onSaved: (value) => _holderName = value ?? '',
@@ -116,9 +106,8 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                     return null;
                   },
                 ),
-                // Campo para la fecha de vencimiento (teclado numérico)
                 TextFormField(
-                  keyboardType: TextInputType.datetime,  // Teclado numérico para fechas
+                  keyboardType: TextInputType.datetime,
                   decoration: const InputDecoration(labelText: 'Expiry Date (MM/YY)'),
                   onSaved: (value) => _expiryDate = value ?? '',
                   validator: (value) {
@@ -128,9 +117,8 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                     return null;
                   },
                 ),
-                // Campo para el CVV (teclado numérico)
                 TextFormField(
-                  keyboardType: TextInputType.number,  // Teclado numérico
+                  keyboardType: TextInputType.number,
                   decoration: const InputDecoration(labelText: 'CVV'),
                   onSaved: (value) => _cvv = value ?? '',
                   validator: (value) {
@@ -145,7 +133,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      _saveWallet(); // Llamar a la función para guardar y navegar
+                      _saveWallet();
                     }
                   },
                   child: const Text('Create Wallet'),
