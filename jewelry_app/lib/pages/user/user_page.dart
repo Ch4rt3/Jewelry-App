@@ -63,15 +63,8 @@ class UserPage extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            const SizedBox(height: 20),
-            // Muestra el ID del usuario o un mensaje de carga
-            Text(
-              'User ID: ${userProvider.userId ?? "Cargando..."}',
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.blueGrey,
-              ),
-            ),
+          
+           
             const SizedBox(height: 30),
             Expanded(
               child: ListView(

@@ -1,6 +1,6 @@
 class Tarjeta {
   int? id;
-  String usuarioId; // usuarioId como String
+  String usuarioId;
   String numeroTarjeta;
   String nombreTitular;
   String expFecha;
@@ -18,11 +18,11 @@ class Tarjeta {
   factory Tarjeta.fromJson(Map<String, dynamic> json) {
     return Tarjeta(
       id: json['ID'],
-      usuarioId: json['UsuarioId'].toString(),
-      numeroTarjeta: json['numeroTarjeta'],
-      nombreTitular: json['nombreTitular'],
-      expFecha: json['expFecha'],
-      cvv: json['CCV'],
+      usuarioId: json['UsuarioId'].toString(), // Asegura que usuarioId esté en String
+      numeroTarjeta: json['numeroTarjeta'].toString(), // Convierte numeroTarjeta a String
+      nombreTitular: json['nombreTitular'] ?? 'N/A', // Valor por defecto si es nulo
+      expFecha: json['expFecha'] ?? 'N/A',
+      cvv: json['CCV'].toString(), // Convierte CVV a String
     );
   }
 

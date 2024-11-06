@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:jewelry_app/models/tarjeta.dart';
-import 'package:jewelry_app/services/api_base_service.dart';
+import '../models/tarjeta.dart';
+import 'api_base_service.dart';
 
 class WalletService extends ApiBaseService {
   // Método para crear una nueva tarjeta

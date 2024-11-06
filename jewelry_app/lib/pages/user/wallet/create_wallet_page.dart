@@ -83,7 +83,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('User ID: ${userId ?? 'Cargando...'}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                
                 const SizedBox(height: 20),
                 TextFormField(
                   keyboardType: TextInputType.number,

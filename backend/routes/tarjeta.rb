@@ -18,7 +18,7 @@ end
 # Obtener todas las tarjetas de un usuario específico por usuarioId
 get '/wallets/usuario/:usuarioId' do
   content_type :json
-  usuario_id = params[:usuarioId]
+  usuario_id = params[:usuarioId].to_i
   begin
     tarjetas = Pago.where(UsuarioId: usuario_id).all
     if tarjetas.any?

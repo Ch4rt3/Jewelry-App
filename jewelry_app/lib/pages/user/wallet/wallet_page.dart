@@ -116,6 +116,7 @@ class _WalletPageState extends State<WalletPage> {
                             cardNumber: wallet.numeroTarjeta,
                             holderName: wallet.nombreTitular,
                             expiryDate: wallet.expFecha,
+                            cvv: wallet.cvv,
                             onDelete: () => _deleteWallet(index),
                           ),
                         );
@@ -146,6 +147,7 @@ class _WalletPageState extends State<WalletPage> {
     required String cardNumber,
     required String holderName,
     required String expiryDate,
+    required String cvv,
     required VoidCallback onDelete,
   }) {
     return Container(
@@ -194,6 +196,11 @@ class _WalletPageState extends State<WalletPage> {
           const SizedBox(height: 10),
           Text(
             'Expiry Date\n$expiryDate',
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'CVV\n$cvv',
             style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
         ],
