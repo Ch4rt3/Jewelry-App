@@ -49,7 +49,7 @@ class SignUpPage extends StatelessWidget {
                   // Navegación al registro exitoso
                   Navigator.pushNamedAndRemoveUntil(
                     context,
-                    '/home', // Ruta a la que quieres navegar
+                    '/success-password', // Ruta a la que quieres navegar
                     (route) => false, // El predicado que elimina todas las rutas anteriores
                   );
                 }
