@@ -28,12 +28,14 @@ class SignUpPage extends StatelessWidget {
           LargeTextFormField(
             titulo: "Contraseña",
             controller: signUpController.passwordController,
+            isPassword: true,
             onChanged: (value) => signUpController.setPassword(value),
           ),
           const SizedBox(height: 20),
           LargeTextFormField(
             titulo: "Confirmar contraseña",
             controller: signUpController.confirmPswrdController,
+            isPassword: true,
             onChanged: (value) => signUpController.setConfirmPassword(value),
           ),
           const SizedBox(height: 10),

@@ -30,6 +30,7 @@ class SignInPage extends StatelessWidget {
           LargeTextFormField(
             titulo: "Contraseña",
             controller: signInController.passwordController,
+            isPassword: true,
             onChanged: (value) {
               // Aquí puedes manejar cambios si es necesario
             },
