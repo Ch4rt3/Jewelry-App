@@ -22,7 +22,7 @@ get '/productos/categoria/:categoria' do
     content_type :json
     categoria = params[:categoria]
     begin
-# Obtener los productos que coincidan con la categoría
+    # Obtener los productos que coincidan con la categoría
     productos = Producto.where(Categoria: categoria).all
     if productos.any?
         status 200
@@ -40,11 +40,11 @@ end
 post '/productos' do
     content_type :json
     begin
-# Parsear los datos JSON del request
+    # Parsear los datos JSON del request
     datos = JSON.parse(request.body.read)
     puts "-----------------------------"
     puts datos
-# Extraer los valores del JSON
+    # Extraer los valores del JSON
     nombre = datos['Nombre']
     precio = datos['Precio']
     stock = datos['Stock']
@@ -52,15 +52,15 @@ post '/productos' do
     imagen_url = datos['ImagenUrl']
     descripcion = datos['Descripcion']
     descripcion_larga = datos['DescripcionLarga']
-# Insertar el producto en la base de datos usando parámetros
+    # Insertar el producto en la base de datos usando parámetros
     query = <<-SQL
         INSERT INTO productos (Nombre, Precio, Stock, Categoria, ImagenUrl, Descripcion, DescripcionLarga)
         VALUES (?, ?, ?, ?, ?, ?, ?)
         RETURNING *;
     SQL
-# Ejecutar la consulta y obtener el producto recién creado
+    # Ejecutar la consulta y obtener el producto recién creado
     nuevo_producto = DB[query, nombre, precio, stock, categoria, imagen_url, descripcion, descripcion_larga].first
-# Devolver el producto creado en la respuesta
+    # Devolver el producto creado en la respuesta
     status 201
     nuevo_producto.to_json
     rescue Sequel::DatabaseError => e
