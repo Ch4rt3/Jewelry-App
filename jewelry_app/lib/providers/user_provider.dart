@@ -18,12 +18,10 @@ class UserProvider extends ChangeNotifier {
   ); // Usuario actualmente logueado
   bool _isLogged = false; // Atributo para verificar si el usuario está logueado
   String? _userId; // Variable para almacenar el ID del usuario
-  List<Usuario> _usuarios = []; // Lista de usuarios cargados
 
   // Getters
   Usuario? get usuario => _usuario;
   bool get isLogged => _isLogged;
-  List<Usuario> get usuarios => _usuarios;
   String? get userId => _userId; // Getter para acceder al ID del usuario
 
   // Método para actualizar la información del usuario
