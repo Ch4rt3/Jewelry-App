@@ -24,7 +24,7 @@ class CategoryPage extends StatelessWidget {
     return MainBackground(
       searchBar: true,
       showDiamondMessage: false,  
-      message: categoryName,    
+      message: "",    
       showComplementMessage: false, 
       subtitle: categoryName,
       automaticallyImplyLeading: false,
