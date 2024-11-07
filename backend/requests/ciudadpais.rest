@@ -1,0 +1,14 @@
+@baseUrl = http://localhost:4568
+@paisId = 3  # Puedes cambiar este valor al ID del país que deseas consultar
+
+#############################################
+
+# Obtener todos los países
+GET {{baseUrl}}/paises
+
+#############################################
+
+# Obtener ciudades de un país específico
+GET {{baseUrl}}/ciudades/pais/{{paisId}}
+
+#############################################

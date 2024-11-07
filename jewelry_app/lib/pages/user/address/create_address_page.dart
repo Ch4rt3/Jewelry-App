@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../models/direccion.dart';
+import '../../../providers/direccion_provider.dart';
+import '../../../providers/pais_provider.dart';
+import '../../../providers/ciudad_provider.dart';
 
 class CreateAddressPage extends StatefulWidget {
-  final Map<String, dynamic>? address;
+  final int usuarioId;
 
-  const CreateAddressPage({Key? key, this.address}) : super(key: key);
+  const CreateAddressPage({Key? key, required this.usuarioId}) : super(key: key);
 
   @override
   _CreateAddressPageState createState() => _CreateAddressPageState();
@@ -11,23 +16,28 @@ class CreateAddressPage extends StatefulWidget {
 
 class _CreateAddressPageState extends State<CreateAddressPage> {
   final _formKey = GlobalKey<FormState>();
-  String _name = '';
-  String _address = '';
+  String _direccion = '';
+  String _codigoPostal = '';
+  int? _selectedPaisId;
+  int? _selectedCiudadId;
 
   @override
   void initState() {
     super.initState();
-    if (widget.address != null) {
-      _name = widget.address!['name'];
-      _address = widget.address!['address'];
-    }
+    // Cargar los países al iniciar la página
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<PaisProvider>(context, listen: false).fetchPaises();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final paises = Provider.of<PaisProvider>(context).paises;
+    final ciudades = Provider.of<CiudadProvider>(context).ciudades;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.address == null ? 'Create Address' : 'Edit Address'),
+        title: Text('Crear Dirección (Usuario ID: ${widget.usuarioId})'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,38 +45,102 @@ class _CreateAddressPageState extends State<CreateAddressPage> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                initialValue: _name,
-                decoration: const InputDecoration(labelText: 'Name'),
-                onSaved: (value) => _name = value ?? '',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the name';
+              // Dropdown de países
+              DropdownButtonFormField<int>(
+                decoration: const InputDecoration(labelText: 'Seleccionar País'),
+                value: _selectedPaisId,
+                items: paises.isNotEmpty
+                    ? paises.map((pais) {
+                        return DropdownMenuItem<int>(
+                          value: pais.id,
+                          child: Text(pais.nombre),
+                        );
+                      }).toList()
+                    : null,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedPaisId = value;
+                    _selectedCiudadId = null; // Reiniciar selección de ciudad
+                  });
+                  if (value != null) {
+                    // Cargar las ciudades para el país seleccionado
+                    Provider.of<CiudadProvider>(context, listen: false)
+                        .fetchCiudadesByPaisId(value);
                   }
-                  return null;
                 },
+                validator: (value) =>
+                    value == null ? 'Por favor seleccione un país' : null,
+                hint: paises.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : const Text("Seleccione un país"),
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                initialValue: _address,
-                decoration: const InputDecoration(labelText: 'Address'),
-                onSaved: (value) => _address = value ?? '',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the address';
-                  }
-                  return null;
+              // Dropdown de ciudades
+              DropdownButtonFormField<int>(
+                decoration: const InputDecoration(labelText: 'Seleccionar Ciudad'),
+                value: _selectedCiudadId,
+                items: ciudades.isNotEmpty
+                    ? ciudades.map((ciudad) {
+                        return DropdownMenuItem<int>(
+                          value: ciudad.id,
+                          child: Text(ciudad.nombre),
+                        );
+                      }).toList()
+                    : null,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedCiudadId = value;
+                  });
                 },
+                validator: (value) =>
+                    value == null ? 'Por favor seleccione una ciudad' : null,
+                hint: ciudades.isEmpty
+                    ? const Center(child: Text("Seleccione un país primero"))
+                    : const Text("Seleccione una ciudad"),
+              ),
+              const SizedBox(height: 16),
+              // Campo de dirección
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Dirección'),
+                onSaved: (value) => _direccion = value ?? '',
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Por favor ingrese una dirección' : null,
+              ),
+              const SizedBox(height: 16),
+              // Campo de código postal
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Código Postal'),
+                onSaved: (value) => _codigoPostal = value ?? '',
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Por favor ingrese el código postal' : null,
               ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    Navigator.pop(context, {'name': _name, 'address': _address});
+                    if (_selectedCiudadId != null && _selectedPaisId != null) {
+                      final nuevaDireccion = Direccion(
+                        usuarioId: widget.usuarioId,
+                        ciudadId: _selectedCiudadId!,
+                        direccion: _direccion,
+                        codigoPostal: _codigoPostal,
+                      );
+
+                      Provider.of<DireccionProvider>(context, listen: false)
+                          .addDireccion(nuevaDireccion);
+
+                      Navigator.pop(context, nuevaDireccion);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Seleccione un país y una ciudad.'),
+                        ),
+                      );
+                    }
                   }
                 },
-                child: Text(widget.address == null ? 'Create Address' : 'Save Changes'),
+                child: const Text('Guardar Dirección'),
               ),
             ],
           ),

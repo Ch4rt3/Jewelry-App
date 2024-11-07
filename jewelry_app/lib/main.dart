@@ -25,7 +25,9 @@ import 'package:jewelry_app/providers/user_provider.dart';
 import 'package:jewelry_app/providers/order_provider.dart';
 import 'package:jewelry_app/providers/shoppingcart_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:jewelry_app/providers/direccion_provider.dart'; 
+import 'providers/pais_provider.dart';
+import 'providers/ciudad_provider.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -40,6 +42,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
         ChangeNotifierProvider(create: (context) => ShoppingCartProvider()),
+        ChangeNotifierProvider(create: (context) => DireccionProvider()), // Agrega DireccionProvider aquí
+        ChangeNotifierProvider(create: (context) => PaisProvider()),
+        ChangeNotifierProvider(create: (context) => CiudadProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

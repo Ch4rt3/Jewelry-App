@@ -1,0 +1,29 @@
+@baseUrl = http://localhost:4568
+
+#############################################
+
+# Obtener todas las direcciones
+GET {{baseUrl}}/direcciones
+
+#############################################
+
+# Obtener todas las direcciones de un usuario específico
+GET {{baseUrl}}/direcciones/usuario/1
+
+#############################################
+
+# Crear una nueva dirección
+POST {{baseUrl}}/direcciones
+Content-Type: application/json
+
+{
+  "UsuarioId": 10,
+  "CiudadId": 2,
+  "Direccion": "Av. Nueva 456",
+  "codigoPostal": "45678"
+}
+
+#############################################
+
+# Eliminar una dirección por ID
+DELETE {{baseUrl}}/direcciones/3
