@@ -4,7 +4,7 @@ class LargeTextFormField extends StatefulWidget {
   final String titulo;
   final TextEditingController? controller;
   final Function(String) onChanged;
-  final bool isPassword; // Nuevo parámetro para indicar si es un campo de contraseña
+  final bool isPassword;
 
   const LargeTextFormField({
     super.key,
@@ -19,7 +19,7 @@ class LargeTextFormField extends StatefulWidget {
 }
 
 class _LargeTextFormFieldState extends State<LargeTextFormField> {
-  bool _obscureText = true; // Estado para controlar la visibilidad del texto
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +37,21 @@ class _LargeTextFormFieldState extends State<LargeTextFormField> {
           vertical: 16,
           horizontal: 20,
         ),
-        suffixIcon: widget.isPassword // Solo mostrar el icono si es un campo de contraseña
+        suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
                 ),
                 onPressed: () {
                   setState(() {
-                    _obscureText = !_obscureText; // Alternar la visibilidad
+                    _obscureText = !_obscureText;
                   });
                 },
               )
-            : null, // Si no es contraseña, no mostrar icono
+            : null,
       ),
       onChanged: widget.onChanged,
-      obscureText: widget.isPassword ? _obscureText : false, // Controlar si debe ser oculto
+      obscureText: widget.isPassword ? _obscureText : false,
     );
   }
 }

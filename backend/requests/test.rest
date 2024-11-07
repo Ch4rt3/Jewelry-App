@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:4568
+
+#############################################
+
+# Obtener todas las tarjetas
+GET {{baseUrl}}/wallets
+
+#############################################
+
+# Obtener todas las tarjetas de un usuario específico
+GET {{baseUrl}}/wallets/usuario/1
+
+#############################################
+
+# Obtener una tarjeta específica por ID
+GET {{baseUrl}}/wallets/3
+
+#############################################
+
+# Crear una nueva tarjeta
+POST {{baseUrl}}/wallets
+Content-Type: application/json
+
+{
+  "numeroTarjeta": "1234567890123456",
+ 
+  "expFecha": "12/25",
+   "CCV": "123",
+  "nombreTitular": "Titular Ejemplo",
+  "usuarioId": 1
+}
+
+#############################################
+
+# Eliminar una tarjeta por ID
+DELETE {{baseUrl}}/wallets/7

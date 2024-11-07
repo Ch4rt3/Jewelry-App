@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:jewelry_app/providers/user_provider.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -11,169 +13,68 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _isEditingName = false;
   bool _isEditingEmail = false;
   bool _isEditingPassword = false;
-  bool _isPasswordVisible = false; // Controlar visibilidad de la contraseña
+  bool _isPasswordVisible = false;
 
-  final TextEditingController _nameController =
-      TextEditingController(text: 'Bruno Pham');
-  final TextEditingController _emailController =
-      TextEditingController(text: 'bruno203@gmail.com');
-  final TextEditingController _passwordController =
-      TextEditingController(text: '************');
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    _nameController = TextEditingController(text: userProvider.usuario?.nombre ?? '');
+    _emailController = TextEditingController(text: userProvider.usuario?.email ?? '');
+    _passwordController = TextEditingController(text: userProvider.usuario?.contrasena ?? '');
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context); // Regresar a la pantalla anterior
-          },
-        ),
-        title: const Text(
-          'Settings',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert, color: Colors.black),
-            onPressed: () {
-              // Acción de más opciones
-            },
-          ),
-        ],
+        title: const Text('Settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            // Información personal
-            _buildSectionTitle('Personal Information'),
-            const SizedBox(height: 10),
-            _buildEditableField(
-              label: 'Name',
+            TextFormField(
               controller: _nameController,
-              isEditing: _isEditingName,
-              onEditTap: () {
-                setState(() {
-                  _isEditingName = !_isEditingName;
-                });
-              },
+              decoration: const InputDecoration(labelText: 'Name'),
             ),
             const SizedBox(height: 10),
-            _buildEditableField(
-              label: 'Email',
+            TextFormField(
               controller: _emailController,
-              isEditing: _isEditingEmail,
-              onEditTap: () {
-                setState(() {
-                  _isEditingEmail = !_isEditingEmail;
-                });
-              },
+              decoration: const InputDecoration(labelText: 'Email'),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: _passwordController,
+              obscureText: !_isPasswordVisible,
+              decoration: const InputDecoration(labelText: 'Password'),
             ),
             const SizedBox(height: 20),
-            // Sección de contraseña
-            _buildSectionTitle('Password'),
-            const SizedBox(height: 10),
-            _buildPasswordField(
-              label: 'Password',
-              controller: _passwordController,
-              isEditing: _isEditingPassword,
-              isPasswordVisible: _isPasswordVisible,
-              onEditTap: () {
-                setState(() {
-                  _isEditingPassword = !_isEditingPassword;
-                });
+            ElevatedButton(
+              onPressed: () async {
+                // Llamar al método de actualización en UserProvider
+                await userProvider.actualizarUsuario(
+                  _nameController.text,
+                  _emailController.text,
+                  _passwordController.text,
+                );
+
+                // Mostrar un mensaje de éxito
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Información actualizada')),
+                );
               },
-              onEyeTap: () {
-                setState(() {
-                  _isPasswordVisible = !_isPasswordVisible;
-                });
-              },
+              child: const Text('Guardar'),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  // Función para mostrar el título de la sección
-  Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        color: Colors.grey,
-      ),
-    );
-  }
-
-  // Función para construir los campos de texto editables
-  Widget _buildEditableField({
-    required String label,
-    required TextEditingController controller,
-    required bool isEditing,
-    required VoidCallback onEditTap,
-  }) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: controller,
-            readOnly: !isEditing, // Cambiar entre editable o no
-            decoration: InputDecoration(
-              labelText: label,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-        ),
-        IconButton(
-          icon: Icon(isEditing ? Icons.check : Icons.edit, color: Colors.grey),
-          onPressed: onEditTap, // Alternar entre editar o guardar
-        ),
-      ],
-    );
-  }
-
-  // Función para construir el campo de contraseña
-  Widget _buildPasswordField({
-    required String label,
-    required TextEditingController controller,
-    required bool isEditing,
-    required bool isPasswordVisible,
-    required VoidCallback onEditTap,
-    required VoidCallback onEyeTap, // Controlar visibilidad
-  }) {
-    return Row(
-      children: [
-        Expanded(
-          child: TextFormField(
-            controller: controller,
-            readOnly: !isEditing, // Cambiar entre editable o no
-            obscureText: !isPasswordVisible, // Controlar visibilidad
-            decoration: InputDecoration(
-              labelText: label,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-        ),
-        IconButton(
-          icon: Icon(isEditing ? Icons.check : Icons.edit, color: Colors.grey),
-          onPressed: onEditTap, // Alternar entre editar o guardar
-        ),
-        IconButton(
-          icon: Icon(
-            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-            color: Colors.grey,
-          ),
-          onPressed: onEyeTap, // Mostrar/ocultar contraseña
-        ),
-      ],
     );
   }
 }

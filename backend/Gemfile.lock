@@ -3,7 +3,10 @@ GEM
   specs:
     base64 (0.2.0)
     bigdecimal (3.1.8)
+    dotenv (3.1.4)
     ffi (1.17.0-x64-mingw-ucrt)
+    jwt (2.9.3)
+      base64
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -24,6 +27,9 @@ GEM
     rerun (0.14.0)
       listen (~> 3.0)
     ruby2_keywords (0.0.5)
+    ruby_http_client (3.5.5)
+    sendgrid-ruby (6.7.0)
+      ruby_http_client (~> 3.4)
     sequel (5.79.0)
       bigdecimal
     sinatra (4.0.0)
@@ -40,8 +46,11 @@ PLATFORMS
   x64-mingw-ucrt
 
 DEPENDENCIES
+  dotenv
+  jwt
   rackup
   rerun
+  sendgrid-ruby
   sequel (~> 5.79.0)
   sinatra
   sqlite3

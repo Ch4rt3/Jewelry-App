@@ -6,9 +6,6 @@ require 'dotenv/load'
 require_relative '../configs/database'
 require_relative '../configs/models'
 
-# Configuración del secreto para JWT
-SECRET_KEY = ENV['JWT_SECRET'] || 'tu_clave_secreta_aqui'
-
 # Obtener todos los usuarios
 get '/usuarios' do
   content_type :json
@@ -108,7 +105,13 @@ put '/usuarios/:id' do
     usuario = Usuario[usuario_id]
     if usuario
       datos = JSON.parse(request.body.read)
-      usuario.update(datos)
+      puts "Datos recibidos para actualizar: #{datos}"  # Log para ver los datos recibidos
+
+      # Filtrar solo los campos que quieres permitir actualizar
+      campos_actualizables = ['Nombre', 'Email', 'Contrasenia']
+      datos_filtrados = datos.select { |key, _| campos_actualizables.include?(key) }
+
+      usuario.update(datos_filtrados)
       usuario.to_json
     else
       status 404

@@ -20,7 +20,6 @@ class SignInController {
 
       // Intentar el login con el método del UserProvider
       bool isLoggedIn = await userProvider.login(email, password); // Suponiendo que login retorna un bool
-
       if (isLoggedIn) {
         // Navegar al HomePage después del login exitoso
         Navigator.pushNamedAndRemoveUntil(

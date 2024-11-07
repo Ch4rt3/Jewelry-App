@@ -5,6 +5,24 @@ import 'package:jewelry_app/models/usuario.dart';
 import 'package:jewelry_app/services/api_base_service.dart';
 
 class UsuarioService extends ApiBaseService{
+
+
+
+ Future<http.Response> updateUsuario(Map<String, dynamic> data) async {
+    final String endpoint = '/usuarios/${data['id']}';
+    final response = await http.put(
+      Uri.parse('$baseUrl$endpoint'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer tu_token_aqui', // Agrega tu token de autenticación aquí si es necesario
+      },
+      body: jsonEncode(data),
+    );
+
+    print('Response: ${response.body}');
+    return response;
+  }
+
   
   // Método para obtener todos los usuarios
   Future<List<Usuario>> fetchAllUsuarios() async {

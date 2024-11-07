@@ -7,7 +7,12 @@ class UserPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userProvider = Provider.of<UserProvider>(context);
+
+    // Llamar a loadUserId si el userId es null y aún no se ha cargado
+    if (userProvider.userId == null) {
+      userProvider.loadUserId();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -44,21 +49,22 @@ class UserPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            const Text(
-              'Robert Fox',
-              style: TextStyle(
+            Text(
+              userProvider.usuario?.nombre ?? 'Nombre no disponible',
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 5),
-            const Text(
-              'robertfox@gmail.com',
-              style: TextStyle(
+            Text(
+              userProvider.usuario?.email ?? 'Correo no disponible',
+              style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
               ),
             ),
+          
+           
             const SizedBox(height: 30),
             Expanded(
               child: ListView(
@@ -69,7 +75,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/settings');
-                      // Acción de ir a ajustes
                     },
                   ),
                   ListTile(
@@ -78,7 +83,6 @@ class UserPage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
                       Navigator.pushNamed(context, '/orders');
-                      // Acción de ir a órdenes
                     },
                   ),
                   ListTile(
@@ -86,8 +90,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Shipping Addresses'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                        Navigator.pushNamed(context, '/address');
-                      // Acción de ir a direcciones
+                      Navigator.pushNamed(context, '/address');
                     },
                   ),
                   ListTile(
@@ -96,8 +99,7 @@ class UserPage extends StatelessWidget {
                     title: const Text('Wallet'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                       Navigator.pushNamed(context, '/wallet');
-                      // Acción de ir a billetera
+                      Navigator.pushNamed(context, '/wallet');
                     },
                   ),
                   ListTile(
@@ -105,9 +107,8 @@ class UserPage extends StatelessWidget {
                     title: const Text('Log out'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                        userProvider.logout();
-                        Navigator.pushNamed(context, '/sign-in');
-                        // Acción de cerrar sesión
+                      userProvider.logout();
+                      Navigator.pushNamed(context, '/sign-in');
                     },
                   ),
                 ],

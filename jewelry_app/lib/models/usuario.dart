@@ -1,4 +1,5 @@
 class Usuario {
+  int? id;
   String email;
   String url;
   String descripcion;
@@ -8,9 +9,10 @@ class Usuario {
   String telefono;
   bool visibilidad;
   String contrasena;
-  int? codigoRecuperacion;
+  String? codigoRecuperacion;
 
   Usuario({
+    this.id,
     required this.email,
     required this.url,
     required this.descripcion,
@@ -25,29 +27,33 @@ class Usuario {
 
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
+      id: json['ID'] is String ? int.tryParse(json['ID']) : json['ID'], // Convierte a int si es String
       email: json['Email'] ?? '',
-      contrasena: json['Contrasenia'] ?? '',
-      nombre: json['Nombre'] ?? 'User',
-      telefono: json['Telefono'] ?? 'Desconocido',
-      imagen: json['Imagen'] ?? 'assets/images/default_user.png',
       url: json['URL'] ?? '',
       descripcion: json['Descripcion'] ?? 'Sin descripción',
       acercaDe: json['AcercaDe'] ?? '',
+      imagen: json['Imagen'] ?? 'assets/images/default_user.png',
+      nombre: json['Nombre'] ?? 'User',
+      telefono: json['Telefono'] ?? 'Desconocido',
       visibilidad: json['Visibilidad'] ?? true,
+      contrasena: json['Contrasenia'] ?? '',
+      codigoRecuperacion: json['CodigoRecuperacion'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'ID': id,
       'Email': email,
-      'Contrasenia': contrasena,
-      'Nombre': nombre,
-      'Telefono': telefono,
-      'Imagen': imagen,
-      'Url': url,
+      'URL': url,
       'Descripcion': descripcion,
       'AcercaDe': acercaDe,
+      'Imagen': imagen,
+      'Nombre': nombre,
+      'Telefono': telefono,
       'Visibilidad': visibilidad,
+      'Contrasenia': contrasena,
+      'CodigoRecuperacion': codigoRecuperacion,
     };
   }
 }
