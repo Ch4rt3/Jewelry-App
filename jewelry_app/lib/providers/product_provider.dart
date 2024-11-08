@@ -10,7 +10,7 @@ class ProductProvider with ChangeNotifier {
   List<Producto> get productos => _productos;
   bool get isLoading => _isLoading;
 
-  final String baseUrl = 'http://localhost:4568'; // Cambia esta URL por la de tu backend
+  final String baseUrl = 'http://192.168.19.60:4568'; // Cambia esta URL por la de tu backend
 
   // Método para cargar todos los productos desde el backend
   Future<void> fetchAllProducts() async {

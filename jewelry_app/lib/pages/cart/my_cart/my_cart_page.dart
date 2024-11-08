@@ -34,7 +34,7 @@ class _MyCartPageState extends State<MyCartPage> {
     }
 
     try {
-      final response = await http.get(Uri.parse('http://localhost:4568/carrito/$usuarioId'));
+      final response = await http.get(Uri.parse('http://192.168.19.60:4568/carrito/$usuarioId'));
       if (response.statusCode == 200) {
         final carritoData = jsonDecode(response.body);
         setState(() {
@@ -53,7 +53,7 @@ class _MyCartPageState extends State<MyCartPage> {
 
   Future<void> _actualizarSubtotal(int carritoId) async {
     try {
-      final response = await http.put(Uri.parse('http://localhost:4568/carrito/$carritoId/actualizar_subtotal'));
+      final response = await http.put(Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/actualizar_subtotal'));
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
@@ -70,7 +70,7 @@ class _MyCartPageState extends State<MyCartPage> {
   Future<void> _actualizarCantidad(int carritoId, int productoId, int nuevaCantidad) async {
     try {
       await http.put(
-        Uri.parse('http://localhost:4568/carrito/$carritoId/producto/$productoId'),
+        Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/producto/$productoId'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'cantidad': nuevaCantidad}),
       );
@@ -83,7 +83,7 @@ class _MyCartPageState extends State<MyCartPage> {
 
   Future<void> _eliminarProducto(int carritoId, int productoId) async {
     try {
-      await http.delete(Uri.parse('http://localhost:4568/carrito/$carritoId/producto/$productoId'));
+      await http.delete(Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/producto/$productoId'));
       _actualizarSubtotal(carritoId);
       _cargarCarrito();
     } catch (e) {

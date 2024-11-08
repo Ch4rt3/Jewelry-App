@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/components/layouts/main_background.dart';
 import 'package:jewelry_app/components/categories_widgets/productCard.dart';
-import 'package:jewelry_app/models/producto.dart';
 import 'package:jewelry_app/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class CategoryPage extends StatelessWidget {
     return FutureBuilder(
       future: productProvider.fetchProductsByCategory(categoryName),
       builder: (context, snapshot) {
-        if (productProvider.isLoading) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
@@ -53,5 +52,7 @@ class CategoryPage extends StatelessWidget {
     );
   }
 }
+
+
 
 

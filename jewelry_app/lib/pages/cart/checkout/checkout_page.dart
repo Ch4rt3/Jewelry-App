@@ -37,7 +37,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
 
     try {
-      final response = await http.get(Uri.parse('http://localhost:4568/carrito/$usuarioId'));
+      final response = await http.get(Uri.parse('http://192.168.19.60:4568/carrito/$usuarioId'));
       if (response.statusCode == 200) {
         final carritoData = jsonDecode(response.body);
         setState(() {
@@ -59,7 +59,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     final usuarioId = userProvider.userId;
 
     try {
-      final response = await http.get(Uri.parse('http://localhost:4568/direcciones/usuario/$usuarioId'));
+      final response = await http.get(Uri.parse('http://192.168.19.60:4568/direcciones/usuario/$usuarioId'));
       if (response.statusCode == 200) {
         final direcciones = jsonDecode(response.body);
         setState(() {
@@ -78,7 +78,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     final usuarioId = userProvider.userId;
 
     try {
-      final response = await http.get(Uri.parse('http://localhost:4568/wallets/usuario/$usuarioId'));
+      final response = await http.get(Uri.parse('http://192.168.19.60:4568/wallets/usuario/$usuarioId'));
       if (response.statusCode == 200) {
         final metodosPago = jsonDecode(response.body);
         setState(() {
@@ -102,7 +102,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
 
     try {
-      final response = await http.post(Uri.parse('http://localhost:4568/carrito/$usuarioId/confirmar'));
+      final response = await http.post(Uri.parse('http://192.168.19.60:4568/carrito/$usuarioId/confirmar'));
       if (response.statusCode == 201) {
         print('Pedido confirmado exitosamente');
         Navigator.pushNamed(context, "/success-order");
