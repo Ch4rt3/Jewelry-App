@@ -11,7 +11,7 @@ class HomePageController {
 
   // Método para cargar productos
   Future<void> loadProducts() async {
-    await Provider.of<ProductProvider>(context, listen: false).loadProducts();
+    await Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
   }
 
   String cargarNombre() {

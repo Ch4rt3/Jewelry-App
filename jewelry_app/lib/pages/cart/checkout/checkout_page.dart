@@ -172,7 +172,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               elevation: 0,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, "/address"),
+              Navigator.pushNamed(context, "/address");
             },
             child: const Text(
               'Change Address',
@@ -214,7 +214,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               elevation: 0,
             ),
             onPressed: () {
-              Navigator.pushNamed(context, "/wallet"),
+              Navigator.pushNamed(context, "/wallet");
             },
             child: const Text(
               'Use Other',

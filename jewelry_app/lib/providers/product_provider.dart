@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jewelry_app/models/producto.dart';
 
@@ -37,8 +36,11 @@ class ProductProvider with ChangeNotifier {
 
   // Método para obtener productos por categoría desde el backend
   Future<void> fetchProductsByCategory(String categoria) async {
+  // Usamos el addPostFrameCallback para asegurarnos que notifyListeners() 
+  // se llame después de que la construcción haya finalizado
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
     _isLoading = true;
-    notifyListeners();
+    notifyListeners();  // Llamamos a notifyListeners() después del build
 
     final url = Uri.parse('$baseUrl/productos/categoria/$categoria');
     try {
@@ -54,7 +56,8 @@ class ProductProvider with ChangeNotifier {
     }
 
     _isLoading = false;
-    notifyListeners();
-  }
+    notifyListeners();  // Actualizamos el estado nuevamente después de la solicitud
+  });
+}
 }
 

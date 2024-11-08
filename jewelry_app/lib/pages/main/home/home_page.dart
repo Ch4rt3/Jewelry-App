@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jewelry_app/components/categories_widgets/productCard.dart';
 import 'package:jewelry_app/components/layouts/main_background.dart';
-import 'package:jewelry_app/pages/cart/my_cart/my_cart_controller.dart';
 import 'package:jewelry_app/pages/main/home/home_page_controller.dart';
 import 'package:jewelry_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';

@@ -18,12 +18,22 @@ class DireccionProvider extends ChangeNotifier {
 
   // Cargar el usuarioId desde SharedPreferences
   Future<void> loadUsuarioId() async {
-    final prefs = await SharedPreferences.getInstance();
-    _usuarioId = prefs.getInt('userId');
-    if (_usuarioId != null) {
-      await fetchDirecciones();
-    }
+  final prefs = await SharedPreferences.getInstance();
+  // Verificar si el valor almacenado es un int
+  final storedId = prefs.get('userId');
+  
+  if (storedId is int) {
+    _usuarioId = storedId;
+  } else {
+    // Manejar el caso si no es un int
+    _usuarioId = null;
   }
+
+  if (_usuarioId != null) {
+    await fetchDirecciones();
+  }
+}
+
 
   // Obtener direcciones desde el servicio
   Future<void> fetchDirecciones() async {

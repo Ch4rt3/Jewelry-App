@@ -114,13 +114,13 @@ class _MyCartPageState extends State<MyCartPage> {
                   cantidad: 1, // Asignar la cantidad real aquí
                   onDecrease: () {
                     if (1 > 1) {
-                      _actualizarCantidad(carritoId!, producto.id, 1 - 1);
+                      _actualizarCantidad(carritoId! as int, producto.id, 1 - 1);
                     } else {
-                      _eliminarProducto(carritoId!, producto.id);
+                      _eliminarProducto(carritoId! as int, producto.id);
                     }
                   },
-                  onIncrease: () => _actualizarCantidad(carritoId!, producto.id, 1 + 1),
-                  onRemove: () => _eliminarProducto(carritoId!, producto.id),
+                  onIncrease: () => _actualizarCantidad(carritoId! as int, producto.id, 1 + 1),
+                  onRemove: () => _eliminarProducto(carritoId! as int, producto.id),
                 );
               }).toList(),
             ),
