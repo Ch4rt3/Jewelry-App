@@ -42,9 +42,8 @@ post '/carrito/:carrito_id/confirmar' do
         DB[query_pedido_producto, nuevo_pedido[:ID], producto[:Producto_ID], producto[:Cantidad], producto[:Precio]].insert
       end
   
-      # Eliminar el carrito después de convertirlo en un pedido
+      # Vaciamos el carrito
       CarritoProducto.where(Carrito_ID: carrito_id).delete
-      Carrito.where(ID: carrito_id).delete
   
       # Devolver el pedido creado en la respuesta
       status 201

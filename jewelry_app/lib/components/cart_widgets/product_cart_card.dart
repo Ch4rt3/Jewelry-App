@@ -9,13 +9,13 @@ class ProductCartCard extends StatelessWidget {
   final VoidCallback onDecrease;
 
   const ProductCartCard({
-    super.key,
+    Key? key,
     required this.producto,
     required this.cantidad,
     required this.onRemove,
     required this.onIncrease,
     required this.onDecrease,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +38,20 @@ class ProductCartCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Imagen del producto
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(producto.imagenUrl), // Cambia a NetworkImage si es una URL
+                  image: NetworkImage(producto.imagenUrl),
                   fit: BoxFit.cover,
                 ),
               ),
-              width: 80, // Ancho del contenedor
-              height: 80, // Altura del contenedor
+              width: 80,
+              height: 80,
             ),
           ),
           const SizedBox(width: 10),
-          // Detalles del producto
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +59,6 @@ class ProductCartCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Nombre del producto
                     Expanded(
                       child: Text(
                         producto.nombre,
@@ -72,7 +69,6 @@ class ProductCartCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    // Botón de eliminación
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.grey),
                       onPressed: onRemove,
@@ -91,7 +87,6 @@ class ProductCartCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    // Botón para disminuir la cantidad
                     _buildQuantityButton(Icons.remove, onDecrease),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -102,11 +97,7 @@ class ProductCartCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Botón para aumentar la cantidad
                     _buildQuantityButton(Icons.add, onIncrease),
-                    // Quitamos Spacer para evitar conflictos de layout
-                    // const Spacer(),
-                    // Precio del producto
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,

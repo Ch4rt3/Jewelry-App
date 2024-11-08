@@ -1,51 +1,121 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:jewelry_app/components/notifications/sucess_notification.dart';
 import 'package:provider/provider.dart';
-import 'package:jewelry_app/providers/shoppingcart_provider.dart';
-import 'package:jewelry_app/providers/order_provider.dart';
 import 'package:jewelry_app/models/producto.dart';
-import 'package:jewelry_app/pages/cart/my_cart/my_cart_controller.dart';
+import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:http/http.dart' as http;
 
 class CheckoutPage extends StatefulWidget {
-    const CheckoutPage({super.key});
-    @override
-    _CheckoutPageState createState() => _CheckoutPageState();
-  }
+  const CheckoutPage({super.key});
+
+  @override
+  _CheckoutPageState createState() => _CheckoutPageState();
+}
 
 class _CheckoutPageState extends State<CheckoutPage> {
-    double itemTotal = 0.0;
-    static const deliveryFee = 50.0;
-    List<Producto> carritoProducto = [];
-    
-    @override
-    void initState() {
-      super.initState();
-      _cargarProductos();
+  double _itemTotal = 0.0;
+  static const double _deliveryFee = 50.0;
+  List<Producto> _carritoProductos = [];
+  String _direccion = 'Cargando dirección...';
+  String _metodoPago = 'Cargando método de pago...';
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarProductos();
+    _cargarDireccion();
+    _cargarMetodoPago();
+  }
+
+  Future<void> _cargarProductos() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final usuarioId = userProvider.userId;
+
+    if (usuarioId == null) {
+      print("Error: No hay usuario autenticado");
+      return;
     }
 
-    Future<void> _cargarProductos() async {
-      MyCartController myCartController = MyCartController();
-      List<Producto> productos = await myCartController.cargarCarritoProductos(context);
-      setState(() {
-        carritoProducto = productos;
-        itemTotal = _calculateItemTotal(productos); // Calcula el total de los artículos
-      });
-    }
-
-    double _calculateItemTotal(List<Producto> productos) {
-      // Sumar el precio de cada producto en el carrito
-      double total = 0.0;
-      for (var producto in productos) {
-        total += producto.precio; // Asegúrate de que 'precio' sea la propiedad correcta
+    try {
+      final response = await http.get(Uri.parse('http://localhost:4568/carrito/$usuarioId'));
+      if (response.statusCode == 200) {
+        final carritoData = jsonDecode(response.body);
+        setState(() {
+          _carritoProductos = (carritoData['productos'] as List)
+              .map((json) => Producto.fromJson(json))
+              .toList();
+          _itemTotal = carritoData['SubTotal'];
+        });
+      } else {
+        print('Error al cargar los productos del carrito');
       }
-      return total;
+    } catch (e) {
+      print('Error en _cargarProductos: $e');
     }
+  }
+
+  Future<void> _cargarDireccion() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final usuarioId = userProvider.userId;
+
+    try {
+      final response = await http.get(Uri.parse('http://localhost:4568/direcciones/usuario/$usuarioId'));
+      if (response.statusCode == 200) {
+        final direcciones = jsonDecode(response.body);
+        setState(() {
+          _direccion = direcciones[0]['Direccion'] ?? 'Dirección no disponible';
+        });
+      } else {
+        print('Error al cargar la dirección');
+      }
+    } catch (e) {
+      print('Error en _cargarDireccion: $e');
+    }
+  }
+
+  Future<void> _cargarMetodoPago() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final usuarioId = userProvider.userId;
+
+    try {
+      final response = await http.get(Uri.parse('http://localhost:4568/wallets/usuario/$usuarioId'));
+      if (response.statusCode == 200) {
+        final metodosPago = jsonDecode(response.body);
+        setState(() {
+          _metodoPago = '**** **** **** ${metodosPago[0]['numeroTarjeta'].toString().substring(12)}';
+        });
+      } else {
+        print('Error al cargar el método de pago');
+      }
+    } catch (e) {
+      print('Error en _cargarMetodoPago: $e');
+    }
+  }
+
+  Future<void> _confirmarPedido() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final usuarioId = userProvider.userId;
+
+    if (usuarioId == null) {
+      print("Error: No hay usuario autenticado");
+      return;
+    }
+
+    try {
+      final response = await http.post(Uri.parse('http://localhost:4568/carrito/$usuarioId/confirmar'));
+      if (response.statusCode == 201) {
+        print('Pedido confirmado exitosamente');
+        Navigator.pushNamed(context, "/success-order");
+      } else {
+        print('Error al confirmar el pedido: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error en _confirmarPedido: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Obtener los providers de ShoppingCart y Order
-    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
-    final orderProvider = Provider.of<OrderProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -59,36 +129,19 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Resumen de la Orden',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-
-            // Sección de Dirección de Entrega Estática
             _buildAddressSection(),
-
             const SizedBox(height: 20),
-
-            // Sección de Método de Pago Estática
             _buildPaymentMethodSection(),
-
             const SizedBox(height: 20),
-
-            // Resumen de productos en el carrito
-            _buildOrderSummary(shoppingCartProvider),
-
+            _buildOrderSummary(),
             const SizedBox(height: 20),
-
-            // Botón para colocar la orden
-            _buildPlaceOrderButton(context, shoppingCartProvider, orderProvider),
+            _buildPlaceOrderButton(),
           ],
         ),
       ),
     );
   }
 
-  // Sección de dirección de entrega estática
   Widget _buildAddressSection() {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -109,7 +162,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              '123 Calle Principal, Ciudad de Ejemplo',
+              _direccion,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
@@ -118,7 +171,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               backgroundColor: Colors.blue[100],
               elevation: 0,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/address"),
+            },
             child: const Text(
               'Change Address',
               style: TextStyle(color: Colors.blue),
@@ -129,7 +184,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // Sección de método de pago estática
   Widget _buildPaymentMethodSection() {
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -150,7 +204,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              '**** **** **** 1234',
+              _metodoPago,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
@@ -159,7 +213,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               backgroundColor: Colors.blue[100],
               elevation: 0,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, "/wallet"),
+            },
             child: const Text(
               'Use Other',
               style: TextStyle(color: Colors.blue),
@@ -170,9 +226,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // Mostrar el resumen del pedido con el subtotal y el costo de envío
-  Widget _buildOrderSummary(ShoppingCartProvider shoppingCartProvider) {
-    final total = itemTotal + deliveryFee;
+  Widget _buildOrderSummary() {
+    final total = _itemTotal + _deliveryFee;
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -189,8 +244,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSummaryRow('Item Total', '\$${itemTotal.toStringAsFixed(2)}'),
-          _buildSummaryRow('Delivery Fee', '\$${deliveryFee.toStringAsFixed(2)}'),
+          _buildSummaryRow('Item Total', '\$${_itemTotal.toStringAsFixed(2)}'),
+          _buildSummaryRow('Delivery Fee', '\$${_deliveryFee.toStringAsFixed(2)}'),
           const Divider(),
           _buildSummaryRow('Total', '\$${total.toStringAsFixed(2)}', isTotal: true),
         ],
@@ -198,7 +253,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // Widget para construir las filas del resumen de la orden
   Widget _buildSummaryRow(String title, String amount, {bool isTotal = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -226,8 +280,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  // Botón para realizar el pedido
-  Widget _buildPlaceOrderButton(BuildContext context, ShoppingCartProvider shoppingCartProvider, OrderProvider orderProvider) {
+  Widget _buildPlaceOrderButton() {
     return Center(
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -235,24 +288,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
           padding: const EdgeInsets.all(16.0),
           textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        onPressed: () {
-          // if (shoppingCartProvider.productosEnCarrito.isNotEmpty) {
-            // await shoppingCartProvider.placeOrder(context);
-            Navigator.pushNamed(context, "/success-order");
-            // shoppingCartProvider.clearCart();
-            // Navigator.popUntil(context, ModalRoute.withName('/'));
-          // } else {
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   const SnackBar(content: Text("Your cart is empty!")),
-            // );
-          // }
-        },
+        onPressed: _confirmarPedido,
         child: const Text(
-            "Place Order",
-            style: TextStyle(
-              color: Colors.white
-            ),
-          ),
+          "Place Order",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
