@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:jewelry_app/models/producto.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
+import 'package:jewelry_app/models/producto.dart';
+import 'package:jewelry_app/providers/product_provider.dart';  // Importamos el ProductProvider
 import 'package:jewelry_app/providers/user_provider.dart';
 import 'package:jewelry_app/components/cart_widgets/product_cart_card.dart';
 
@@ -14,7 +13,6 @@ class MyCartPage extends StatefulWidget {
 }
 
 class _MyCartPageState extends State<MyCartPage> {
-  List<Producto> _carritoProductos = [];
   double _subTotal = 0.0;
   static const double _deliveryFee = 50.0;
 
@@ -33,68 +31,36 @@ class _MyCartPageState extends State<MyCartPage> {
       return;
     }
 
-    try {
-      final response = await http.get(Uri.parse('http://192.168.19.60:4568/carrito/$usuarioId'));
-      if (response.statusCode == 200) {
-        final carritoData = jsonDecode(response.body);
-        setState(() {
-          _carritoProductos = (carritoData['productos'] as List)
-              .map((json) => Producto.fromJson(json))
-              .toList();
-          _subTotal = carritoData['SubTotal'];
-        });
-      } else {
-        print('Error al cargar el carrito');
-      }
-    } catch (e) {
-      print('Error en _cargarCarrito: $e');
-    }
-  }
+    // Aquí se llamará al provider para obtener el carrito de productos
+    final productProvider = Provider.of<ProductProvider>(context, listen: false);
+    await productProvider.fetchAllProducts(); // Cargar todos los productos (o productos por categoría si es necesario)
 
-  Future<void> _actualizarSubtotal(int carritoId) async {
-    try {
-      final response = await http.put(Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/actualizar_subtotal'));
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        setState(() {
-          _subTotal = data['nuevo_subtotal'];
-        });
-      } else {
-        print('Error al actualizar el subtotal');
-      }
-    } catch (e) {
-      print('Error en _actualizarSubtotal: $e');
-    }
+    setState(() {
+      // En este caso suponemos que los productos ya están cargados
+      _subTotal = productProvider.productos.fold(0, (total, producto) => total + producto.precio);
+    });
   }
 
   Future<void> _actualizarCantidad(int carritoId, int productoId, int nuevaCantidad) async {
-    try {
-      await http.put(
-        Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/producto/$productoId'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'cantidad': nuevaCantidad}),
-      );
-      _actualizarSubtotal(carritoId);
-      _cargarCarrito();
-    } catch (e) {
-      print('Error en _actualizarCantidad: $e');
-    }
+    // Implementa el cambio de cantidad en el carrito según la cantidad
+    setState(() {
+      // Aquí iría la lógica para actualizar el subtotal después de modificar la cantidad
+      _subTotal += nuevaCantidad * 10.0; // Ejemplo de actualización
+    });
   }
 
   Future<void> _eliminarProducto(int carritoId, int productoId) async {
-    try {
-      await http.delete(Uri.parse('http://192.168.19.60:4568/carrito/$carritoId/producto/$productoId'));
-      _actualizarSubtotal(carritoId);
-      _cargarCarrito();
-    } catch (e) {
-      print('Error en _eliminarProducto: $e');
-    }
+    // Implementa la eliminación de un producto en el carrito
+    setState(() {
+      // Aquí iría la lógica para eliminar el producto y actualizar el subtotal
+      _subTotal -= 10.0; // Ejemplo de eliminación
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final carritoId = userProvider.userId;
+    final productProvider = Provider.of<ProductProvider>(context);
+    final carritoId = Provider.of<UserProvider>(context).userId;
 
     return Scaffold(
       appBar: AppBar(
@@ -104,32 +70,51 @@ class _MyCartPageState extends State<MyCartPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: _carritoProductos.map((producto) {
-                return ProductCartCard(
-                  producto: producto,
-                  cantidad: 1, // Asignar la cantidad real aquí
-                  onDecrease: () {
-                    if (1 > 1) {
-                      _actualizarCantidad(carritoId! as int, producto.id, 1 - 1);
-                    } else {
-                      _eliminarProducto(carritoId! as int, producto.id);
-                    }
-                  },
-                  onIncrease: () => _actualizarCantidad(carritoId! as int, producto.id, 1 + 1),
-                  onRemove: () => _eliminarProducto(carritoId! as int, producto.id),
-                );
-              }).toList(),
+      body: productProvider.isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Column(
+                    children: productProvider.productos.map((producto) {
+                      return ProductCartCard(
+  producto: producto,
+  cantidad: 1, // Asignar la cantidad real aquí
+  onDecrease: () {
+    // Convertir carritoId a int si es necesario
+    final carritoIdInt = int.tryParse(carritoId!); // Usar tryParse para evitar errores si la conversión falla
+    if (carritoIdInt != null) {
+      _actualizarCantidad(carritoIdInt, producto.id, 1 - 1);
+    } else {
+      print("Error: carritoId no es un número válido.");
+    }
+  },
+  onIncrease: () {
+    final carritoIdInt = int.tryParse(carritoId!);
+    if (carritoIdInt != null) {
+      _actualizarCantidad(carritoIdInt, producto.id, 1 + 1);
+    } else {
+      print("Error: carritoId no es un número válido.");
+    }
+  },
+  onRemove: () {
+    final carritoIdInt = int.tryParse(carritoId!);
+    if (carritoIdInt != null) {
+      _eliminarProducto(carritoIdInt, producto.id);
+    } else {
+      print("Error: carritoId no es un número válido.");
+    }
+  },
+);
+
+                    }).toList(),
+                  ),
+                  _buildPaymentSummary(),
+                  const SizedBox(height: 20),
+                  _buildCheckoutButton(),
+                ],
+              ),
             ),
-            _buildPaymentSummary(),
-            const SizedBox(height: 20),
-            _buildCheckoutButton(),
-          ],
-        ),
-      ),
     );
   }
 
@@ -190,14 +175,17 @@ class _MyCartPageState extends State<MyCartPage> {
           ),
         ),
         onPressed: () {
-          if (_carritoProductos.isNotEmpty) {
-            Navigator.pushNamed(context, '/checkout');
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("No hay productos en el carrito para proceder al checkout.")),
-            );
-          }
-        },
+  // Acceder a la instancia de ProductProvider usando Provider.of
+  final productProvider = Provider.of<ProductProvider>(context, listen: false);
+
+  if (productProvider.productos.isNotEmpty) {
+    Navigator.pushNamed(context, '/checkout');
+  } else {
+    // Manejar el caso cuando no hay productos
+    // Puedes mostrar un mensaje o hacer algo similar
+  }
+}
+,
         child: const Text(
           'Go to Checkout',
           style: TextStyle(fontSize: 18, color: Colors.white),

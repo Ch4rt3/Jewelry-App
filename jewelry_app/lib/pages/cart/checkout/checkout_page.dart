@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:jewelry_app/models/producto.dart';
 import 'package:jewelry_app/providers/user_provider.dart';
+import 'package:jewelry_app/providers/product_provider.dart'; 
 import 'package:http/http.dart' as http;
 
 class CheckoutPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   double _itemTotal = 0.0;
   static const double _deliveryFee = 50.0;
-  List<Producto> _carritoProductos = [];
   String _direccion = 'Cargando dirección...';
   String _metodoPago = 'Cargando método de pago...';
 
@@ -36,22 +36,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
       return;
     }
 
-    try {
-      final response = await http.get(Uri.parse('http://192.168.19.60:4568/carrito/$usuarioId'));
-      if (response.statusCode == 200) {
-        final carritoData = jsonDecode(response.body);
-        setState(() {
-          _carritoProductos = (carritoData['productos'] as List)
-              .map((json) => Producto.fromJson(json))
-              .toList();
-          _itemTotal = carritoData['SubTotal'];
-        });
-      } else {
-        print('Error al cargar los productos del carrito');
+    final productProvider = Provider.of<ProductProvider>(context, listen: false);
+    await productProvider.fetchAllProducts(); // Obtener los productos desde el provider
+
+    setState(() {
+      _itemTotal = 0.0;
+      for (var producto in productProvider.productos) {
+        // Calcular el total sumando el precio de cada producto
+        _itemTotal += producto.precio; // Asumimos que 'precio' es el atributo adecuado del modelo Producto
       }
-    } catch (e) {
-      print('Error en _cargarProductos: $e');
-    }
+    });
   }
 
   Future<void> _cargarDireccion() async {
@@ -285,18 +279,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
-          padding: const EdgeInsets.all(16.0),
-          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),
         onPressed: _confirmarPedido,
         child: const Text(
-          "Place Order",
+          'Place Order',
           style: TextStyle(color: Colors.white),
         ),
       ),
     );
   }
 }
-
 
 

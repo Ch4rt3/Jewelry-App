@@ -6,7 +6,7 @@ import 'package:jewelry_app/models/producto.dart';
 import 'package:jewelry_app/services/product_service.dart';
 
 class OrderService {
-  final ProductoService _productoService = ProductoService();
+  final ProductService _productoService = ProductService();
 
   // Cargar todos los pedidos desde el JSON
   Future<List<Pedido>> fetchAllPedidos() async {
@@ -41,13 +41,12 @@ class OrderService {
       List<PedidoProducto> relaciones = pedidoProductos.where((rel) => rel.pedidoId == pedidoId).toList();
 
       // Cargar todos los productos
-      List<Producto> productos = await _productoService.fetchAll();
+      List<Producto> productos = await _productoService.fetchAllProducts();
 
       // Buscar los productos relacionados
       List<Producto> productosPedido = relaciones
           .map((relacion) => productos.firstWhere(
-                (prod) => prod.id == relacion.productoId,
-                orElse: () => _productoService.obtenerProductoTemporal(relacion.productoId),
+                (prod) => prod.id == relacion.productoId
               ))
           .toList();
 
@@ -90,15 +89,14 @@ Future<void> agregarPedidoConProductos(int usuarioId, List<int> productosIds) as
     double montoTotal = 0.0;
 
     // Crear lista de productos usando el servicio de productos
-    List<Producto> productos = await _productoService.fetchAll();
+    List<Producto> productos = await _productoService.fetchAllProducts();
     List<PedidoProducto> productosEnPedido = [];
 
     // Agregar cada producto a la relación intermedia y calcular el total
     for (int id in productosIds) {
       try {
         Producto producto = productos.firstWhere(
-          (prod) => prod.id == id,
-          orElse: () => _productoService.obtenerProductoTemporal(id),
+          (prod) => prod.id == id
         );
 
         montoTotal += producto.precio;

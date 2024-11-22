@@ -1,64 +1,30 @@
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:jewelry_app/models/producto.dart';
+import 'package:jewelry_app/services/api_base_service.dart';
+import 'package:http/http.dart' as http;
 
-class ProductoService {
-  // Método para obtener todos los productos
-  Future<List<Producto>> fetchAll() async {
-    try {
-      final String response = await rootBundle.loadString('assets/json/productos.json');
-      final List<dynamic> data = jsonDecode(response);
+class ProductService extends ApiBaseService {
+  // Obtener todos los productos
+  Future<List<Producto>> fetchAllProducts() async {
+    final String endpoint = '/productos';
+    final response = await http.get(Uri.parse('$baseUrl$endpoint'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
       return data.map((json) => Producto.fromJson(json)).toList();
-    } catch (e) {
-      print("Error al cargar productos: $e");
-      return [];
+    } else {
+      throw Exception('Error al cargar todos los productos');
     }
   }
-
-  // Método para obtener un producto por ID
-  Future<Producto?> getProductoById(int id) async {
-  try {
-    List<Producto> productos = await fetchAll();
-    return productos.firstWhere(
-      (producto) => producto.id == id,
-      orElse: () => Producto(
-        id: 0, // Valor temporal para producto no encontrado
-        nombre: "No Encontrado",
-        precio: 0,
-        stock: 0,
-        categoria: "Desconocida",
-        imagenUrl: "assets/images/default.png",
-        descripcion: "Este producto no está disponible.",
-        descripcionLarga: "Inserte descripcion larga"
-      ),
-    );
-  } catch (e) {
-    print("Error al obtener producto por ID: $e");
-    return null;
-  }
-}
-
   // Método para obtener productos por categoría
-  Future<List<Producto>> getProductosByCategoria(String categoria) async {
-    try {
-      List<Producto> productos = await fetchAll();
-      return productos.where((producto) => producto.categoria.toLowerCase() == categoria.toLowerCase()).toList();
-    } catch (e) {
-      print("Error al obtener productos por categoría: $e");
-      return [];
+  Future<List<Producto>> fetchProductsByCategory(String categoria) async {
+    final String endpoint = '/productos/categoria/$categoria';
+    final response = await http.get(Uri.parse('$baseUrl$endpoint'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Producto.fromJson(json)).toList();
+    } else {
+      throw Exception('Error al cargar productos por categoría');
     }
   }
-  Producto obtenerProductoTemporal(int id) {
-  return Producto(
-    id: id,
-    nombre: "Producto No Disponible",
-    precio: 0,
-    stock: 0,
-    categoria: "Desconocida",
-    imagenUrl: "assets/images/default.png",
-    descripcion: "Este producto no está disponible.",
-    descripcionLarga: "Inserte descripcion larga"
-  );
-}
-
 }

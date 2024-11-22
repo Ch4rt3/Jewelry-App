@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 abstract class ApiBaseService {
-  final String baseUrl = 'http://192.168.19.60:4568'; //IP de Fantino
+  final String baseUrl = 'http://192.168.19.69:4568'; //IP de Fantino
   // final String baseUrl = 'http://192.168.190.1:4568'; //IP de josias
   
 

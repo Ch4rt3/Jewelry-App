@@ -1,63 +1,45 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:jewelry_app/models/producto.dart';
+import 'package:jewelry_app/services/product_service.dart'; // Import del servicio
+import 'package:jewelry_app/models/producto.dart'; // Modelo del producto
 
-class ProductProvider with ChangeNotifier {
+class ProductProvider extends ChangeNotifier {
+  final ProductService _productService = ProductService();
+  // Lista de productos
   List<Producto> _productos = [];
-  bool _isLoading = false;
-
   List<Producto> get productos => _productos;
+
+  // Indicador de carga
+  bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  final String baseUrl = 'http://192.168.19.60:4568'; // Cambia esta URL por la de tu backend
-
-  // Método para cargar todos los productos desde el backend
+  // Cargar todos los productos
   Future<void> fetchAllProducts() async {
     _isLoading = true;
     notifyListeners();
 
-    final url = Uri.parse('$baseUrl/productos');
     try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        _productos = data.map((json) => Producto.fromJson(json)).toList();
-      } else {
-        print('Error al cargar productos');
-      }
+      _productos = await _productService.fetchAllProducts();
     } catch (error) {
-      print("Error en la solicitud: $error");
+      print('Error al cargar todos los productos: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
   }
 
-  // Método para obtener productos por categoría desde el backend
+  // Cargar productos por categoría
   Future<void> fetchProductsByCategory(String categoria) async {
-  // Usamos el addPostFrameCallback para asegurarnos que notifyListeners() 
-  // se llame después de que la construcción haya finalizado
-  WidgetsBinding.instance.addPostFrameCallback((_) async {
     _isLoading = true;
-    notifyListeners();  // Llamamos a notifyListeners() después del build
+    notifyListeners();
 
-    final url = Uri.parse('$baseUrl/productos/categoria/$categoria');
     try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body);
-        _productos = data.map((json) => Producto.fromJson(json)).toList();
-      } else {
-        print('Error al cargar productos por categoría');
-      }
+      _productos = await _productService.fetchProductsByCategory(categoria);
     } catch (error) {
-      print("Error en la solicitud: $error");
+      print('Error al cargar productos por categoría: $error');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();  // Actualizamos el estado nuevamente después de la solicitud
-  });
-}
+  }
 }
 
