@@ -192,7 +192,7 @@ post '/usuarios/enviar-correo' do
       usuario.update(CodigoRecuperacion: codigo_recuperacion)
 
       # Enviar el correo electrónico
-      from = Email.new(email: 'noreply.greenfieldjewelry@gmail.com')
+      from = Email.new(email: 'greenfieldxd0@gmail.com')
       to = Email.new(email: correo)
       subject = 'Recuperación de Contraseña'
       content = Content.new(type: 'text/plain', value: "Aquí tienes tu código de recuperación: #{codigo_recuperacion}")

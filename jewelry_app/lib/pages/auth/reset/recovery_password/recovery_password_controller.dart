@@ -9,7 +9,7 @@ class RecoveryPasswordController {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
-  Future<void> changePassword(BuildContext context, String resetCode) async {
+  Future<void> changePassword(BuildContext context, String email) async {
     String inputResetCode = resetCodeController.text.trim(); // Trim para evitar espacios en blanco
     String newPassword = newPasswordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
@@ -29,7 +29,7 @@ class RecoveryPasswordController {
 
     try {
         Provider.of<UserProvider>(context, listen: false).updatePassword(newPassword);
-        UsuarioService().actualizarContrasenia(newPassword, confirmPassword, inputResetCode);
+        UsuarioService().actualizarContrasenia(email, newPassword, inputResetCode);
         
         // Navegar a la página de éxito
         Navigator.pushNamed(context, "/success-password");
