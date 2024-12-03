@@ -31,13 +31,23 @@ class _MyCartPageState extends State<MyCartPage> {
       return;
     }
 
+    // Intentar convertir usuarioId a int
+    final carritoId = int.tryParse(usuarioId);
+    if (carritoId == null) {
+      print("Error: El usuarioId no es un número válido");
+      return;
+    }
+
     // Aquí se llamará al provider para obtener el carrito de productos
     final productProvider = Provider.of<ProductProvider>(context, listen: false);
-    await productProvider.fetchAllProducts(); // Cargar todos los productos (o productos por categoría si es necesario)
+    await productProvider.fetchProductsByCartId(carritoId); // Cargar productos del carrito
 
     setState(() {
       // En este caso suponemos que los productos ya están cargados
-      _subTotal = productProvider.productos.fold(0, (total, producto) => total + producto.precio);
+      _subTotal = productProvider.productos.fold(
+        0,
+        (total, producto) => total + producto.precio,
+      );
     });
   }
 
@@ -60,7 +70,19 @@ class _MyCartPageState extends State<MyCartPage> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    final carritoId = Provider.of<UserProvider>(context).userId;
+    final userProvider = Provider.of<UserProvider>(context);
+    final usuarioId = userProvider.userId;
+
+    if (usuarioId == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('My Cart'),
+        ),
+        body: const Center(
+          child: Text("Error: No hay usuario autenticado"),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -71,42 +93,40 @@ class _MyCartPageState extends State<MyCartPage> {
         ),
       ),
       body: productProvider.isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [
                   Column(
                     children: productProvider.productos.map((producto) {
                       return ProductCartCard(
-  producto: producto,
-  cantidad: 1, // Asignar la cantidad real aquí
-  onDecrease: () {
-    // Convertir carritoId a int si es necesario
-    final carritoIdInt = int.tryParse(carritoId!); // Usar tryParse para evitar errores si la conversión falla
-    if (carritoIdInt != null) {
-      _actualizarCantidad(carritoIdInt, producto.id, 1 - 1);
-    } else {
-      print("Error: carritoId no es un número válido.");
-    }
-  },
-  onIncrease: () {
-    final carritoIdInt = int.tryParse(carritoId!);
-    if (carritoIdInt != null) {
-      _actualizarCantidad(carritoIdInt, producto.id, 1 + 1);
-    } else {
-      print("Error: carritoId no es un número válido.");
-    }
-  },
-  onRemove: () {
-    final carritoIdInt = int.tryParse(carritoId!);
-    if (carritoIdInt != null) {
-      _eliminarProducto(carritoIdInt, producto.id);
-    } else {
-      print("Error: carritoId no es un número válido.");
-    }
-  },
-);
-
+                        producto: producto,
+                        cantidad: 1, // Asignar la cantidad real aquí
+                        onDecrease: () {
+                          final carritoIdInt = int.tryParse(usuarioId);
+                          if (carritoIdInt != null) {
+                            _actualizarCantidad(carritoIdInt, producto.id, 1 - 1);
+                          } else {
+                            print("Error: carritoId no es un número válido.");
+                          }
+                        },
+                        onIncrease: () {
+                          final carritoIdInt = int.tryParse(usuarioId);
+                          if (carritoIdInt != null) {
+                            _actualizarCantidad(carritoIdInt, producto.id, 1 + 1);
+                          } else {
+                            print("Error: carritoId no es un número válido.");
+                          }
+                        },
+                        onRemove: () {
+                          final carritoIdInt = int.tryParse(usuarioId);
+                          if (carritoIdInt != null) {
+                            _eliminarProducto(carritoIdInt, producto.id);
+                          } else {
+                            print("Error: carritoId no es un número válido.");
+                          }
+                        },
+                      );
                     }).toList(),
                   ),
                   _buildPaymentSummary(),
@@ -175,17 +195,11 @@ class _MyCartPageState extends State<MyCartPage> {
           ),
         ),
         onPressed: () {
-  // Acceder a la instancia de ProductProvider usando Provider.of
-  final productProvider = Provider.of<ProductProvider>(context, listen: false);
-
-  if (productProvider.productos.isNotEmpty) {
-    Navigator.pushNamed(context, '/checkout');
-  } else {
-    // Manejar el caso cuando no hay productos
-    // Puedes mostrar un mensaje o hacer algo similar
-  }
-}
-,
+          final productProvider = Provider.of<ProductProvider>(context, listen: false);
+          if (productProvider.productos.isNotEmpty) {
+            Navigator.pushNamed(context, '/checkout');
+          }
+        },
         child: const Text(
           'Go to Checkout',
           style: TextStyle(fontSize: 18, color: Colors.white),

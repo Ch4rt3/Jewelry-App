@@ -68,4 +68,24 @@ class DireccionProvider extends ChangeNotifier {
       print('Error al eliminar la dirección: $e');
     }
   }
+  // Guardar únicamente la primera dirección de la lista
+Future<void> fetchPrimeraDireccion() async {
+  if (_usuarioId == null) return;
+
+  try {
+    final todasLasDirecciones = await _direccionService.fetchDireccionesByUsuarioId(_usuarioId!);
+    
+    if (todasLasDirecciones.isNotEmpty) {
+      // Guardar solo la primera dirección
+      _direcciones = [todasLasDirecciones.first];
+    } else {
+      // Si no hay direcciones, limpiar la lista
+      _direcciones = [];
+    }
+    notifyListeners();
+  } catch (e) {
+    print('Error al cargar la primera dirección: $e');
+  }
+}
+
 }

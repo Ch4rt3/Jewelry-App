@@ -91,4 +91,49 @@ post '/usuarios/:usuario_id/carrito' do
       { error: 'Formato JSON inválido' }.to_json
     end
 end
+
+get '/carrito/:carrito_id/productos' do
+    content_type :json
+    carrito_id = params[:carrito_id].to_i
+  
+    begin
+      # Verificar si el carrito existe
+      carrito = DB[:carritos].where(ID: carrito_id).first
+  
+      if carrito
+        # Obtener productos asociados al carrito desde la tabla intermedia
+        carrito_productos = DB[:carrito_productos]
+                            .join(:productos, ID: :ProductoId)
+                            .where(CarritoId: carrito_id)
+                            .select(
+                              Sequel[:productos][:ID].as(:producto_id),
+                              Sequel[:productos][:Nombre].as(:nombre_producto),
+                              Sequel[:productos][:Precio].as(:precio),
+                              Sequel[:carrito_productos][:Cantidad].as(:cantidad),
+                              Sequel.expr(Sequel[:productos][:Precio] * Sequel[:carrito_productos][:Cantidad]).as(:total_por_producto)
+                            )
+                            .all
+  
+        # Calcular el subtotal
+        subtotal = carrito_productos.sum { |p| p[:total_por_producto] }
+  
+        # Responder con los datos
+        {
+          carrito_id: carrito_id,
+          productos: carrito_productos,
+          subtotal: subtotal
+        }.to_json
+      else
+        status 404
+        { error: 'Carrito no encontrado' }.to_json
+      end
+    rescue Sequel::DatabaseError => e
+      status 500
+      { error: 'Error al acceder a la base de datos', message: e.message }.to_json
+    end
+end
+  
+  
+  
+
   
